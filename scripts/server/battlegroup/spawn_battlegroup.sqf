@@ -25,6 +25,7 @@ if !(_spawn_marker isEqualTo "") then {
     if (_infOnly) then {
         // Infantry units to choose from
         private _infClasses = [KPLIB_o_inf_classes, militia_squad] select (combat_readiness < 50);
+		diag_log format ["DEBUG: Battle group spawning infantry only"] ;
 
         // Adjust target size for infantry
         _target_size = 12 max (_target_size * 4);
@@ -41,6 +42,7 @@ if !(_spawn_marker isEqualTo "") then {
         [_grp] spawn battlegroup_ai;
         _bg_groups pushBack _grp;
     } else {
+		diag_log format ["DEBUG: Battle group spawning vehicles"] ;
         private _vehicle_pool = [opfor_battlegroup_vehicles, opfor_battlegroup_vehicles_low_intensity] select (combat_readiness < 50);
 
         while {count _selected_opfor_battlegroup < _target_size} do {

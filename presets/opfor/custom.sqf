@@ -103,11 +103,13 @@ opfor_battlegroup_vehicles = [
     "O_Heli_Light_02_dynamicLoadout_F",                                 // Po-30 Orca (Armed)
     "O_Heli_Light_02_dynamicLoadout_F",                                 // Po-30 Orca (Armed)
     "O_Heli_Transport_04_bench_F",                                      // Mi-290 Taru (Bench)
+	"O_T_VTOL_02_infantry_dynamicLoadout_F",							// Xi'an VTOL
     "O_Heli_Attack_02_dynamicLoadout_F"                                 // Mi-48 Kajman
 ];
 
 // All enemy vehicles that can spawn as battlegroups, either assaulting or as reinforcements, at lower enemy combat readiness (aggression levels).
 opfor_battlegroup_vehicles_low_intensity = [
+    "O_LSV_02_armed_F",                                                 // Qilin (Minigun)
     "O_MRAP_02_hmg_F",                                                  // Ifrit (HMG)
     "O_MRAP_02_hmg_F",                                                  // Ifrit (HMG)
     "O_Truck_03_transport_F",                                           // Tempest Transport

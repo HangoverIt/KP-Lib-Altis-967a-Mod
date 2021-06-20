@@ -19,7 +19,7 @@ if (local _unit && !(isPlayer _unit)) then {
 
 		waitUntil {!isNil {_unit getVariable "BIS_fnc_feedback_hitArrayHandler"} || {time > 0}};
 		_unit removeAllEventHandlers "handleDamage";
-		["%1 --- add damageEH to AI %2", diag_ticktime, _unit] call BIS_fnc_logFormat;
+		//["%1 --- add damageEH to AI %2", diag_ticktime, _unit] call BIS_fnc_logFormat;
 		ais_hdEH = _unit addEventHandler ["HandleDamage", {_this call AIS_Damage_fnc_handleDamage}];
 		
 		ais_hkEH = _unit addEventHandler ["Killed", {_this call AIS_System_fnc_killed}];
