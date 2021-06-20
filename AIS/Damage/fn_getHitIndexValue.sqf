@@ -16,6 +16,7 @@ params [
 	["_hitValue", 0, [0,""]]
 ];
 
+_ret = ["",_hitValue, 0] ;
 
 _ret = if (_hitValue isEqualType 0) then {
 
