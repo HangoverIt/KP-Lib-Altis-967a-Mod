@@ -228,11 +228,17 @@ class CfgDiscordRichPresence {
 };
 
 class CfgFunctions {
+    #include "vcom\cfgFunctions.hpp" // HangoverIt 21st June 2021 - Added VCOM
     #include "CfgFunctions.hpp"
     #include "KP\KPPLM\KPPLM_functions.hpp"
 	#include "AIS\cfgFunctions.hpp" // HangoverIt 13th June 2021 - Added for AIS
 };
 #include "AIS\Effects\BarDlg.hpp" // HangoverIt 13th June 2021 - Added for AIS
+
+// HangoverIt 21st June 2021 - Added for VCOM
+class Extended_PreInit_EventHandlers {
+	VCM_CBASettings = call compile preprocessFileLineNumbers "Vcom\Functions\VCM_Functions\fn_CBASettings.sqf";
+};
 
 class CfgRespawnTemplates {
 
