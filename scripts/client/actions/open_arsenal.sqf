@@ -15,6 +15,10 @@ createDialog "liberation_arsenal";
 
 private _backpack = backpack player;
 
+private _currentLoadout = [ player, ["ammo", "repetitive"] ] call KPLIB_fnc_getLoadout;
+diag_log text "Players current loadout";
+diag_log _currentLoadout;
+
 private ["_loadouts_data"];
 // Get loadouts either from ACE or BI arsenals
 if (KP_liberation_ace && KP_liberation_arsenal_type) then {
@@ -90,9 +94,15 @@ while { dialog && (alive player) && edit_loadout == 0 } do {
 
         if (KP_liberation_arsenalUsePreset) then {
             if ([_backpack] call KPLIB_fnc_checkGear) then {
-                hint format [ localize "STR_HINT_LOADOUT_LOADED", _loaded_loadout param [0]];
+            
+                diag_log text "Loading selected preset loadout here";
+                private _result = [player] call KPLIB_fnc_checkResources; 
+                diag_log format ["result: %1", _result];
+                
+                hint format [ localize "STR_HINT_LOADOUT_LOADED", _loaded_loadout param [0]];                
             };
         } else {
+            diag_log text "Loading selected loadout here";
             hint format [ localize "STR_HINT_LOADOUT_LOADED", _loaded_loadout param [0]];
         };
 
@@ -104,6 +114,7 @@ while { dialog && (alive player) && edit_loadout == 0 } do {
 
     if ( respawn_loadout > 0 ) then {
         GRLIB_respawn_loadout = [ player, ["repetitive"] ] call KPLIB_fnc_getLoadout;
+        diag_log text "Loading respawn loadout here";
         hint localize "STR_MAKE_RESPAWN_LOADOUT_HINT";
         respawn_loadout = 0;
     };
@@ -112,6 +123,7 @@ while { dialog && (alive player) && edit_loadout == 0 } do {
         private _playerselected = ( _loadplayers select load_from_player ) select 1;
         if ( alive _playerselected ) then {
             [player,  [_playerselected, ["repetitive"]] call KPLIB_fnc_getLoadout] call KPLIB_fnc_setLoadout;
+            diag_log text "Loading player loadout here";
             hint format [ localize "STR_LOAD_PLAYER_LOADOUT_HINT", name _playerselected ];
         };
         load_from_player = -1;
@@ -133,6 +145,7 @@ if ( edit_loadout > 0 ) then {
         uiSleep 5;
         private _arsenalDisplay = ["RSCDisplayArsenal", "ace_arsenal_display"] select (KP_liberation_ace && KP_liberation_arsenal_type);
         waitUntil {sleep 1; isNull (uinamespace getvariable [_arsenalDisplay, displayNull])};
-        [_backpack] call KPLIB_fnc_checkGear;
+        [_backpack] call KPLIB_fnc_checkGear;        
     };
+    diag_log text "Loading player edited loadout here";
 };
