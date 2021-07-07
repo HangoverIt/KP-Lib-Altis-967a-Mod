@@ -15,9 +15,7 @@ createDialog "liberation_arsenal";
 
 private _backpack = backpack player;
 
-private _currentLoadout = [ player, ["ammo", "repetitive"] ] call KPLIB_fnc_getLoadout;
-diag_log text "Players current loadout";
-diag_log _currentLoadout;
+private _currentLoadout = getUnitLoadout player;
 
 private ["_loadouts_data"];
 // Get loadouts either from ACE or BI arsenals
@@ -93,14 +91,12 @@ while { dialog && (alive player) && edit_loadout == 0 } do {
         };
 
         if (KP_liberation_arsenalUsePreset) then {
+        
             if ([_backpack] call KPLIB_fnc_checkGear) then {
-            
+              hint format [ localize "STR_HINT_LOADOUT_LOADED", _loaded_loadout param [0]];             
                 diag_log text "Loading selected preset loadout here";
-                private _result = [player] call KPLIB_fnc_checkResources; 
-                diag_log format ["result: %1", _result];
-                
-                hint format [ localize "STR_HINT_LOADOUT_LOADED", _loaded_loadout param [0]];                
             };
+            
         } else {
             diag_log text "Loading selected loadout here";
             hint format [ localize "STR_HINT_LOADOUT_LOADED", _loaded_loadout param [0]];
@@ -149,3 +145,27 @@ if ( edit_loadout > 0 ) then {
     };
     diag_log text "Loading player edited loadout here";
 };
+
+// Mark Bennett changes
+//   check we hgave enough resources to load a new loadout, reset to old loadout if not
+private _newLoadout = getUnitLoadout player;
+
+if (player getVariable "KPLIB_isNearStart" == false && _newLoadout isNotEqualTo _currentLoadout) then {
+
+  private _nearestFob = [] call KPLIB_fnc_getNearestFob;
+  ([_nearestFob] call KPLIB_fnc_getFobResources) params ["", "_supplies", "_ammo", "_fuel", "_hasAir", "_hasRecycling"];
+
+  if(_supplies > (LoadoutCost select 0) && _ammo > (LoadoutCost select 1)) then {
+  
+    _storage_areas = (_nearestFob nearobjects (GRLIB_fob_range * 2)) select {(_x getVariable ["KP_liberation_storage_type",-1]) == 0};
+    [LoadoutCost select 0, LoadoutCost select 1, 0, "", 99, _storage_areas] remoteExec ["build_remote_call", 2];
+    
+    hint format ["cost %1 supplies and %2 ammo", LoadoutCost select 0, LoadoutCost select 1];
+  }else{
+    player setUnitLoadout _currentLoadout;
+    hint "Not enough resources, loadout not changed";
+  };  
+};
+
+
+
