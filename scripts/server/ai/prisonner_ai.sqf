@@ -8,6 +8,14 @@ if ((_unit isKindOf "Man") && (alive _unit) && (side group _unit == GRLIB_side_e
 
     sleep (random 5);
 
+	// HangoverIt - check if AIS variable set for injured soldier
+	_AISCHECK = _unit getVariable "ais_unconscious" ;
+	_AISINJURED = !(isNil "_AISCHECK");
+	if (_AISINJURED) then {
+		// Unit will die
+		_unit setDamage 1;
+	};
+	
     if (alive _unit) then {
 
         removeAllWeapons _unit;
@@ -24,15 +32,17 @@ if ((_unit isKindOf "Man") && (alive _unit) && (side group _unit == GRLIB_side_e
         sleep 1;
         private _grp = createGroup [GRLIB_side_civilian, true];
         [_unit] joinSilent _grp;
-        if (KP_liberation_ace) then {
-            ["ace_captives_setSurrendered", [_unit, true], _unit] call CBA_fnc_targetEvent;
-        } else {
-            _unit disableAI "ANIM";
-            _unit disableAI "MOVE";
-            _unit playmove "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon";
-            sleep 2;
-            _unit setCaptive true;
-        };
+	
+		if (KP_liberation_ace) then {
+			["ace_captives_setSurrendered", [_unit, true], _unit] call CBA_fnc_targetEvent;
+		} else {
+			_unit disableAI "ANIM";
+			_unit disableAI "MOVE";
+			_unit playmove "AmovPercMstpSnonWnonDnon_AmovPercMstpSsurWnonDnon";
+			sleep 2;
+			_unit setCaptive true;
+		};
+	
         waitUntil {sleep 1;
             !alive _unit || side group _unit == GRLIB_side_friendly
         };
