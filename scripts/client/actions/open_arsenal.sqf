@@ -155,66 +155,7 @@ private _costs = [0, 0, 0];
 if (player getVariable "KPLIB_isNearStart" == false && _old_loadout isNotEqualTo _new_loadout) then {
 
   [_old_loadout, _new_loadout] call KPLIB_fnc_calculateLoadoutCost;
-  
-  
-  
-  
-  // private _index = 0;
-  
-  // while {_index < (count _new_loadout) && _index < (count _old_loadout)} do
-  // {
-  
-  
-    // private _new_ld_section = (_new_loadout select _index);
-    // private _curr_ld_section = (_old_loadout select _index);
-
-    // if(_new_ld_section isNotEqualTo _curr_ld_section) then
-    // {
-      // private _new_item = _new_ld_section select 0;
-      // private _curr_item = _curr_ld_section select 0;
-
-      // diag_log text "started handling section";
-      // diag_log _curr_ld_section;
-      // diag_log _new_item;
-      // diag_log _curr_item;
-
-      // switch(_index) do
-      // {
-        //primary weapon slot
-        // case 0:{
-          // diag_log text "in the switch";
-          // diag_log _new_item;
-          // diag_log _curr_item;
-          
-          // if (_new_item isNotEqualTo _curr_item) then {
-            
-            // if (typeName _new_item == "STRING") then {
-            
-              // diag_log text "what is the value of _new_item";
-              // diag_log _new_item;
-              // private _itemtype = _new_item call BIS_fnc_itemType;
-              // diag_log text "what is the type of _new_item";
-              // diag_log _itemtype;
-              
-              //add up cost in supplies
-              // private _amt = (LoadoutCost select 0);
-              //_amt *= 1;
-              // _costs set [0, _amt];
-              
-              // diag_log (_costs select 0);
-            // };
-          // };
-          
-
-        // };
-          
-          
-      // };
-    // };
-    // _index = _index + 1; 
-  // };
-  
-  
+   
   
   // apply loadout cost to nearst FOB
   private _nearestFob = [] call KPLIB_fnc_getNearestFob;
