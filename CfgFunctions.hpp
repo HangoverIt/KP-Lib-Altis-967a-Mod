@@ -84,7 +84,7 @@ class KPLIB {
         class spawnRegularSquad         {};
         class spawnVehicle              {};
         class swapInventory             {};
-        class checkResources            {};
+        class calculateLoadoutCost      {};
     };
     class functions_curator {
         file = "functions\curator";
