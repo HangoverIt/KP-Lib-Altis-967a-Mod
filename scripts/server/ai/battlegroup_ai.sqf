@@ -2,6 +2,9 @@ params [
     ["_grp", grpNull, [grpNull]]
 ];
 
+// HangoverIt - VCOM setting to prevent wandering groups
+_grp setVariable ["VCM_NORESCUE", true] ; // prevent responding to calls for backup
+
 if (isNull _grp) exitWith {};
 if (isNil "reset_battlegroups_ai") then {reset_battlegroups_ai = false};
 
@@ -13,6 +16,10 @@ private _objPos = [getPos (leader _grp)] call KPLIB_fnc_getNearestBluforObjectiv
 
 private _startpos = getPos (leader _grp);
 
+// Delete previous waypoints
+while {!((waypoints _grp) isEqualTo [])} do {deleteWaypoint ((waypoints _grp) select 0);};
+{_x doFollow leader _grp} forEach units _grp;
+
 private _waypoint = [];
 _waypoint = _grp addWaypoint [_objPos, 100];
 _waypoint setWaypointType "MOVE";
@@ -21,29 +28,31 @@ _waypoint setWaypointBehaviour "AWARE";
 _waypoint setWaypointCombatMode "YELLOW";
 _waypoint setWaypointCompletionRadius 30;
 
-// Delete previous waypoints
-while {!((waypoints _grp) isEqualTo [])} do {deleteWaypoint ((waypoints _grp) select 0);};
-{_x doFollow leader _grp} forEach units _grp;
+sleep 120 ;
 
-_startpos = getPos (leader _grp);
+// HangoverIt - Keep attacking squad with refreshed waypoints at the attack location
+while {({alive _x} count (units _grp) > 0) && !reset_battlegroups_ai} do {
+	
+	if ((currentWaypoint _grp) >= (count (waypoints _grp))) then {
+		
+		// Delete previous waypoints
+		while {!((waypoints _grp) isEqualTo [])} do {deleteWaypoint ((waypoints _grp) select 0);};
+		{_x doFollow leader _grp} forEach units _grp;
 
-_waypoint = _grp addWaypoint [_objPos, 100];
-_waypoint setWaypointType "SAD";
-_waypoint = _grp addWaypoint [_objPos, 100];
-_waypoint setWaypointType "SAD";
-_waypoint = _grp addWaypoint [_objPos, 100];
-_waypoint setWaypointType "SAD";
-_waypoint = _grp addWaypoint [_objPos, 100];
-_waypoint setWaypointType "CYCLE";
+		_startpos = getPos (leader _grp);
 
-sleep 90;
+		_waypoint = _grp addWaypoint [_objPos, 100];
+		_waypoint setWaypointType "SAD";
+		_waypoint = _grp addWaypoint [_objPos, 100];
+		_waypoint setWaypointType "SAD";
+		_waypoint = _grp addWaypoint [_objPos, 100];
+		_waypoint setWaypointType "SAD";
 
-waitUntil {
-    sleep 5;
-    (((units _grp) select {alive _x}) isEqualTo []) || reset_battlegroups_ai
+	};
+	sleep 5;
 };
 
-sleep (5 + (random 5));
+sleep (10 + (random 5));
 reset_battlegroups_ai = false;
 
 if (!((units _grp) isEqualTo []) && (GRLIB_endgame == 0)) then {

@@ -182,7 +182,7 @@ if (_set_unconscious && {!(_unit getVariable ["ais_unconscious", false])}) then 
 };
 
 _damage = _damage min 0.89;
-//diag_log format ["Selection: %1 --- Damage1: %2 --- Damage2: %3 --- partIndex: %4 --- Projectile: %5 ----> %6", _hitSelection, _damage, (_hitPart select 2), _hitPartIndex, _projectile, diag_frameno];
+diag_log format ["Selection: %1 --- Damage1: %2 --- Damage2: %3 --- partIndex: %4 --- Projectile: %5 ----> %6", _hitSelection, _damage, (_hitPart select 2), _hitPartIndex, _projectile, diag_frameno];
 
 _unit setHitIndex [_hitPart select 1, _damage];
 _damage
