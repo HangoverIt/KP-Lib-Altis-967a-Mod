@@ -39,10 +39,9 @@ if !(_spawn_marker isEqualTo "") then {
             };
             [selectRandom _infClasses, markerPos _spawn_marker, _grp] call KPLIB_fnc_createManagedUnit;
         };
-        [_grp] spawn battlegroup_ai;
+        [_grp, markerPos _spawn_marker] spawn battlegroup_ai; // HangoverIt - specify location
         _bg_groups pushBack _grp;
     } else {
-		diag_log format ["DEBUG: Battle group spawning vehicles"] ;
         private _vehicle_pool = [opfor_battlegroup_vehicles, opfor_battlegroup_vehicles_low_intensity] select (combat_readiness < 50);
 
         while {count _selected_opfor_battlegroup < _target_size} do {
@@ -56,8 +55,8 @@ if !(_spawn_marker isEqualTo "") then {
 
             sleep 0.5;
 
-            (crew _vehicle) joinSilent _nextgrp;
-            [_nextgrp] spawn battlegroup_ai;
+            (crew _vehicle) joinSilent _nextgrp; // HangoverIt - specify location
+            [_nextgrp, markerpos _spawn_marker] spawn battlegroup_ai;
             _bg_groups pushback _nextgrp;
 
             if ((_x in opfor_troup_transports) && ([] call KPLIB_fnc_getOpforCap < GRLIB_battlegroup_cap)) then {

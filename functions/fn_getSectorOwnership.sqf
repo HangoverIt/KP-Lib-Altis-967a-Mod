@@ -21,7 +21,7 @@ params [
     ["_radius", GRLIB_capture_size, [0]]
 ];
 
-private _capCount = 3;
+private _capCount = 2; // HangoverIt - changed from 3 to 2
 private _capRatio = 0.85;
 private _capRatioMin = 0.51;
 private _blufor = [_pos, _radius, GRLIB_side_friendly] call KPLIB_fnc_getUnitsCount;

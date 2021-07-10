@@ -29,7 +29,7 @@ _ret = if (_hitValue isEqualType 0) then {
 	private _num = ((getAllHitPointsDamage _unit) select 1) find _hitValue;
 	
 	if (_num < 0) then {
-		[_hitValue, -1, damage _unit]
+		[_hitValue, -1, _damage _unit] // HangoverIt - corrected missing underscore from variable
 	} else {
 		[_hitValue, _num, ((getAllHitPointsDamage _unit) select 2) select _num]
 	};

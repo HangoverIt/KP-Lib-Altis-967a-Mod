@@ -33,7 +33,7 @@ params [
 	"_instigator",		// Person who pulled the trigger. (Object)
 	"_hitPoint"			// hit point Cfg name (String)
 ];
-
+if (isNil "_damage") then {diag_log format ["fn_handleDamage called with Nil _damage var"];}; // HangoverIt debug
 // remote Units
 if !(local _unit) exitWith {false};
 if (_damage == 0) exitWith {[_unit, _hitPartIndex] call AIS_Damage_fnc_exitDamageHandler};
@@ -97,7 +97,7 @@ So we have to set the damage by ourself to the wanted hitPartIndex.
 */
 _hitPart = [_unit, _hitSelection] call AIS_Damage_fnc_getHitIndexValue;
 _damage = (_hitPart select 2) + (_new_damage * AIS_DAMAGE_TOLLERANCE_FACTOR);
-
+if (isNil "_damage") then {diag_log format ["AIS_Damage_fnc_getHitIndexValue causing Nil _damage var"];}; // HangoverIt debug
 // bullet/splitter impact post process effects
 if (AIS_IMPACT_EFFECTS) then {
 	if (_damageType in ["grenade", "bullet"]) then {
@@ -182,7 +182,7 @@ if (_set_unconscious && {!(_unit getVariable ["ais_unconscious", false])}) then 
 };
 
 _damage = _damage min 0.89;
-diag_log format ["Selection: %1 --- Damage1: %2 --- Damage2: %3 --- partIndex: %4 --- Projectile: %5 ----> %6", _hitSelection, _damage, (_hitPart select 2), _hitPartIndex, _projectile, diag_frameno];
+//diag_log format ["Selection: %1 --- Damage1: %2 --- Damage2: %3 --- partIndex: %4 --- Projectile: %5 ----> %6", _hitSelection, _damage, (_hitPart select 2), _hitPartIndex, _projectile, diag_frameno];
 
 _unit setHitIndex [_hitPart select 1, _damage];
 _damage
