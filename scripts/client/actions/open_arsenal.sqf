@@ -154,19 +154,19 @@ private _costs = [0, 0, 0];
 // apply costs only if either the player is not on the carrier or the loadout has changed
 if (player getVariable "KPLIB_isNearStart" == false && _old_loadout isNotEqualTo _new_loadout) then {
 
-  [_old_loadout, _new_loadout] call KPLIB_fnc_calculateLoadoutCost;
-   
+  _costs = [_old_loadout, _new_loadout] call KPLIB_fnc_calculateLoadoutCost;
+  diag_log format ["calculated costs: %1", _costs]; 
   
   // apply loadout cost to nearst FOB
   private _nearestFob = [] call KPLIB_fnc_getNearestFob;
   ([_nearestFob] call KPLIB_fnc_getFobResources) params ["", "_supplies", "_ammo", "_fuel", "_hasAir", "_hasRecycling"];
 
-  if(_supplies > (LoadoutCost select 0) && _ammo > (LoadoutCost select 1)) then {
+  if(_supplies > (_costs select 0) && _ammo > (_costs select 1)) then {
   
     _storage_areas = (_nearestFob nearobjects (GRLIB_fob_range * 2)) select {(_x getVariable ["KP_liberation_storage_type",-1]) == 0};
-    [LoadoutCost select 0, LoadoutCost select 1, 0, "", 99, _storage_areas] remoteExec ["build_remote_call", 2];
+    [_costs select 0, _costs select 1, 0, "", 99, _storage_areas] remoteExec ["build_remote_call", 2];
     
-    hint format ["cost %1 supplies and %2 ammo", LoadoutCost select 0, LoadoutCost select 1];
+    hint format ["cost %1 supplies and %2 ammo", _costs select 0, _costs select 1];
     
   }else{
   

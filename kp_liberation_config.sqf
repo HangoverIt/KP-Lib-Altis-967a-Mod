@@ -251,7 +251,11 @@ KP_liberation_resistance_sector_chance = 35;                            // Chanc
 KP_liberation_resistance_ambush_chance = 25;                            // Chance that some guerilla units will spawn in blufor sectors for an ambush, if reputation is low.
 
 // cost of taking a new loadout [supplies, ammo, fuel]
-LoadoutCost = [50, 50, 0];
+WeaponLoadoutCost = createHashMapFromArray [
+        ["AssaultRifle", [5, 0, 0]]
+
+
+];
 
 // Array of worldName values.
 // When playing on this map, it'll create a clearance (remove terrain objects) in a 15m radius around the battlegroup/reinforcements spawnpoint.
