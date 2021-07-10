@@ -1,7 +1,7 @@
 [] spawn
 {
 	sleep 1;
-	waitUntil {!(isNil "CBAACT")};
+	waitUntil {!(isNil "CBAACT") && !(isNil "VCM_USECBASETTINGS")}; // HangoverIt - added check for VCM_USECBASETTINGS
 	if (CBAACT && VCM_USECBASETTINGS) then
 	{
 [

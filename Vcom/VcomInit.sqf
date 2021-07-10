@@ -62,6 +62,8 @@ VCOM_MINEARRAY = [];
 		player addEventHandler ["Respawn",{_this spawn VCM_fnc_IRCHECK;}];
 	};
 	
+	waitUntil {!(isNil "Vcm_ActivateAI")} ; // HangoverIt - added wait for variable to be defined
+	
 	while {true} do 
 	{
 		if (Vcm_ActivateAI) then

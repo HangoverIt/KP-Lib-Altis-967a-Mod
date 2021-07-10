@@ -109,6 +109,7 @@ if (hasInterface) then {
 		private _allAddons = ["Core"];
         if (!_limited) then {
             _allAddons = ("true" configClasses (configFile >> "CfgPatches")) apply {configName _x};
+			//{diag_log format["HangoverIt - applying Zeus addon %1", _x];} foreach _allAddons ;
         };
 		[true, "KPLIB_activateZeusAddons", [_zeus, _allAddons]] remoteExecCall ["BIS_fnc_callScriptedEventHandler", 2];
 		// End Update - HangoverIt 16th June 2021
