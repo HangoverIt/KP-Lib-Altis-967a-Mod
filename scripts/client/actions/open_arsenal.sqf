@@ -154,7 +154,6 @@ private _costs = [0, 0, 0];
 if (player getVariable "KPLIB_isNearStart" == false && _old_loadout isNotEqualTo _new_loadout) then {
 
   _costs = [_old_loadout, _new_loadout] call KPLIB_fnc_calculateLoadoutCost;
-  
   // round everything up heh heh heh
   {
     _costs set [_forEachIndex, ceil _x];

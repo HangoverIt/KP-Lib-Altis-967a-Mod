@@ -23,8 +23,13 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
   
   private _new_ld_section = _new_ld select _i;
   
-  // only evaluate things that differ
-  if (_old_ld_section isNotEqualTo _new_ld_section) then {
+  // only evaluate things that differ or have a count value
+  private _has_count = false;
+  if( typeName (_new_ld select _i) == "SCALAR" || ((count _new_ld > _i + 1) && typeName (_new_ld select _i + 1) == "SCALAR")) then {
+    _has_count = true;
+  };
+  
+  if (_old_ld_section isNotEqualTo _new_ld_section || _has_count) then {
   
     // should be an identifier
     if (typeName _new_ld_section == "STRING") then {
@@ -32,6 +37,8 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
       if (_new_ld_section != "") then {
 
         private _itemtype = _new_ld_section call BIS_fnc_itemType;
+        
+        // thee's got to be at least one thing if we got here
         _count = 1;
         
         if(_itemtype select 0 == "Weapon") then {
@@ -39,6 +46,7 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
           if((_itemtype select 1) in WeaponLoadoutCost) then {
           
             _total_supplies_cost = _total_supplies_cost + (_ld_costs select 0) + ((WeaponLoadoutCost get (_itemtype select 1)) select 0);
+
           };          
         };
         
@@ -47,6 +55,7 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
           if((_itemtype select 1) in ItemLoadoutCost) then {
 
             _total_supplies_cost = _total_supplies_cost + (_ld_costs select 0) + ((ItemLoadoutCost get (_itemtype select 1)) select 0);
+
           };                    
         };
         
@@ -55,6 +64,7 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
           if((_itemtype select 1) in EquipmentLoadoutCost) then {
           
             _total_supplies_cost = _total_supplies_cost +  (_ld_costs select 0) + ((EquipmentLoadoutCost get (_itemtype select 1)) select 0);
+
           };          
         
         };
@@ -65,6 +75,7 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
           if((_itemtype select 1) in MagazineLoadoutCost) then {
           
             _total_ammo_cost = _total_ammo_cost +  (_ld_costs select 1) + ((MagazineLoadoutCost get (_itemtype select 1)) select 1);
+
           };          
         
         };              
@@ -74,9 +85,9 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
           if((_itemtype select 1) in MineLoadoutCost) then {
           
             _total_ammo_cost = _total_ammo_cost +  (_ld_costs select 1) + ((MineLoadoutCost get (_itemtype select 1)) select 1);
-          };          
-        
-        };              
+
+          };                  
+        };        
       };
     };
     
@@ -104,7 +115,7 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
         // evaluate sub-array
         private _sub_costs = [_old_ld_section, _new_ld_section] call KPLIB_fnc_calculateLoadoutCost;
         
-        // add the costs into the current costs
+        // add the sub-array costs into the current costs
         private _updated_cost = (_ld_costs select 0) + (_sub_costs select 0);
         _ld_costs set [0, _updated_cost];
         
@@ -117,6 +128,7 @@ for [{private _i = 0}, {_i < count _new_ld}, {_i = _i + 1}] do {
   };
 };
 
+// calculate the final costs and apply them to the costs array
 _total_supplies_cost = _total_supplies_cost * _count;
 _total_ammo_cost = _total_ammo_cost * _count;
 
@@ -126,5 +138,5 @@ _ld_costs set [0, _old_costs + _total_supplies_cost];
 private _old_costs = _ld_costs select 1;
 _ld_costs set [1, _old_costs + _total_ammo_cost];
 
-// retrun the costs array
+// return the costs array
 _ld_costs;
