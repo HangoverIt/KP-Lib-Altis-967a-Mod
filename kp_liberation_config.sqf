@@ -313,9 +313,9 @@ MagazineLoadoutCost = createHashMapFromArray [
         ["Laser", [0.1, 0, 0]],
         ["Missile", [0, 2, 0]],
         ["Rocket", [0, 1, 0]],
-        ["Shell", [0, 1, 0]],
+        ["Shell", [0, 0.1, 0]],
         ["ShotgunShell", [0, 0.0001, 0]],
-        ["SmokeShell", [0, 0.01, 0]],
+        ["SmokeShell", [0, 0.1, 0]],
         ["UnknownMagazine", [0, 0, 0]]
 ];
 
