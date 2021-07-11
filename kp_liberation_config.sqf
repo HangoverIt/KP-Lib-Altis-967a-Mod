@@ -250,12 +250,14 @@ KP_liberation_resistance_at_chance = 20;                                // Chanc
 KP_liberation_resistance_sector_chance = 35;                            // Chance that a guerilla squad will join an ongoing sector attack.
 KP_liberation_resistance_ambush_chance = 25;                            // Chance that some guerilla units will spawn in blufor sectors for an ambush, if reputation is low.
 
-// cost of taking a new loadout [supplies, ammo, fuel]
+// cost of taking a new loadout
+// hash map with object type as key and array of costs in each category [supplies, ammo, fuel]
+// Tweak these costs as needed
 WeaponLoadoutCost = createHashMapFromArray [
         ["AssaultRifle", [1, 0, 0]],
         ["BombLauncher", [5, 0, 0]],
         ["Cannon", [5, 0, 0]],
-        ["GrenadeLauncher", [1, 0, 0]],
+        ["GrenadeLauncher", [2, 0, 0]],
         ["Handgun", [1, 0, 0]],
         ["Launcher", [3, 0, 0]],
         ["MachineGun", [2, 0, 0]],
@@ -264,7 +266,7 @@ WeaponLoadoutCost = createHashMapFromArray [
         ["Mortar", [3, 0, 0]],
         ["RocketLauncher", [3, 0, 0]],
         ["Shotgun", [1, 0, 0]],
-        ["Throw", [1, 0, 0]],
+        ["Throw", [0, 0.05, 0]],
         ["Rifle", [1, 0, 0]],
         ["SubmachineGun", [1, 0, 0]],
         ["SniperRifle", [2, 0, 0]]
@@ -281,7 +283,7 @@ ItemLoadoutCost = createHashMapFromArray [
         ["GPS", [0.5, 0, 0]],
         ["LaserDesignator", [0.5, 0, 0]],
         ["Map", [0, 0, 0]],
-        ["Medikit", [0.5, 0, 0]],
+        ["Medikit", [1, 0, 0]],
         ["MineDetector", [2, 0, 0]],
         ["NVGoggles", [1, 0, 0]],
         ["Radio", [0, 0, 0]],
@@ -295,11 +297,32 @@ ItemLoadoutCost = createHashMapFromArray [
 ];
 
 EquipmentLoadoutCost = createHashMapFromArray [ 
-        ["Glasses", [0.0, 0, 0]],
+        ["Glasses", [0, 0, 0]],
         ["Headgear", [0, 0, 0]],
         ["Vest", [0, 0, 0]],
         ["Uniform", [0.01, 0, 0]],
         ["Backpack", [0.1, 0, 0]]
+];
+
+MagazineLoadoutCost = createHashMapFromArray [  
+        ["Artillery", [0, 2, 0]],
+        ["Bullet", [0, 0.01, 0]],
+        ["CounterMeasures", [0, 0.01, 0]],
+        ["Flare", [0, 0.01, 0]],
+        ["Grenade", [0, 0.05, 0]],
+        ["Laser", [0.1, 0, 0]],
+        ["Missile", [0, 2, 0]],
+        ["Rocket", [0, 1, 0]],
+        ["Shell", [0, 1, 0]],
+        ["ShotgunShell", [0, 0.0001, 0]],
+        ["SmokeShell", [0, 0.01, 0]],
+        ["UnknownMagazine", [0, 0, 0]]
+];
+
+MineLoadoutCost = createHashMapFromArray [  
+        ["Mine", [0, 1, 0]],
+        ["MineBounding", [0, 0.5, 0]],
+        ["MineDirectional", [0, 0.6, 0]]
 ];
 
 

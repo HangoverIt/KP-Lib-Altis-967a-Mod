@@ -143,7 +143,6 @@ if ( edit_loadout > 0 ) then {
 
 // Mark Bennett changes
 //   check we hgave enough resources to load a new loadout, reset to old loadout if not
-diag_log text "calculating and applying loadout cost here";
 
 // get the players new loadout
 private _new_loadout = getUnitLoadout player;
@@ -155,7 +154,11 @@ private _costs = [0, 0, 0];
 if (player getVariable "KPLIB_isNearStart" == false && _old_loadout isNotEqualTo _new_loadout) then {
 
   _costs = [_old_loadout, _new_loadout] call KPLIB_fnc_calculateLoadoutCost;
-  diag_log format ["calculated costs: %1", _costs]; 
+  
+  // round everything up heh heh heh
+  {
+    _costs set [_forEachIndex, ceil _x];
+  } forEach _costs;
   
   // apply loadout cost to nearst FOB
   private _nearestFob = [] call KPLIB_fnc_getNearestFob;
