@@ -252,10 +252,56 @@ KP_liberation_resistance_ambush_chance = 25;                            // Chanc
 
 // cost of taking a new loadout [supplies, ammo, fuel]
 WeaponLoadoutCost = createHashMapFromArray [
-        ["AssaultRifle", [5, 0, 0]]
-
-
+        ["AssaultRifle", [1, 0, 0]],
+        ["BombLauncher", [5, 0, 0]],
+        ["Cannon", [5, 0, 0]],
+        ["GrenadeLauncher", [1, 0, 0]],
+        ["Handgun", [1, 0, 0]],
+        ["Launcher", [3, 0, 0]],
+        ["MachineGun", [2, 0, 0]],
+        ["Magazine", [0, 1, 0]],
+        ["MissileLauncher", [4, 0, 0]],
+        ["Mortar", [3, 0, 0]],
+        ["RocketLauncher", [3, 0, 0]],
+        ["Shotgun", [1, 0, 0]],
+        ["Throw", [1, 0, 0]],
+        ["Rifle", [1, 0, 0]],
+        ["SubmachineGun", [1, 0, 0]],
+        ["SniperRifle", [2, 0, 0]]
 ];
+
+ItemLoadoutCost = createHashMapFromArray [
+        ["AccessoryMuzzle", [0.5, 0, 0]],
+        ["AccessoryPointer", [0.1, 0, 0]],
+        ["AccessorySights", [0.5, 0, 0]],
+        ["AccessoryBipod", [0.1, 0, 0]],
+        ["Binocular", [0.1, 0, 0]],
+        ["Compass", [0.0, 0, 0]],
+        ["FirstAidKit", [0.01, 0, 0]],
+        ["GPS", [0.5, 0, 0]],
+        ["LaserDesignator", [0.5, 0, 0]],
+        ["Map", [0, 0, 0]],
+        ["Medikit", [0.5, 0, 0]],
+        ["MineDetector", [2, 0, 0]],
+        ["NVGoggles", [1, 0, 0]],
+        ["Radio", [0, 0, 0]],
+        ["Toolkit", [1, 0, 0]],
+        ["UAVTerminal", [1, 0, 0]],
+        ["VehicleWeapon", [5, 0, 0]],
+        ["Unknown", [0, 0, 0]],
+        ["UnknownEquipment", [0, 0, 0]],
+        ["UnknownWeapon", [0, 0, 0]],
+        ["Watch", [0, 0, 0]]
+];
+
+EquipmentLoadoutCost = createHashMapFromArray [ 
+        ["Glasses", [0.0, 0, 0]],
+        ["Headgear", [0, 0, 0]],
+        ["Vest", [0, 0, 0]],
+        ["Uniform", [0.01, 0, 0]],
+        ["Backpack", [0.1, 0, 0]]
+];
+
 
 // Array of worldName values.
 // When playing on this map, it'll create a clearance (remove terrain objects) in a 15m radius around the battlegroup/reinforcements spawnpoint.
