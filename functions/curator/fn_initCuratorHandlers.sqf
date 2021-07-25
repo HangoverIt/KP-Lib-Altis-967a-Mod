@@ -92,7 +92,26 @@ if (isServer) then {
         };
     }];
 };
-
+/*
+_deletecall = {
+	params["_curator", "_entity"] ;
+	diag_log format["HangoverIt - Zeus adding object %1", TypeOf(_this select 1)];
+	if (typeName _entity == "GROUP") then {
+		{deleteVehicle _x;} foreach units _entity;
+	}else{
+		if (typeName _entity == "OBJECT") then {
+			if (({_entity isKindOf _x} count ["Air", "Car", "Ship", "Tank"]) > 0 ) then {
+				{_entity deleteVehicleCrew _x;} forEach crew _entity;
+				deleteVehicle _entity;
+			}else{
+				deleteVehicle _entity;
+			};
+		}else{
+			deleteVehicle _entity;
+		}; 		
+	};
+};
+*/
 if (hasInterface) then {
     [true, "KPLIB_zeusAssigned", {
         params [
@@ -107,7 +126,11 @@ if (hasInterface) then {
 
         // Updated to always set Core addon even if limited - HangoverIt 16th June 2021
 		private _allAddons = ["Core"];
-        if (!_limited) then {
+        if (_limited) then {
+			// HangoverIt - Add handlers to remove any zeus created objects apart from the allowed ones
+			//_zeus addEventHandler ["CuratorObjectPlaced", {[] call _deletecall}];
+			//_zeus addEventHandler ["CuratorGroupPlaced", {[] call _deletecall}];
+		} else {
             _allAddons = ("true" configClasses (configFile >> "CfgPatches")) apply {configName _x};
 			//{diag_log format["HangoverIt - applying Zeus addon %1", _x];} foreach _allAddons ;
         };
