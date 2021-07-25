@@ -3683,7 +3683,7 @@
             <Czech>Záchranná mise</Czech>
         </Key>
         <Key ID="STR_SECONDARY_BRIEFING3">
-            <Original>&lt;t size='1.3' color='#ffa000'&gt;SEARCH AND RESCUE&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;A popular civilian leader has been captured by the enemy. Rescue them.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1.15' color='#00a0ff'&gt;Cost: 8&lt;img image='\A3\Ui_f\data\GUI\Cfg\Ranks\general_gs.paa'/&gt;&lt;/t&gt;&lt;br/&gt;&lt;t size='1.15' color='#ffa000'&gt;Reward: improve cilian reputation.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='10'&gt;&lt;img image='res\secondary\fob_obj.jpg'/&gt;&lt;/t&gt;</Original>
+            <Original>&lt;t size='1.3' color='#ffa000'&gt;CIVILIAN SEARCH AND RESCUE&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;A popular civlian leader has been detailed by the enemy. Rescuing this leader will certainly help relations with the civilian population.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;The leaders vehicle was stopped and he is being held by enemy troops, you will have to deal with them.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1.15' color='#00a0ff'&gt;Cost: 10&lt;img image='\A3\Ui_f\data\GUI\Cfg\Ranks\general_gs.paa'/&gt;&lt;/t&gt;&lt;br/&gt;&lt;t size='1.15' color='#ffa000'&gt;Reward: Improved civilian relations.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='10'&gt;&lt;img image='res\secondary\fob_obj.jpg'/&gt;&lt;/t&gt;</Original>
             <French>&lt;t size='1.3' color='#ffa000'&gt;RECHERCHE ET SAUVETAGE&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;Nous avons perdu le contact avec un helicoptère de reconnaissance en mission derrière les lignes ennemies. Il a probablement été abattu par les forces hostiles.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;L'hélicopter a pu finir sa course dans une large zone autour de sa dernière position connue. Votre mission est de retrouver l'équipage et sa précieuse intel. Les forces hostiles les auront peut-être déjà retrouvés, votre action doit donc être rapide et décisive.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1.15' color='#00a0ff'&gt;Cout: 8&lt;img image='\A3\Ui_f\data\GUI\Cfg\Ranks\general_gs.paa'/&gt;&lt;/t&gt;&lt;br/&gt;&lt;t size='1.15' color='#ffa000'&gt;Récompense: 20 points d'intel (10 pour chaque équipage vivant).&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='10'&gt;&lt;img image='res\secondary\fob_obj.jpg'/&gt;&lt;/t&gt;</French>
             <German>&lt;t size='1.3' color='#ffa000'&gt;SUCHEN UND ZERSTÖREN&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;Wir haben den Kontakt mit einem Aufklärungshelikopter, der auf einer Mission hinter feindlichen Linien war, verloren. Wir vermuten, dass der Helikotper von feindlichen Kräften abgeschossen wurde.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;Der Helikopter muss irgendwo in einem größeren Bereich um seine letzte bekannte Position notgelandet sein. Ihr Auftrag ist es, die Besatzung zu finden und deren Aufklärungsbericht zu beschaffen. Feindliche Kräfte könnten sie bereits gefunden haben, also müssen sie schnell, vorsichtig und auf alles vorbereitet sein.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1.15' color='#00a0ff'&gt;Cost: 8&lt;img image='\A3\Ui_f\data\GUI\Cfg\Ranks\general_gs.paa'/&gt;&lt;/t&gt;&lt;br/&gt;&lt;t size='1.15' color='#ffa000'&gt;Reward: 20 intel points (10 for each crew alive).&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='10'&gt;&lt;img image='res\secondary\fob_obj.jpg'/&gt;&lt;/t&gt;</German>
             <Spanish>&lt;t size='1.3' color='#ffa000'&gt;BÚSQUEDA Y RESCATE&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;Hemos perdido contacto con un helicóptero de reconocimiento durante una misión tras las líneas enemigas. Creemos que el helicóptero ha sido derribado por las fuerzas hostiles.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1'&gt;El helicóptero habría aterrizado forzosamente en alguna parte alrededor de su última posición conocida. Tu misión consiste en traer de vuelta a su tripulación y a la preciada información de interligencia que allí se encuentra. Las fuerzas hostiles pueden haberlos encontrado antes, así que hay que ser rápidos, cuidadosos y estar preparados para enfrentarse.&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='1.15' color='#00a0ff'&gt;Coste: 8&lt;img image='\A3\Ui_f\data\GUI\Cfg\Ranks\general_gs.paa'/&gt;&lt;/t&gt;&lt;br/&gt;&lt;t size='1.15' color='#ffa000'&gt;Recompensa: 20 puntos de intel (10 por cada tripulante).&lt;/t&gt;&lt;br/&gt;&lt;br/&gt;&lt;t size='10'&gt;&lt;img image='res\secondary\fob_obj.jpg'/&gt;&lt;/t&gt;</Spanish>
@@ -3741,6 +3741,48 @@
             <Czech>Záchranná mise selhala, všichni jsou mrtví.</Czech>
         </Key>
         <Key ID="STR_NOTIFICATION_SAR_SUCCESS">
+            <Original>SAR mission succeeded.</Original>
+            <French>Mission SAR réussie.</French>
+            <German>SAR Mission erfolgreich</German>
+            <Spanish>Misión de Búsqueda y Rescate completada satisfactoriamente</Spanish>
+            <Russian>Миссия спасения выполнена.</Russian>
+            <Italian>Missione Cerca e Soccorri completata con successo</Italian>
+            <Chinesesimp>营救任务成功。</Chinesesimp>
+            <Chinese>營救任務成功。</Chinese>
+            <Turkish>Arama kurtarma başarılı.</Turkish>
+            <Portuguese>Missão de busca e resgate concluída com sucesso.</Portuguese>
+            <Korean>구출작전 성공!</Korean>
+            <Czech>Záchranná mise byla úspěšná</Czech>
+        </Key>
+        <Key ID="STR_NOTIFICATION_CIV_SAR_STARTED">
+            <Original>Leader detained near %1.</Original>
+            <French>Helicopter crashé près de %1.</French>
+            <German>Helikopterabsturz in der Nähe von %1</German>
+            <Spanish>Helicóptero derribado cerca de %1</Spanish>
+            <Russian>Вертолет разбился около %1.</Russian>
+            <Italian>L'elicottero si è schiantato nei pressi di %1.</Italian>
+            <Chinesesimp>直升机坠毁在%1附近</Chinesesimp>
+            <Chinese>直升機墜落在 %1 附近</Chinese>
+            <Turkish>Düşmüş helikopter %1 yakınlarında.</Turkish>
+            <Portuguese>Helicóptero abatido nas proximidades de %1.</Portuguese>
+            <Korean>%1 근처에 정찰기가 추락했습니다.</Korean>
+            <Czech>Havárie vrtulníku poblíž %1</Czech>
+        </Key>
+        <Key ID="STR_NOTIFICATION_CIV_SAR_FAILED">
+            <Original>SAR mission failed, leader has been imprisoned.</Original>
+            <French>Mission SAR échouée, les deux équipages sont morts.</French>
+            <German>SAR Mission fehlgeschlagen. Beide Crewmitglieder gefallen.</German>
+            <Spanish>Misión de Búsqueda y Rescate fallida, ambos tripulantes están muertos</Spanish>
+            <Russian>Миссия спасения не удалась, экипаж погиб.</Russian>
+            <Italian>Missione Cerca e Soccorri FALLITA,l'equipaggio è stato ucciso</Italian>
+            <Chinesesimp>营救任务失败，两名组员均已阵亡。</Chinesesimp>
+            <Chinese>營救任務失敗，直升機機組員全員陣亡。</Chinese>
+            <Turkish>Arama kurtarma görevi başarısız. Ekip çatışmada öldü.</Turkish>
+            <Portuguese>A missão de busca e resgate falhou, ambos os tripulantes morreram em combate.</Portuguese>
+            <Korean>구조작전 실패, 승무원 전원 사망.</Korean>
+            <Czech>Záchranná mise selhala, všichni jsou mrtví.</Czech>
+        </Key>
+        <Key ID="STR_NOTIFICATION_CIV_SAR_SUCCESS">
             <Original>SAR mission succeeded.</Original>
             <French>Mission SAR réussie.</French>
             <German>SAR Mission erfolgreich</German>
