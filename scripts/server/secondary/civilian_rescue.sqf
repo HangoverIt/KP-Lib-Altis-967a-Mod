@@ -3,20 +3,20 @@ private _spawn_marker = [ 2000, 999999, false ] call KPLIB_fnc_getOpforSpawnPoin
 if ( _spawn_marker == "" ) exitWith {["Could not find position for search and rescue mission", "ERROR"] call KPLIB_fnc_log;};
 used_positions pushbackUnique _spawn_marker;
 
-private _helopos = (markerPos _spawn_marker) getPos [random 200, random 360];
-private _helowreck = KPLIB_sarWreck createVehicle _helopos;
-_helowreck allowDamage false;
-_helowreck setPos _helopos;
-_helowreck setPos _helopos;
-private _helowreckDir = (random 360);
-_helowreck setDir _helowreckDir;
+private _civcarpos = (markerPos _spawn_marker) getPos [random 200, random 360];
+private _civcar = KPLIB_civ_sar_car createVehicle _civcarpos;
+_civcar allowDamage false;
+_civcar setPos _civcarpos;
+_civcar setPos _civcarpos;
+private _civcarDir = (random 360);
+_civcar setDir _civcarDir;
 
-private _helofire = KPLIB_sarFire createVehicle (getpos _helowreck);
-_helofire setpos (getpos _helowreck);
-_helofire setpos (getpos _helowreck);
+private _helofire = KPLIB_sarFire createVehicle (getpos _civcar);
+_helofire setpos (getpos _civcar);
+_helofire setpos (getpos _civcar);
 
 private _pilotsGrp = createGroup [GRLIB_side_enemy, true];
-private _pilotsPos = (getpos _helowreck) getPos [25, random 360];
+private _pilotsPos = (getpos _civcar) getPos [25, random 360];
 
 [pilot_classname, _pilotsPos, _pilotsGrp, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
 sleep 0.2;
@@ -33,10 +33,10 @@ private _pilotUnits = units _pilotsGrp;
 
 private _grppatrol = createGroup [GRLIB_side_enemy, true];
 private _patrolcorners = [
-    [ (getpos _helowreck select 0) - 40, (getpos _helowreck select 1) - 40, 0 ],
-    [ (getpos _helowreck select 0) + 40, (getpos _helowreck select 1) - 40, 0 ],
-    [ (getpos _helowreck select 0) + 40, (getpos _helowreck select 1) + 40, 0 ],
-    [ (getpos _helowreck select 0) - 40, (getpos _helowreck select 1) + 40, 0 ]
+    [ (getpos _civcar select 0) - 40, (getpos _civcar select 1) - 40, 0 ],
+    [ (getpos _civcar select 0) + 40, (getpos _civcar select 1) - 40, 0 ],
+    [ (getpos _civcar select 0) + 40, (getpos _civcar select 1) + 40, 0 ],
+    [ (getpos _civcar select 0) - 40, (getpos _civcar select 1) + 40, 0 ]
 ];
 
 {
@@ -66,7 +66,7 @@ for [ {_idx=0},{_idx < _nbsentry},{_idx=_idx+1} ] do {
 
 (leader _grpsentry) setDir (random 360);
 
-(opfor_transport_truck createVehicle ((getpos _helowreck) getPos [25, random 360])) setDir random 360;
+(opfor_transport_truck createVehicle ((getpos _civcar) getPos [25, random 360])) setDir random 360;
 
 private _vehicle_pool = opfor_vehicles;
 if ( combat_readiness < 50 ) then {
@@ -76,9 +76,9 @@ if ( combat_readiness < 50 ) then {
 private _vehtospawn = [];
 private _spawnchances = [75,50,15];
 {if (random 100 < _x) then {_vehtospawn pushBack (selectRandom _vehicle_pool);};} foreach _spawnchances;
-{([(getpos _helowreck) getPos [30 + (random 30), random 360], _x, true] call KPLIB_fnc_spawnVehicle) addMPEventHandler ['MPKilled', {_this spawn kill_manager}]; } foreach _vehtospawn;
+{([(getpos _civcar) getPos [30 + (random 30), random 360], _x, true] call KPLIB_fnc_spawnVehicle) addMPEventHandler ['MPKilled', {_this spawn kill_manager}]; } foreach _vehtospawn;
 
-secondary_objective_position = getpos _helowreck;
+secondary_objective_position = getpos _civcar;
 secondary_objective_position_marker = secondary_objective_position getPos [800, random 360];
 publicVariable "secondary_objective_position_marker";
 sleep 1;
