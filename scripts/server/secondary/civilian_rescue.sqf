@@ -1,3 +1,4 @@
+diag_log text "civlian rescue started";
 
 private _spawn_marker = [ 2000, 999999, false ] call KPLIB_fnc_getOpforSpawnPoint;
 if ( _spawn_marker == "" ) exitWith {["Could not find position for search and rescue mission", "ERROR"] call KPLIB_fnc_log;};
@@ -11,25 +12,31 @@ _civcar setPos _civcarpos;
 private _civcarDir = (random 360);
 _civcar setDir _civcarDir;
 
-private _helofire = KPLIB_sarFire createVehicle (getpos _civcar);
-_helofire setpos (getpos _civcar);
-_helofire setpos (getpos _civcar);
+private _civLeader = createGroup [GRLIB_side_enemy, true];
+private _civLeaderPos = (getpos _civcar) getPos [25, random 360];
 
-private _pilotsGrp = createGroup [GRLIB_side_enemy, true];
-private _pilotsPos = (getpos _civcar) getPos [25, random 360];
-
-[pilot_classname, _pilotsPos, _pilotsGrp, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+["C_Nikos", _civLeaderPos, _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
 sleep 0.2;
 
-[pilot_classname, _pilotsPos getPos [1, random 360], _pilotsGrp, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+["C_Nikos_aged", _civLeaderPos getPos [1, random 360], _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
 sleep 2;
 
-private _pilotUnits = units _pilotsGrp;
+
+// add marker on AO/target
+_marker = createMarker ["mIfestiona", _civLeaderPos];
+_marker setMarkerType "hd_objective";
+_marker setMarkerColor "ColorRed";
+_marker setMarkerText "The Civilians";
+_marker setMarkerSize [1,1];
+
+
+
+private _civUnits = units _civLeader;
 {
     [ _x, true ] spawn prisonner_ai;
     _x setDir (random 360);
     sleep 0.5
-} foreach (_pilotUnits);
+} foreach (_civUnits);
 
 private _grppatrol = createGroup [GRLIB_side_enemy, true];
 private _patrolcorners = [
@@ -61,7 +68,7 @@ private _grpsentry = createGroup [GRLIB_side_enemy, true];
 private _nbsentry = 2 + (floor (random 3));
 
 for [ {_idx=0},{_idx < _nbsentry},{_idx=_idx+1} ] do {
-    [opfor_sentry, _pilotsPos getPos [1, random 360], _grpsentry, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+    [opfor_sentry, _civLeaderPos getPos [1, random 360], _grpsentry, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
 };
 
 (leader _grpsentry) setDir (random 360);
@@ -87,24 +94,24 @@ GRLIB_secondary_in_progress = 2; publicVariable "GRLIB_secondary_in_progress";
 
 waitUntil {
     sleep 5;
-    { ( alive _x ) && ( _x distance ( [ getpos _x ] call KPLIB_fnc_getNearestFob ) > 50 ) } count _pilotUnits == 0
+    { ( alive _x ) && ( _x distance ( [ getpos _x ] call KPLIB_fnc_getNearestFob ) > 50 ) } count _civUnits == 0
 };
 
 sleep 5;
 
-private _alive_crew_count = { alive _x } count _pilotUnits;
+private _alive_crew_count = { alive _x } count _civUnits;
 if ( _alive_crew_count == 0 ) then {
     [7] remoteExec ["remote_call_intel"];
 } else {
     [8] remoteExec ["remote_call_intel"];
     private _grp = createGroup [GRLIB_side_friendly, true];
-    { [_x ] joinSilent _grp; } foreach _pilotUnits;
+    { [_x ] joinSilent _grp; } foreach _civUnits;
     while {(count (waypoints _grp)) != 0} do {deleteWaypoint ((waypoints _grp) select 0);};
     {_x doFollow (leader _grp)} foreach units _grp;
-    { [ _x ] spawn { sleep 600; deleteVehicle (_this select 0) } } foreach _pilotUnits;
+    { [ _x ] spawn { sleep 600; deleteVehicle (_this select 0) } } foreach _civUnits;
 };
 
-resources_intel = resources_intel + (10 * _alive_crew_count);
+[(KP_liberation_cr_mission_gain), false] spawn F_cr_changeCR;
 stats_secondary_objectives = stats_secondary_objectives + 1;
 
 GRLIB_secondary_in_progress = -1; publicVariable "GRLIB_secondary_in_progress";
