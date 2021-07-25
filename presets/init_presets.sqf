@@ -319,6 +319,7 @@ military_alphabet = ["Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "G
 markers_reset = [99999,99999,0];
 zeropos = [0,0,0];
 KPLIB_sarWreck = "Land_Wreck_Heli_Attack_01_F";
+KPLIB_civ_sar_car = "C_Offroad_01_F";
 KPLIB_sarFire = "test_EmptyObjectForFireBig";
 
 KPLIB_initPresets = true;
