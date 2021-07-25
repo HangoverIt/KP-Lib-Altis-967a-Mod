@@ -27,13 +27,19 @@ if (isServer) then
 }
 else
 {
+	[] call compile preprocessFileLineNumbers "Vcom\Functions\VCOMAI_DefaultSettings.sqf";
+	
 	private _id = clientOwner;
 	["Vcm_Settings",_id] remoteExec ["VCM_ServerAsk",2,false];
+	diag_log format["HangoverIt - Asking for VCOM settings..."] ;
 	waitUntil {!(isNil "Vcm_Settings")};
+	diag_log format["HangoverIt - Received VCOM Settings"] ;
 	[] call Vcm_Settings;
+	
 };
 
 waitUntil {!(isNil "VCM_AIMagLimit")};
+diag_log format["HangoverIt - Confirmed VCOM Settings"] ;
 
 //Mod checks
 //ACE CHECK

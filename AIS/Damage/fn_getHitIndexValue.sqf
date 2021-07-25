@@ -29,11 +29,15 @@ _ret = if (_hitValue isEqualType 0) then {
 	private _num = ((getAllHitPointsDamage _unit) select 1) find _hitValue;
 	
 	if (_num < 0) then {
-		[_hitValue, -1, _damage _unit] // HangoverIt - corrected missing underscore from variable
+		[_hitValue, -1, damage _unit] 
 	} else {
 		[_hitValue, _num, ((getAllHitPointsDamage _unit) select 2) select _num]
 	};
 	
+};
+
+if (isNil {_ret select 1}) then {
+  _ret = ["", 0, 0] ; // HangoverIt trap an error
 };
 
 

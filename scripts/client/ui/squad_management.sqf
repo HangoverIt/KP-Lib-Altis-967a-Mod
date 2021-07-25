@@ -208,7 +208,7 @@ while { dialog && alive player } do {
         if (GRLIB_squadaction == 3) then {
 
             closeDialog 0;
-
+/* - HangoverIt - removed replace code with switch AI code
             if ( primaryWeapon player == "" && secondaryWeapon player == "" ) then {
                 [ _selectedmember, player ] call KPLIB_fnc_swapInventory;
             };
@@ -233,8 +233,55 @@ while { dialog && alive player } do {
             sleep 0.01;
 
             [ localize 'STR_SQUAD_DEPLOY' ] spawn spawn_camera;
+*/
 
+			_prevunit = player ;
+			_selectedmember setVariable["revertunit", _prevunit, true] ;
+			_eh1 = player addEventHandler ["HandleDamage",
+			{
+				_unit = _this select 0;
+				_unit removeEventHandler ["HandleDamage",_thisEventHandler];
+				selectPlayer _unit;
+				(units group player) joinsilent group player;
+				group player selectLeader player;
+				nil;
+			}];
+			_eh2 = _selectedmember addEventHandler ["HandleDamage",
+			{
+				_unit = _this select 0;
+				_unit removeEventHandler ["HandleDamage",_thisEventHandler];
+				removeAllActions _unit;
+				selectPlayer (_unit getVariable "owner");
+				(units group player) joinsilent group player;
+				group player selectLeader player;
+				nil;
+			}];
+			selectPlayer _selectedmember;
+			_selectedmember addAction ["Return Control to AI",{removeAllActions (_this select 0); selectPlayer leader (group (_this select 0))}];
+			if (!isNil "AIS_fnc_resetOnTeamSwitch") then {
+				[_selectedmember,_prevunit] call AIS_fnc_resetOnTeamSwitch ;
+				[] call AIS_fnc_aisInitPlayer ;
+			};
+			waitUntil {sleep 1; (isPlayer (leader group player)) || 
+								!(alive _selectedmember) || 
+								!(alive _prevunit) || 
+								{_selectedmember getVariable ["ais_unconscious", false]} ||
+								{_prevunit getVariable ["ais_unconscious", false]}};
+			removeAllActions _selectedmember ;
+			
+			selectPlayer (_selectedmember getVariable ["revertunit", _selectedmember]) ;
+			waitUntil {sleep 0.2; player == _prevunit};
+			if (!isNil "AIS_fnc_resetOnTeamSwitch") then {
+				[_prevunit, _selectedmember] call AIS_fnc_resetOnTeamSwitch ;
+			};
+			(units group player) joinsilent group player ;
+			group player selectLeader player ;
+			//removeAllActions player ; // don't do this as it removes AIS
+			[] call KPLIB_fnc_addActionsPlayer;
+			_selectedmember removeEventHandler ["HandleDamage",_eh2];
+			player removeEventHandler ["HandleDamage",_eh1];
         };
+		
 
         GRLIB_squadaction = -1;
 
