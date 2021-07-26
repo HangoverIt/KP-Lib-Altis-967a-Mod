@@ -1,5 +1,3 @@
-diag_log text "civlian rescue started";
-
 private _spawn_marker = [ 2000, 999999, false ] call KPLIB_fnc_getOpforSpawnPoint;
 if ( _spawn_marker == "" ) exitWith {["Could not find position for search and rescue mission", "ERROR"] call KPLIB_fnc_log;};
 used_positions pushbackUnique _spawn_marker;
@@ -21,22 +19,21 @@ sleep 0.2;
 ["C_Nikos_aged", _civLeaderPos getPos [1, random 360], _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
 sleep 2;
 
-
-// add marker on AO/target
-_marker = createMarker ["mIfestiona", _civLeaderPos];
-_marker setMarkerType "hd_objective";
-_marker setMarkerColor "ColorRed";
-_marker setMarkerText "The Civilians";
-_marker setMarkerSize [1,1];
-
-
-
 private _civUnits = units _civLeader;
 {
     [ _x, true ] spawn prisonner_ai;
     _x setDir (random 360);
     sleep 0.5
 } foreach (_civUnits);
+
+
+_marker = createMarker ["mIfestiona", _civLeaderPos];
+_marker setMarkerType "hd_objective";
+_marker setMarkerColor "ColorRed";
+_marker setMarkerText " Hefaistiona";
+_marker setMarkerSize [1,1];
+
+
 
 private _grppatrol = createGroup [GRLIB_side_enemy, true];
 private _patrolcorners = [
@@ -90,7 +87,7 @@ secondary_objective_position_marker = secondary_objective_position getPos [800, 
 publicVariable "secondary_objective_position_marker";
 sleep 1;
 GRLIB_secondary_in_progress = 2; publicVariable "GRLIB_secondary_in_progress";
-[6] remoteExec ["remote_call_intel"];
+[9] remoteExec ["remote_call_intel"];
 
 waitUntil {
     sleep 5;
@@ -99,11 +96,19 @@ waitUntil {
 
 sleep 5;
 
-private _alive_crew_count = { alive _x } count _civUnits;
-if ( _alive_crew_count == 0 ) then {
-    [7] remoteExec ["remote_call_intel"];
+//private _alive_crew_count = { alive _x } count _civUnits;
+
+private _alive_leader = false;
+{
+  if (_x == "C_Nikos_aged" && alive _x) then {
+    _alive_leader = true;
+  }
+} foreach _civUnits;
+
+if ( _alive_leader == false ) then {
+    [10] remoteExec ["remote_call_intel"];
 } else {
-    [8] remoteExec ["remote_call_intel"];
+    [11] remoteExec ["remote_call_intel"];
     private _grp = createGroup [GRLIB_side_friendly, true];
     { [_x ] joinSilent _grp; } foreach _civUnits;
     while {(count (waypoints _grp)) != 0} do {deleteWaypoint ((waypoints _grp) select 0);};
