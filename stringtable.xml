@@ -3783,7 +3783,7 @@
             <Czech>Záchranná mise selhala, všichni jsou mrtví.</Czech>
         </Key>
         <Key ID="STR_NOTIFICATION_CIV_SAR_SUCCESS">
-            <Original>SAR mission succeeded.</Original>
+            <Original>Civilian SAR mission succeeded.</Original>
             <French>Mission SAR réussie.</French>
             <German>SAR Mission erfolgreich</German>
             <Spanish>Misión de Búsqueda y Rescate completada satisfactoriamente</Spanish>

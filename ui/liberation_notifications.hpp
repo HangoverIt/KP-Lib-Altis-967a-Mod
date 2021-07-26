@@ -120,6 +120,17 @@ class CfgNotifications {
     class lib_intel_sar_succeeded: lib_secondary_fob_destroyed {
         description = $STR_NOTIFICATION_SAR_SUCCESS;
     };
+    class lib_intel_civ_sar: lib_intel {
+        description = $STR_NOTIFICATION_CIV_SAR_STARTED;
+    };
+    class lib_intel_civ_sar_failed: lib_secondary_fob_destroyed {
+        description = $STR_NOTIFICATION_CIV_SAR_FAILED;
+        color[] = { 1, 0, 0, 1 };
+        sound = "taskFailed";
+    };
+    class lib_intel_civ_sar_succeeded: lib_secondary_fob_destroyed {
+        description = $STR_NOTIFICATION_CIV_SAR_SUCCESS;
+    };
     class lib_restart_60_s: lib_default_notification {
         title = $STR_NOTIFICATION_RESTART_TITLE;
         description = $STR_NOTIFICATION_RESTART_SECOND;
