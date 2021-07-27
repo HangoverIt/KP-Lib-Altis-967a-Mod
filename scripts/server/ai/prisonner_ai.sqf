@@ -1,4 +1,4 @@
-params ["_unit", ["_force_surrender", false]];
+params ["_unit", ["_force_surrender", false], ["_nointel", false]];
 
 if ((!_force_surrender) && ((random 100) > GRLIB_surrender_chance)) exitWith {};
 
@@ -56,7 +56,9 @@ if ((_unit isKindOf "Man") && (alive _unit) && (side group _unit == GRLIB_side_e
                 _unit setCaptive false;
             };
             sleep 1;
-            [_unit] remoteExec ["remote_call_prisonner", _unit];
+			if (!_nointel) then {
+				[_unit] remoteExec ["remote_call_prisonner", _unit];
+			};
         };
     };
 };

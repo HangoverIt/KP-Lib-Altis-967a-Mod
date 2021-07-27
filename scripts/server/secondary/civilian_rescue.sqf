@@ -1,10 +1,14 @@
+// BUGS - second spawn doesn't create VIP units
+// 		- treats civs as prisonner_ai and therefore awards intel points on rescue - FIXED
+//		- VCOM allows civs to get in cars - FIXED
+
 private _spawn_marker = [ 2000, 999999, false ] call KPLIB_fnc_getOpforSpawnPoint;
-if ( _spawn_marker == "" ) exitWith {["Could not find position for search and rescue mission", "ERROR"] call KPLIB_fnc_log;};
+if ( _spawn_marker == "" ) exitWith {["Could not find position for civ search and rescue mission", "ERROR"] call KPLIB_fnc_log;};
 used_positions pushbackUnique _spawn_marker;
 
 private _civcarpos = (markerPos _spawn_marker) getPos [random 200, random 360];
 private _civcar = KPLIB_civ_sar_car createVehicle _civcarpos;
-_civcar allowDamage false;
+
 _civcar setPos _civcarpos;
 _civcar setPos _civcarpos;
 private _civcarDir = (random 360);
@@ -13,24 +17,26 @@ _civcar setDir _civcarDir;
 private _civLeader = createGroup [GRLIB_side_enemy, true];
 private _civLeaderPos = (getpos _civcar) getPos [25, random 360];
 
-["C_Nikos", _civLeaderPos, _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+private _nonvip = ["C_Nikos", _civLeaderPos, _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
 sleep 0.2;
 
-["C_Nikos_aged", _civLeaderPos getPos [1, random 360], _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+private _vip = ["C_Nikos_aged", _civLeaderPos getPos [1, random 360], _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
 sleep 2;
 
 private _civUnits = units _civLeader;
 {
-    [ _x, true ] spawn prisonner_ai;
+    [ _x, true, true ] spawn prisonner_ai;
     _x setDir (random 360);
     sleep 0.5
 } foreach (_civUnits);
 
+// Disable any VCOM on the civilians (i.e. don't steal cars)
+_civLeader setVariable ["Vcm_Disable",true];
 
-_marker = createMarker ["mIfestiona", _civLeaderPos];
+_marker = createMarker ["mIfestiona", _civLeaderPos]; // DEBUG
 _marker setMarkerType "hd_objective";
 _marker setMarkerColor "ColorRed";
-_marker setMarkerText " Hefaistiona";
+_marker setMarkerText "Civs";
 _marker setMarkerSize [1,1];
 
 
@@ -91,21 +97,14 @@ GRLIB_secondary_in_progress = 2; publicVariable "GRLIB_secondary_in_progress";
 
 waitUntil {
     sleep 5;
-    { ( alive _x ) && ( _x distance ( [ getpos _x ] call KPLIB_fnc_getNearestFob ) > 50 ) } count _civUnits == 0
+    ({( alive _x ) && ( _x distance ( [ getpos _x ] call KPLIB_fnc_getNearestFob ) > 50 )} count _civUnits == 0) || !(alive _vip)
 };
 
 sleep 5;
 
 //private _alive_crew_count = { alive _x } count _civUnits;
 
-private _alive_leader = false;
-{
-  if (_x == "C_Nikos_aged" && alive _x) then {
-    _alive_leader = true;
-  }
-} foreach _civUnits;
-
-if ( _alive_leader == false ) then {
+if ( !alive _vip) then {
     [10] remoteExec ["remote_call_intel"];
 } else {
     [11] remoteExec ["remote_call_intel"];
@@ -113,10 +112,14 @@ if ( _alive_leader == false ) then {
     { [_x ] joinSilent _grp; } foreach _civUnits;
     while {(count (waypoints _grp)) != 0} do {deleteWaypoint ((waypoints _grp) select 0);};
     {_x doFollow (leader _grp)} foreach units _grp;
-    { [ _x ] spawn { sleep 600; deleteVehicle (_this select 0) } } foreach _civUnits;
+	if (( alive _nonvip ) && ( _nonvip distance ( [ getpos _nonvip ] call KPLIB_fnc_getNearestFob ) > 50 )) then {
+		[floor(KP_liberation_cr_mission_gain/2), false] spawn F_cr_changeCR;
+	};
+	[(KP_liberation_cr_mission_gain), false] spawn F_cr_changeCR;
+	{ [ _x ] spawn { sleep 600; deleteVehicle (_this select 0) } } foreach _civUnits;
+	
 };
 
-[(KP_liberation_cr_mission_gain), false] spawn F_cr_changeCR;
 stats_secondary_objectives = stats_secondary_objectives + 1;
 
 GRLIB_secondary_in_progress = -1; publicVariable "GRLIB_secondary_in_progress";
