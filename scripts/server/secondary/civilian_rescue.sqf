@@ -1,7 +1,3 @@
-// BUGS - second spawn doesn't create VIP units
-// 		- treats civs as prisonner_ai and therefore awards intel points on rescue - FIXED
-//		- VCOM allows civs to get in cars - FIXED
-
 private _spawn_marker = [ 2000, 999999, false ] call KPLIB_fnc_getOpforSpawnPoint;
 if ( _spawn_marker == "" ) exitWith {["Could not find position for civ search and rescue mission", "ERROR"] call KPLIB_fnc_log;};
 used_positions pushbackUnique _spawn_marker;
@@ -33,11 +29,12 @@ private _civUnits = units _civLeader;
 // Disable any VCOM on the civilians (i.e. don't steal cars)
 _civLeader setVariable ["Vcm_Disable",true];
 
-_marker = createMarker ["mIfestiona", _civLeaderPos]; // DEBUG
-_marker setMarkerType "hd_objective";
-_marker setMarkerColor "ColorRed";
-_marker setMarkerText "Civs";
-_marker setMarkerSize [1,1];
+
+//_marker = createMarker ["mIfestiona", _civLeaderPos]; // DEBUG
+//_marker setMarkerType "hd_objective";
+//_marker setMarkerColor "ColorRed";
+//_marker setMarkerText "Civs";
+//_marker setMarkerSize [1,1];
 
 
 
@@ -83,10 +80,15 @@ if ( combat_readiness < 50 ) then {
     _vehicle_pool = opfor_vehicles_low_intensity;
 };
 
+private _vehicles = [] ;
 private _vehtospawn = [];
 private _spawnchances = [75,50,15];
 {if (random 100 < _x) then {_vehtospawn pushBack (selectRandom _vehicle_pool);};} foreach _spawnchances;
-{([(getpos _civcar) getPos [30 + (random 30), random 360], _x, true] call KPLIB_fnc_spawnVehicle) addMPEventHandler ['MPKilled', {_this spawn kill_manager}]; } foreach _vehtospawn;
+{
+	private _v = ([(getpos _civcar) getPos [30 + (random 30), random 360], _x, true] call KPLIB_fnc_spawnVehicle) ;
+	_v addMPEventHandler ['MPKilled', {_this spawn kill_manager}]; 
+	_vehicles pushBack _v;
+} foreach _vehtospawn;
 
 secondary_objective_position = getpos _civcar;
 secondary_objective_position_marker = secondary_objective_position getPos [800, random 360];
@@ -102,8 +104,6 @@ waitUntil {
 
 sleep 5;
 
-//private _alive_crew_count = { alive _x } count _civUnits;
-
 if ( !alive _vip) then {
     [10] remoteExec ["remote_call_intel"];
 } else {
@@ -112,13 +112,39 @@ if ( !alive _vip) then {
     { [_x ] joinSilent _grp; } foreach _civUnits;
     while {(count (waypoints _grp)) != 0} do {deleteWaypoint ((waypoints _grp) select 0);};
     {_x doFollow (leader _grp)} foreach units _grp;
-	if (( alive _nonvip ) && ( _nonvip distance ( [ getpos _nonvip ] call KPLIB_fnc_getNearestFob ) > 50 )) then {
-		[floor(KP_liberation_cr_mission_gain/2), false] spawn F_cr_changeCR;
+	private _gain = KP_liberation_cr_mission_gain;
+	if (alive _nonvip) then {
+		_gain = _gain + floor(KP_liberation_cr_mission_gain/2);
 	};
-	[(KP_liberation_cr_mission_gain), false] spawn F_cr_changeCR;
+	[(_gain), false] spawn F_cr_changeCR;
+	
+	// Clean up mission actors
 	{ [ _x ] spawn { sleep 600; deleteVehicle (_this select 0) } } foreach _civUnits;
+	//{ [ _x ] spawn { sleep 600; deleteVehicle (_this select 0) } } foreach units _grppatrol;
+	//{ [ _x ] spawn { sleep 600; deleteVehicle (_this select 0) } } foreach units _grpsentry;
+	// Delete vehicles - complex - what if player captures? What if empty and crew got out?
+	//{ [ _x ] spawn { sleep 600; {deleteVehicleCrew _x} forEach crew (_this select 0) ;deleteVehicle (_this select 0) } } foreach _vehicles;
+	//[_civcar] spawn { sleep 600; deleteVehicle (_this select 0) };
 	
 };
+
+// Have remaining AI enemy go to FOB - they want their man back / revenge!
+private _go_to = [ _civcarpos ] call KPLIB_fnc_getNearestFob;
+{
+	if (side (leader _x ) == GRLIB_side_enemy) then {
+		while {(count (waypoints (group leader _x))) != 0} do {deleteWaypoint ((waypoints (group leader _x)) select 0);};
+		private _wp = (group leader _x) addWaypoint [_go_to,0];
+		_wp setWaypointType "MOVE";
+	};
+}forEach _vehicles ;
+
+{
+	while {(count (waypoints _x)) != 0} do {deleteWaypoint ((waypoints _x) select 0);};
+	private _wp = _x addWaypoint [_go_to,0];
+	_wp setWaypointType "MOVE";
+}forEach [ _grppatrol, _grpsentry] ;
+
+//deleteMarker _marker ; // DEBUG
 
 stats_secondary_objectives = stats_secondary_objectives + 1;
 
