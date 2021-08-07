@@ -1991,7 +1991,7 @@
             <Czech>-- SPRÁVA DRUŽSTVA</Czech>
         </Key>
         <Key ID="STR_DEPLOY_ON_MEMBER">
-            <Original>Replace</Original>
+            <Original>Switch</Original>
             <French>Remplacer</French>
             <German>Ersetzen</German>
             <Spanish>Reemplazar</Spanish>

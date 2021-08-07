@@ -33,7 +33,7 @@ params [
 	"_instigator",		// Person who pulled the trigger. (Object)
 	"_hitPoint"			// hit point Cfg name (String)
 ];
-if (isNil "_damage") then {diag_log format ["fn_handleDamage called with Nil _damage var"];}; // HangoverIt debug
+if (isNil "_damage") then {_damage = 0; diag_log format ["fn_handleDamage called with Nil _damage var"];}; // HangoverIt fix and debug
 // remote Units
 if !(local _unit) exitWith {false};
 if (_damage == 0) exitWith {[_unit, _hitPartIndex] call AIS_Damage_fnc_exitDamageHandler};
@@ -107,13 +107,15 @@ if (AIS_IMPACT_EFFECTS) then {
 	};
 };
 
+private _isSwitchedPlayer = _unit getVariable "revertunit"; // HangoverIt - don't do critical hits on switched players
 // if there is no revive guarantee, handle a realistic mode. Now we have random chance to die. The risk is increasing with higer damage values and some type of damages. (explos and grenades)
-if !(AIS_REVIVE_GUARANTY) then {
+if (!AIS_REVIVE_GUARANTY && isNil "_isSwitchedPlayer") then {
+	
 	private _critical_hit = false;
 	// vehicle blow-up is everytime critical. Set to dead...
 	if (!(isNull objectParent _unit)) then {
-		if (damage (vehicle _unit) >= 1) exitWith {
-			[_unit,_source] call AIS_Damage_fnc_goToDead;
+		if (damage (vehicle _unit) >= 1) then { // HangoverIt removed exitwith and set the flag instead. Same outcome
+			_critical_hit = true;
 		};
 	};
 	// critical hit trough explos?
@@ -130,7 +132,7 @@ if !(AIS_REVIVE_GUARANTY) then {
 	};
 	
 	// unit is instant death - no revive chance
-	if (_critical_hit) exitWith {[_unit,_source] call AIS_Damage_fnc_goToDead};
+	if (_critical_hit) exitWith {diag_log format["AIS Critial hit on %1", _unit] ;[_unit,_source] call AIS_Damage_fnc_goToDead};
 };
 
 // if a stabilized unit become new damage they won't be longer in the stbilized state
