@@ -19,6 +19,7 @@ if (!alive _unit || {!(_unit getVariable ["ais_unconscious", false])}) exitWith 
 	_unit setFatigue 0.6;
 	resetCamShake;
 	titleText ["", "PLAIN DOWN", 1];
+	showhud true; // HangoverIt - added to re-enable on switched back player
 	
 	{_x ppEffectEnable false; true} count ais_ppEff;
 	ppEffectDestroy ais_ppEff;

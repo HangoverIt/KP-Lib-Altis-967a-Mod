@@ -251,35 +251,40 @@ while { dialog && alive player } do {
 				_unit = _this select 0;
 				_unit removeEventHandler ["HandleDamage",_thisEventHandler];
 				removeAllActions _unit;
-				selectPlayer (_unit getVariable "owner");
+				selectPlayer (_unit getVariable "revertunit");
 				(units group player) joinsilent group player;
 				group player selectLeader player;
 				nil;
 			}];
 			selectPlayer _selectedmember;
-			_selectedmember addAction ["Return Control to AI",{removeAllActions (_this select 0); selectPlayer leader (group (_this select 0))}];
-			if (!isNil "AIS_fnc_resetOnTeamSwitch") then {
-				[_selectedmember,_prevunit] call AIS_fnc_resetOnTeamSwitch ;
-				[] call AIS_fnc_aisInitPlayer ;
+			_selectedmember addAction ["Return Control to AI",{removeAllActions (_this select 0); selectPlayer leader (group (_this select 0))},nil,1.5,false];
+			if (!isNil "AIS_Core_fnc_resetOnTeamSwitch") then {
+				[_selectedmember,_prevunit] call AIS_Core_fnc_resetOnTeamSwitch ;
+				player call AIS_Core_fnc_aisInitPlayer ;
 			};
 			waitUntil {sleep 1; (isPlayer (leader group player)) || 
 								!(alive _selectedmember) || 
 								!(alive _prevunit) || 
 								{_selectedmember getVariable ["ais_unconscious", false]} ||
 								{_prevunit getVariable ["ais_unconscious", false]}};
-			removeAllActions _selectedmember ;
 			
 			selectPlayer (_selectedmember getVariable ["revertunit", _selectedmember]) ;
-			waitUntil {sleep 0.2; player == _prevunit};
-			if (!isNil "AIS_fnc_resetOnTeamSwitch") then {
-				[_prevunit, _selectedmember] call AIS_fnc_resetOnTeamSwitch ;
+			waitUntil {sleep 0.2; player == (_selectedmember getVariable ["revertunit", _selectedmember])};
+			_selectedmember setVariable["revertunit", nil, true] ; // remove variable
+			removeAllActions _selectedmember ;
+			if (!isNil "AIS_Core_fnc_resetOnTeamSwitch") then {
+				if (_selectedmember getVariable ["ais_unconscious", false]) then {
+					// Switched unit was injured and unconscious
+					_selectedmember setDamage 1 ; // kill unit - quick fix to remove injured effects from AIS
+				};
+				[_prevunit, _selectedmember] call AIS_Core_fnc_resetOnTeamSwitch ;
 			};
 			(units group player) joinsilent group player ;
 			group player selectLeader player ;
-			//removeAllActions player ; // don't do this as it removes AIS
-			[] call KPLIB_fnc_addActionsPlayer;
 			_selectedmember removeEventHandler ["HandleDamage",_eh2];
 			player removeEventHandler ["HandleDamage",_eh1];
+			//sleep 1;
+			[] call KPLIB_fnc_addActionsPlayer;
         };
 		
 
