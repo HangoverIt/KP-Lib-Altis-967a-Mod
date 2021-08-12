@@ -1,14 +1,22 @@
 private _spawn_marker = [ 2000, 999999, false ] call KPLIB_fnc_getOpforSpawnPoint;
 if ( _spawn_marker == "" ) exitWith {["Could not find position for civ search and rescue mission", "ERROR"] call KPLIB_fnc_log;};
-used_positions pushbackUnique _spawn_marker;
 
-private _civcarpos = (markerPos _spawn_marker) getPos [random 200, random 360];
+private _civcarpos = (markerPos _spawn_marker) getPos [random 200, random 360] ;
+private _dir = random 360 ;
+
+private _nearestRoads = (markerPos _spawn_marker) nearRoads 200 ;
+if (count _nearestRoads > 0) then {
+	private _road = _nearestRoads select (floor random count _nearestRoads);
+	private _roadinfo = getRoadInfo _road ;
+	diag_log format["Civ rescue found road %1", _roadinfo] ;
+	_dir = (_roadinfo select 6) getDir (_roadinfo select 7);
+	_civcarpos = _roadinfo select 7 ;
+};
 private _civcar = KPLIB_civ_sar_car createVehicle _civcarpos;
 
 _civcar setPos _civcarpos;
 _civcar setPos _civcarpos;
-private _civcarDir = (random 360);
-_civcar setDir _civcarDir;
+_civcar setDir _dir ;
 
 private _civLeader = createGroup [GRLIB_side_enemy, true];
 private _civLeaderPos = (getpos _civcar) getPos [25, random 360];
