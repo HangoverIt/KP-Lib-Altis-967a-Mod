@@ -243,6 +243,7 @@ class Extended_PreInit_EventHandlers {
 // HangoverIt - added for Pylon Manager Mod
 class CfgPylonManager
 {
+	rearmObjects[] = {"B_Slingload_01_Ammo_F","B_Truck_01_ammo_F"};
 	rearmRange = 20;
 };
 
