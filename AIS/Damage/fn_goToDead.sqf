@@ -14,7 +14,8 @@ params ["_unit", ["_killer",objNull,[]]];
 
 // HangoverIt - added to allow MP kill handler to register who the killer was
 if (!isNull _killer) then {
-	_unit setVariable ["AIS_KilledBy", _unit];
+	diag_log format["HangoverIt: AIS goToDead called. Setting AIS_KilledBy to %1", name _killer] ;
+	_unit setVariable ["AIS_KilledBy", _killer];
 };
 
 if (!alive _unit) exitWith {};
