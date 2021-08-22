@@ -12,6 +12,11 @@
 
 params ["_unit", ["_killer",objNull,[]]];
 
+// HangoverIt - added to allow MP kill handler to register who the killer was
+if (!isNull _killer) then {
+	_unit setVariable ["AIS_KilledBy", _unit];
+};
+
 if (!alive _unit) exitWith {};
 if (_unit getVariable ["AIS_UnitIsDead", false]) exitWith {};
 

@@ -19,6 +19,12 @@ if (isServer) then {
             publicVariable "KP_liberation_ace_killer";
         };
     };
+	
+	// Check AIS killer flag - HangoverIt
+	private _aiskiller = _unit getVariable "AIS_KilledBy" ;
+	if (!isNil "_aiskiller") then {
+		_killer = _aiskiller ;
+	};
 
     // Failsafe if something gets killed before the save manager is finished
     if (isNil "infantry_weight") then {infantry_weight = 33};
@@ -119,9 +125,10 @@ if (isServer) then {
         };
 
         // Civilian casualty - HangoverIt - added a flag for actual civs. Problem with prisioner AI causing havoc
-        if (side (group _unit) == GRLIB_side_civilian && _unit getVariable["I_am_a_civilian", false]) then {
+        if (side (group _unit) == GRLIB_side_civilian && (_unit getVariable["I_am_a_civilian", false])) then {
             stats_civilians_killed = stats_civilians_killed + 1;
-
+			diag_log format["Civilian %1, killed by %2, on side %3",name _unit, name _killer, side _killer];
+			
             // Killed by BLUFOR
             if (side _killer == GRLIB_side_friendly) then {
                 if (KP_liberation_civrep_debug > 0) then {[format ["Civilian killed by: %1", name _killer], "CIVREP"] call KPLIB_fnc_log;};
