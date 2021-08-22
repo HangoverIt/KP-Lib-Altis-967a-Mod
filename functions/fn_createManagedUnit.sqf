@@ -41,6 +41,9 @@ isNil {
     // Join to target group to preserve Side
     [_unit] joinSilent _group;
     deleteGroup _groupTemp;
+	if (isNull _group || side _group == CIVILIAN) then {
+		_unit setVariable ["I_am_a_civilian", true] ; // HangoverIt - Set flag that this is a civilian as ambigious with prisioner AI
+	};
 
     // Process KP object init
     [_unit] call KPLIB_fnc_addObjectInit;

@@ -118,8 +118,8 @@ if (isServer) then {
             };
         };
 
-        // Civilian casualty
-        if (side (group _unit) == GRLIB_side_civilian) then {
+        // Civilian casualty - HangoverIt - added a flag for actual civs. Problem with prisioner AI causing havoc
+        if (side (group _unit) == GRLIB_side_civilian && _unit getVariable["I_am_a_civilian", false]) then {
             stats_civilians_killed = stats_civilians_killed + 1;
 
             // Killed by BLUFOR
