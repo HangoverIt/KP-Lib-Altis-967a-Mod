@@ -159,7 +159,9 @@ GRLIB_ignore_colisions_when_building = [
     "B_Mortar_01_F",                                                    // Mk6 Mortar
     "ACE_friesAnchorBar",                                               // ACE FRIES
     "ACE_friesGantryReverse",                                           // ACE FRIES
-    "ACE_friesGantry"                                                   // ACE FRIES
+    "ACE_friesGantry",                                                   // ACE FRIES
+	"ContainmentArea_01_sand_F", // HangoverIt
+	"ContainmentArea_02_sand_F" // HangoverIt
 ];
 
 /*

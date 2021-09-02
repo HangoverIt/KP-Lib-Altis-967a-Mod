@@ -39,7 +39,6 @@ if !(_spawn_marker isEqualTo "") then {
             };
             [selectRandom _infClasses, markerPos _spawn_marker, _grp] call KPLIB_fnc_createManagedUnit;
         };
-        [_grp, markerPos _spawn_marker] spawn battlegroup_ai; // HangoverIt - specify location
         _bg_groups pushBack _grp;
     } else {
         private _vehicle_pool = [opfor_battlegroup_vehicles, opfor_battlegroup_vehicles_low_intensity] select (combat_readiness < 50);
@@ -56,7 +55,6 @@ if !(_spawn_marker isEqualTo "") then {
             sleep 0.5;
 
             (crew _vehicle) joinSilent _nextgrp; // HangoverIt - specify location
-            [_nextgrp, markerpos _spawn_marker] spawn battlegroup_ai;
             _bg_groups pushback _nextgrp;
 
             if ((_x in opfor_troup_transports) && ([] call KPLIB_fnc_getOpforCap < GRLIB_battlegroup_cap)) then {
@@ -79,6 +77,7 @@ if !(_spawn_marker isEqualTo "") then {
     stats_hostile_battlegroups = stats_hostile_battlegroups + 1;
 
     {
+		[_x, markerpos _spawn_marker] spawn battlegroup_ai; // HangoverIt - moved AI line to end - fixes issue with infantry not having battlegroup_ai commands
         if (local _x) then {
             _headless_client = [] call KPLIB_fnc_getLessLoadedHC;
             if (!isNull _headless_client) then {
