@@ -48,43 +48,56 @@ _injured attachTo [_healer, _offset];
 private _duration = [_healer, _injured] call AIS_System_fnc_calculateStabilizeTime;
 //hint format ["Stabilize Time Duration: %1", _duration];	// debug
 
+if (isPlayer _healer) then {
+	[
+		"Stabilize the Injured", 
+		_duration,
+		{
+			params ["_injured", "_healer"];
 
-[
-    "Stabilize the Injured", 
-    _duration,
-    {
-		params ["_injured", "_healer"];
+			_injured setVariable ["ais_stabilized", true, true];
+			
+			_healer removeEventHandler ["AnimChanged", ais_animChangeEVH];
+			detach _healer;
+			detach _injured;
 
+			_healer playAction "medicStop";
+
+			_injured setVariable ["ais_hasHelper", ObjNull, true];
+			call AIS_Effects_fnc_garbage;
+		},
+		[_injured, _healer],
+		{
+			params ["_injured", "_healer"];
+
+			_injured setVariable ["ais_hasHelper", ObjNull, true];
+			
+			_healer removeEventHandler ["AnimChanged", ais_animChangeEVH];
+			detach _healer;
+			detach _injured;
+			
+			call AIS_Effects_fnc_garbage;
+			
+			if (alive _healer) then {
+				_healer playActionNow "medicStop";
+			};
+			if (!alive _injured) then {["He is not with us anymore."] call AIS_Core_fnc_dynamicText};
+		},
+		(!alive _injured || _healer getVariable ["ais_unconscious", false])
+	] call AIS_Core_fnc_Progress_ShowBar;
+}else{
+	_time = time;
+	_endTime = time + _duration;
+	waitUntil {sleep 1;(time > _endTime) || !(alive _healer) || !(alive _injured) || (_healer getVariable ["ais_unconscious", false])};
+	detach _healer;
+	detach _injured;
+	if (alive _healer) then {
+		_healer playActionNow "medicStop";
+	};
+	if (alive _healer && !(_healer getVariable ["ais_unconscious", false]) && (alive _injured)) then {
 		_injured setVariable ["ais_stabilized", true, true];
-		
-		_healer removeEventHandler ["AnimChanged", ais_animChangeEVH];
-		detach _healer;
-		detach _injured;
-
-		_healer playAction "medicStop";
-
 		_injured setVariable ["ais_hasHelper", ObjNull, true];
-		call AIS_Effects_fnc_garbage;
-    },
-    [_injured, _healer],
-	{
-		params ["_injured", "_healer"];
-
-		_injured setVariable ["ais_hasHelper", ObjNull, true];
-		
-		_healer removeEventHandler ["AnimChanged", ais_animChangeEVH];
-		detach _healer;
-		detach _injured;
-		
-		call AIS_Effects_fnc_garbage;
-		
-		if (alive _healer) then {
-			_healer playActionNow "medicStop";
-		};
-		if (!alive _injured) then {["He is not with us anymore."] call AIS_Core_fnc_dynamicText};
-	},
-	(!alive _injured || _healer getVariable ["ais_unconscious", false])
-] call AIS_Core_fnc_Progress_ShowBar;
-
+	};
+};
 
 true

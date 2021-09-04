@@ -10,7 +10,7 @@ AIS_MEDICAL_EDUCATION 		= 	2; 				// Who can revive an unconscious unit? 0 == Ev
 AIS_REVIVE_GUARANTY 		= 	false;			// If true you will fall everytime in uncoscious mode, regardless how strong the impact of damage was.
 //AIS_MEDEVAC_STATIONS		=	[[Medevac_Blackfish, 10]];// Add one or more objects and a radius to activate the medevac feature. If enabled revive is only at this place(s) possible. Empty array means feature is disabled.
 												// Syntax: f.e.: [ [myMedevacVehicle, 15], [myMedicTent, 10] ]	--> make sure the variable name is avalible at gamestart. Otherwise call it later in a function.
-AIS_MEDEVAC_STATIONS        =   [["B_Truck_01_medical_F", 10], ["B_T_Truck_01_medical_F", 10], ["Land_Medevac_house_V1_F", 10], ["Land_Medevac_HQ_V1_F", 10]];
+AIS_MEDEVAC_STATIONS        =   [["B_Heli_Transport_03_unarmed_F",10], ["B_Truck_01_medical_F", 10], ["B_T_Truck_01_medical_F", 10], ["Land_Medevac_house_V1_F", 15], ["Land_Medevac_HQ_V1_F", 15]];
 AIS_ANYONE_AT_STATIONS      = true ; // HangoverIt - new config - allows any player to revive at a station regardless of qualifying education
 AIS_MEDICS_HEAL_ANYWHERE    = true ; // HangoverIt - new config - anyone with right education can revive anywhere in the field 
 
