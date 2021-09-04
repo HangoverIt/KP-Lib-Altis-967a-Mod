@@ -21,7 +21,7 @@ params [
 // start searching for a match
 if (isNull _helper) then {
 
-    _isStabil = _target getVariable ["ais_stabilized",false];
+    _isStabil = _injured getVariable ["ais_stabilized",false];
 
 	// looking for a valid AI group member.
 	private _all_members = (units group _injured) - [_injured];
@@ -32,10 +32,11 @@ if (isNull _helper) then {
 		if (count _matching_members_array > 0) then {
 			{if (_x call AIS_System_fnc_isMedic) exitWith {_helper = _x};true} count _matching_members_array;
 			// Removed random non-medic from reviving - HangoverIt 16th Jun 2021
-			// Could run another check - if injured has not been stabilised and education is medic only for revive then send non-medic
-			// else if education is non medic then just send regardless of being stablised
-			if (AIS_MEDICAL_EDUCATION == 2 && !_isStabil || AIS_MEDICAL_EDUCATION != 2) then {
-				diag_log format["AIS: No medic found in group to help %1", _injured];
+			diag_log format ["AIS: Looked through %1 team members for units to help. Found medic %2", count _matching_members_array, !(isNull _helper)] ;
+			// HangoverIt - cannot find a medical helper and a medic is required (and unit is still not stablised) or anyone can heal then 
+				//   get any valid unit to either stablise or heal (depending on medical education required)
+			if (isNull _helper && ((AIS_MEDICAL_EDUCATION == 2 && !_isStabil) || AIS_MEDICAL_EDUCATION != 2)) then {
+				diag_log format["AIS: No medic found in group to help %1. Sending random team member to help", _injured];
 				if (isNull _helper) then {_helper = selectRandom _matching_members_array};
 			};
 		};
@@ -54,7 +55,10 @@ if (isNull _helper) then {
 			if (count _matching_side_array > 0) then {
 				{if (_x call AIS_System_fnc_isMedic) exitWith {_helper = _x};true} count _matching_side_array;
 				// Removed random non-medic from reviving - HangoverIt 16th Jun 2021
-				if (AIS_MEDICAL_EDUCATION == 2 && !_isStabil || AIS_MEDICAL_EDUCATION != 2) then {
+				
+				// HangoverIt - cannot find a medical helper and a medic is required (and unit is still not stablised) or anyone can heal then 
+				//   get any valid unit to either stablise or heal (depending on medical education required)
+				if (isNull _helper && ((AIS_MEDICAL_EDUCATION == 2 && !_isStabil) || AIS_MEDICAL_EDUCATION != 2)) then {
 					diag_log format["AIS: No medic found outside of group to help %1", _injured];
 					if (isNull _helper) then {_helper = _matching_side_array select 0};	// no random value to pick the closest one	
 				};

@@ -33,6 +33,8 @@ if (
 // AI instructions
 if (behaviour _helper != "AWARE") then {_helper setBehaviour "AWARE"};	// better "SAFE" ???
 _helper disableAI "AUTOCOMBAT";
+private _tgt = getAttackTarget _helper ;
+if (!(isNull _tgt)) then {_helper forgetTarget _tgt};
 _helper allowFleeing 0;
 
 if (currentCommand _helper != "MOVE") then {
@@ -45,20 +47,22 @@ _dist = if (!isNull objectParent _injured) then {(sizeOf (typeOf (vehicle _injur
 
 // start revive if close enough and ready for handling. Otherwise reset and repeat searching loop.
 if (_helper distance2D (vehicle _injured) < _dist) exitWith {
+	diag_log format ["AIS: Helper is within %1 distance from unit %2 and healing", _dist, _injured] ;
 	if (isNull (_injured getVariable ["ais_hasHelper", objNull])) then {
 		_helper disableAI "AUTOCOMBAT";
 		// Updated code to run stablisation if only medics can revive - HangoverIt 17th June 2021
-		_isStabil = _target getVariable ["ais_stabilized",false];
-		if (AIS_MEDICAL_EDUCATION == 2) then {
+		_isStabil = _injured getVariable ["ais_stabilized",false];
+		if ((_helper call AIS_System_fnc_isMedic) || AIS_MEDICAL_EDUCATION != 2) then {
+			diag_log format["AIS: AI %1 reviving unit %2", _helper, _injured];
+			[_helper, _injured] spawn AIS_System_fnc_ReviveAI;
+		}else{
 			if (!_isStabil) then {
-				// Just stabilise - HangoverIt 17th June 2021
+				// Just stabilise - HangoverIt 
 				diag_log format["AIS: AI %1 stabilising unit %2", _helper, _injured];
 				[_helper, _injured] spawn AIS_System_fnc_stabilize;
 			};
-		}else{
-			diag_log format["AIS: AI %1 reviving unit %2", _helper, _injured];
-			[_helper, _injured] spawn AIS_System_fnc_ReviveAI;
 		};
+		
 	} else {
 		_helper enableAI "AUTOCOMBAT";
 		[_injured] call AIS_System_fnc_AIselfCheck;
