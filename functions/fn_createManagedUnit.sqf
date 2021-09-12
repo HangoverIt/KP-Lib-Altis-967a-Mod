@@ -45,9 +45,9 @@ isNil {
 		_unit setVariable ["I_am_a_civilian", true] ; // HangoverIt - Set flag that this is a civilian as ambigious with prisioner AI
 	};
 	
-	//if (side _group == GRLIB_side_friendly) then {
-	//	_group setVariable ["Vcm_Disable",true]; // HangoverIt - Stop VCOM working on friendly side
-	//};
+	if (side _group == GRLIB_side_friendly) then {
+		_group setVariable ["Vcm_Disable",true]; // HangoverIt - Stop VCOM working on friendly side
+	};
 
     // Process KP object init
     [_unit] call KPLIB_fnc_addObjectInit;
