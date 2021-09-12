@@ -205,6 +205,7 @@ while { true } do {
                 } else {
                     GRLIB_conflicting_objects = [];
                 };
+				
 
                 if (count _near_objects == 0 && ((_truepos distance _posfob) < _maxdist) && (  ((!surfaceIsWater _truepos) && (!surfaceIsWater getpos player)) || (_classname in boats_names) ) ) then {
 
