@@ -41,8 +41,12 @@ isNil {
     // Join to target group to preserve Side
     [_unit] joinSilent _group;
     deleteGroup _groupTemp;
-	if (isNull _group || side _group == CIVILIAN) then {
+	if (isNull _group || side _group == GRLIB_side_civilian) then {
 		_unit setVariable ["I_am_a_civilian", true] ; // HangoverIt - Set flag that this is a civilian as ambigious with prisioner AI
+	};
+	
+	if (side _group == GRLIB_side_friendly) then {
+		(group _unit) setVariable ["Vcm_Disable",true]; // HangoverIt - Stop VCOM working on friendly side
 	};
 
     // Process KP object init
