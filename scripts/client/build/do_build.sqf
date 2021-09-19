@@ -52,7 +52,8 @@ while { true } do {
             _grp = createGroup GRLIB_side_friendly;
         };
         // HangoverIt - 13th June 2021 - added: [this] call AIS_System_fnc_loadAIS;
-        _classname createUnit [_pos, _grp,"this addMPEventHandler [""MPKilled"", {_this spawn kill_manager}]; [this] call AIS_System_fnc_loadAIS;", 0.5, "private"]; // Modded for AIS
+		// HangoverIt - added to stop VCOM controlling friendly AI: group this setVariable ["Vcm_Disable",true];
+        _classname createUnit [_pos, _grp,"[this] call KPLIB_fnc_initManagedUnit;", 0.5, "private"];
         build_confirmed = 0;
     } else {
         if ( buildtype == 8 ) then {
@@ -64,12 +65,11 @@ while { true } do {
                 _unitrank = "private";
                 if(_idx == 0) then { _unitrank = "sergeant"; };
                 if(_idx == 1) then { _unitrank = "corporal"; };
+				// HangoverIt - added general init code for created units
                 if (_classname isEqualTo blufor_squad_para) then {
-				    // HangoverIt - 13th June 2021 - added: [this] call AIS_System_fnc_loadAIS;
-                    _x createUnit [_pos, _grp,"this addMPEventHandler [""MPKilled"", {_this spawn kill_manager}]; removeBackpackGlobal this; this addBackpackGlobal ""B_parachute""; [this] call AIS_System_fnc_loadAIS;", 0.5, _unitrank]; // Modded for AIS
+                    _x createUnit [_pos, _grp,"[this] call KPLIB_fnc_initManagedUnit;this addBackpackGlobal ""B_parachute"";", 0.5, _unitrank];
                 } else {
-					// HangoverIt - 13th June 2021 - added: [this] call AIS_System_fnc_loadAIS;
-                    _x createUnit [_pos, _grp,"this addMPEventHandler [""MPKilled"", {_this spawn kill_manager}]; [this] call AIS_System_fnc_loadAIS;", 0.5, _unitrank]; // Modded for AIS
+                    _x createUnit [_pos, _grp,"[this] call KPLIB_fnc_initManagedUnit;", 0.5, _unitrank]; // Modded for AIS
                 };
                 _idx = _idx + 1;
 
