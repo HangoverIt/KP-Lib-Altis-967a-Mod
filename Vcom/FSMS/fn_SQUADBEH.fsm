@@ -541,7 +541,7 @@ class FSM
                          "};" \n
                          "" \n
                          "//See if we can take any vehicles." \n
-                         "if (VCM_StealVeh) then {group call VCM_fnc_VehicleCommandeer};"/*%FSM</STATEINIT""">*/;
+                         "if (VCM_StealVeh && !(_Group getvariable [""Vcm_Disable"",false])) then {_Group call VCM_fnc_VehicleCommandeer};"/*%FSM</STATEINIT""">*/;
                         precondition = /*%FSM<STATEPRECONDITION""">*/""/*%FSM</STATEPRECONDITION""">*/;
                         class Links
                         {
