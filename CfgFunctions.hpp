@@ -62,6 +62,7 @@ class KPLIB {
         class handlePlacedZeusObject    {};
         class hasPermission             {};
         class initSectors               {};
+		class initManagedUnit			{};
         class isBigtownActive           {};
         class isClassUAV                {};
         class isRadio                   {};

@@ -24,6 +24,10 @@ if (isNull _veh) exitWith {["Null object given"] call BIS_fnc_error; false};
 
 // Create regular config crew
 private _grp = createVehicleCrew _veh;
+// HangoverIt - ensure all created units are initialised
+{
+	[_x] call KPLIB_fnc_initManagedUnit ;
+}forEach units _grp ;
 
 // If the config crew isn't the correct side, replace it with the crew classnames from the preset
 if ((side _grp) != GRLIB_side_friendly) then {

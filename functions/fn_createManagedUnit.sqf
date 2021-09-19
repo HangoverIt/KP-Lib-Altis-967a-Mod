@@ -34,23 +34,13 @@ isNil {
     private _groupTemp = createGroup [CIVILIAN, true];
 
     _unit = _groupTemp createUnit [_type, _spawnPos, [], _placement, "FORM"];
-    _unit addMPEventHandler ["MPKilled", {_this spawn kill_manager}];
-	_unit call AIS_System_fnc_loadAIS; // HangoverIt 13th June 2021 - Added AIS capability hack
     _unit setRank _rank;
 
     // Join to target group to preserve Side
     [_unit] joinSilent _group;
     deleteGroup _groupTemp;
-	if (isNull _group || side _group == GRLIB_side_civilian) then {
-		_unit setVariable ["I_am_a_civilian", true] ; // HangoverIt - Set flag that this is a civilian as ambigious with prisioner AI
-	};
-	
-	if (side _group == GRLIB_side_friendly) then {
-		_group setVariable ["Vcm_Disable",true]; // HangoverIt - Stop VCOM working on friendly side
-	};
 
-    // Process KP object init
-    [_unit] call KPLIB_fnc_addObjectInit;
+	[_unit] call KPLIB_fnc_initManagedUnit ;
 };
 
 _unit

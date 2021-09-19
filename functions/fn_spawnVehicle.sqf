@@ -84,7 +84,10 @@ if (_classname in militia_vehicles) then {
     private _crew = units (createVehicleCrew _newvehicle);
     _crew joinSilent _grp;
     sleep 0.1;
-    {_x addMPEventHandler ["MPKilled", {_this spawn kill_manager}];} forEach _crew;
+    // HangoverIt - call init for managed units
+	{
+		[_x] call KPLIB_fnc_initManagedUnit ;
+	} forEach _crew;
 };
 
 // Add MPKilled and GetIn EHs and enable damage again
