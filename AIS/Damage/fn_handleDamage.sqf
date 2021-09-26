@@ -97,8 +97,9 @@ For some reason the engine won't handle the damage to the new(changed) body part
 So we have to set the damage by ourself to the wanted hitPartIndex.
 */
 _hitPart = [_unit, _hitSelection] call AIS_Damage_fnc_getHitIndexValue;
+if (isNil "_new_damage") then {diag_log "AIS: _new_damage is nil, setting to zero - assertion error"; _new_damage = 0;} ; // HangoverIt debug
 _damage = (_hitPart select 2) + (_new_damage * AIS_DAMAGE_TOLLERANCE_FACTOR);
-if (isNil "_damage") then {diag_log format ["AIS_Damage_fnc_getHitIndexValue causing Nil _damage var"];}; // HangoverIt debug
+if (isNil "_damage") then {diag_log format ["AIS: _damage is nil causing assertion error"];}; // HangoverIt debug
 // bullet/splitter impact post process effects
 if (AIS_IMPACT_EFFECTS) then {
 	if (_damageType in ["grenade", "bullet"]) then {

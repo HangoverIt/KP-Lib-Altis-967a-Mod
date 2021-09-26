@@ -20,6 +20,9 @@ params [
 ];
 if (!local _healer) exitWith {};
 
+// HangoverIt: Getting errors about undefined ais_medequip_array. Check and set global var
+if (isNil "ais_medequip_array") then {ais_medequip_array = [];}; 
+
 // spawn defi and a bloodbag
 if (_healer call AIS_System_fnc_isMedic) then {
 	_defi_pos = _healer modelToWorld [-0.5,0.2,0];
