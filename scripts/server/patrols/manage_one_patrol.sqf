@@ -50,16 +50,20 @@ while { GRLIB_endgame == 0 } do {
     _started_time = time;
     _patrol_continue = true;
 
+	diag_log format["HangoverIt: Created patrol - is infantry %1, Group %2, Unit Count %3", _is_infantry, _grp, count (units _grp)];
+
     if ( local _grp ) then {
         _headless_client = [] call KPLIB_fnc_getLessLoadedHC;
         if ( !isNull _headless_client ) then {
             _grp setGroupOwner ( owner _headless_client );
         };
+		diag_log format["HangoverIt: Patrol group %1 transferred to HC %2", _grp, _headless_client];
     };
 
+	// HangoverIt: updated to prevent _grp being nil when patrol is destroyed
     while { _patrol_continue } do {
         sleep 60;
-        if ( count (units _grp) == 0  ) then {
+        if ( {alive _x} count (units _grp) == 0  ) then {
             _patrol_continue = false;
         } else {
             if ( time - _started_time > 900 ) then {
@@ -71,6 +75,7 @@ while { GRLIB_endgame == 0 } do {
                         };
                         deleteVehicle _x;
                     } foreach (units _grp);
+					_patrol_continue = false ;
                 };
             };
         };

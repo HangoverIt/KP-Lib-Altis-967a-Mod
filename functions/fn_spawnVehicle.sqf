@@ -46,7 +46,7 @@ if (_precise) then {
 };
 
 // HangoverIt: corrected the check to look for empty array or zeroPos. Will be empty array as this is the initial value.
-if (_spawnPos isEqualTo [] || _spwanPos isEqualTo zeroPos) exitWith {
+if (_spawnPos isEqualTo [] || _spawnPos isEqualTo zeroPos) exitWith {
     ["No suitable spawn position found."] call BIS_fnc_error;
     [format ["Couldn't find spawn position for %1 around position %2", _classname, _pos], "WARNING"] call KPLIB_fnc_log;
     objNull
