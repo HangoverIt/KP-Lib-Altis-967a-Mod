@@ -23,7 +23,7 @@ while {true} do {
     } forEach vehicles;
 	// HangoverIt: Added support for DAO in KP
 	if (!isNil "daoVAMinfo") then {
-		// Count planes in virtual hangers
+		// Count planes and helicoptors in virtual hangers
 		private _idx = switch (GRLIB_side_friendly) do {
 			case east: {2};
 			case resistance: {3};
@@ -33,6 +33,9 @@ while {true} do {
 			{
 				if (_x isKindOf "Plane") then {
 					_local_plane_count = _local_plane_count + 1;
+				};
+				if (_x isKindOf "Helicopter") then {
+					_local_heli_count = _local_heli_count + 1;
 				};
 			}forEach (_x select _idx) ;
 		}forEach daoVAMinfo;
