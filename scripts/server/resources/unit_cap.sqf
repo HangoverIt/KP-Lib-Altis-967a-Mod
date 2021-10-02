@@ -21,6 +21,24 @@ while {true} do {
             };
         };
     } forEach vehicles;
+	// HangoverIt: Added support for DAO in KP
+	if (!isNil "daoVAMinfo") then {
+		// Count planes in virtual hangers
+		private _idx = switch (GRLIB_side_friendly) do {
+			case east: {2};
+			case resistance: {3};
+			default {1};
+		};
+		{
+			{
+				if (_x isKindOf "Plane") then {
+					_local_plane_count = _local_plane_count + 1;
+				};
+			}forEach (_x select _idx) ;
+		}forEach daoVAMinfo;
+	};
+	// END DAO add on code
+	
     unitcap = _local_unitcap;
     KP_liberation_heli_count = _local_heli_count;
     KP_liberation_plane_count = _local_plane_count;
