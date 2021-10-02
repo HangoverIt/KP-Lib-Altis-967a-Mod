@@ -181,6 +181,14 @@ private _weights = [
     air_weight
 ];
 
+// HangoverIt - add VAM from DAO to the save data. Check if DAO running and apply data, otherwise it's an empty array
+private _dao = [] ;
+if (!(isNil "daoVAMinfo")) then {
+	_dao = daoVAMinfo ;
+	diag_log format ["HangoverIt: saving DAO %1", _dao] ;
+};
+
+
 // Pack the save data in the save array
 [
     kp_liberation_version,
@@ -204,5 +212,6 @@ private _weights = [
     resources_intel,
     _allMines,
     _allCrates,
-    KPLIB_sectorTowers
+    KPLIB_sectorTowers,
+	_dao			// HangoverIt - added for DAO
 ] // return

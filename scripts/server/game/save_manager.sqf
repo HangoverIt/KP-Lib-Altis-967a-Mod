@@ -57,6 +57,8 @@ private _weights = [];
 private _allMines = [];
 // All unclaimed crates from crate spawning sectors
 private _allCrates = [];
+// HangoverIt - added for DAO mod support
+private _dao = [] ;
 
 /*
     --- Globals ---
@@ -196,6 +198,7 @@ if (!isNil "_saveData") then {
         _allMines                                   = _saveData param [19, []];
         _allCrates                                  = _saveData param [20, []];
         KPLIB_sectorTowers                          = _saveData param [21, []];
+		_dao										= _saveData param [22, []]; // HangoverIt - new parameter for DAO VAM
 
         stats_ammo_produced                         = _stats select  0;
         stats_ammo_spent                            = _stats select  1;
@@ -285,6 +288,23 @@ if (!isNil "_saveData") then {
         stats_fobs_lost                             = _stats select 26;
         stats_readiness_earned                      = _stats select 27;
     };
+	
+	// HangoverIt - Handle DAO mod support to load VAM
+	if (count _dao > 0) then {
+		daoVAMinfo = _dao ; // setup the global var - yes we do it again if the mod is enabled.
+		{
+			if (_x select 0 == "Drongo's Air Ops") exitWith {
+				_dao spawn {
+					waitUntil{!(isNil"daoReady")}; // wait for mod to finish loading and then set the VAM
+					waitUntil{daoReady} ;
+					daoVAMinfo = _this ;
+					publicVariable "daoVAMinfo";
+					diag_log format ["HangoverIt: loading DAO data %1", daoVAMinfo] ;
+				};
+			};
+		}forEach getLoadedModsInfo ;
+		
+	};
 
     // Extract weigths from collection array
     infantry_weight = _weights select 0;
