@@ -1,12 +1,20 @@
 // TODO Refactor and create function
 params [
     ["_spawn_marker", "", [""]],
-    ["_infOnly", false, [false]]
+    ["_infOnly", false, [false]],
+	["_fobAttack", false, [false]] // HangoverIt: new parameter for FOB attacks
 ];
+
 
 if (GRLIB_endgame == 1) exitWith {};
 
 _spawn_marker = [[2000, 1000] select _infOnly, 3000, false, markerPos _spawn_marker] call KPLIB_fnc_getOpforSpawnPoint;
+
+if (_fobAttack) then {
+	// HangoverIt - further distance usually for a FOB so don't spawn infantry only
+	_infOnly = false ;
+};
+diag_log format["HangoverIt: Spawning battlegroup at position: %1, as infantry: %2, attacking FOB: %3", markerPos _spawn_marker, _infOnly, _fobAttack] ;
 
 if !(_spawn_marker isEqualTo "") then {
     GRLIB_last_battlegroup_time = diag_tickTime;
@@ -57,17 +65,30 @@ if !(_spawn_marker isEqualTo "") then {
             (crew _vehicle) joinSilent _nextgrp; // HangoverIt - specify location
             _bg_groups pushback _nextgrp;
 
+			diag_log format ["HangoverIt: checking %1 is in %2 for troop transport", _x, opfor_troup_transports] ;
             if ((_x in opfor_troup_transports) && ([] call KPLIB_fnc_getOpforCap < GRLIB_battlegroup_cap)) then {
                 if (_vehicle isKindOf "Air") then {
-                    [[markerPos _spawn_marker] call KPLIB_fnc_getNearestBluforObjective, _vehicle] spawn send_paratroopers;
+					if (_fobAttack) then {
+						[[markerPos _spawn_marker] call KPLIB_fnc_getNearestFob, _vehicle] spawn send_paratroopers;
+					}else{
+						[[markerPos _spawn_marker] call KPLIB_fnc_getNearestBluforObjective, _vehicle] spawn send_paratroopers;
+					};
                 } else {
-                    [_vehicle] spawn troup_transport;
+					if (_fobAttack) then {
+						[_vehicle,[markerPos _spawn_marker] call KPLIB_fnc_getNearestFob] spawn troup_transport;
+					}else{
+						[_vehicle,[markerPos _spawn_marker] call KPLIB_fnc_getNearestBluforObjective] spawn troup_transport;
+					};
                 };
             };
         } forEach _selected_opfor_battlegroup;
 
         if (GRLIB_csat_aggressivity > 0.9) then {
-            [[markerPos _spawn_marker] call KPLIB_fnc_getNearestBluforObjective] spawn spawn_air;
+			if (_fobAttack) then {
+				[[markerPos _spawn_marker] call KPLIB_fnc_getNearestFob] spawn spawn_air;
+			}else{
+				[[markerPos _spawn_marker] call KPLIB_fnc_getNearestBluforObjective] spawn spawn_air;
+			};
         };
     };
 
@@ -77,7 +98,7 @@ if !(_spawn_marker isEqualTo "") then {
     stats_hostile_battlegroups = stats_hostile_battlegroups + 1;
 
     {
-		[_x, markerpos _spawn_marker] spawn battlegroup_ai; // HangoverIt - moved AI line to end - fixes issue with infantry not having battlegroup_ai commands
+		[_x, markerpos _spawn_marker, _fobAttack] spawn battlegroup_ai; // HangoverIt - moved AI line to end - fixes issue with infantry not having battlegroup_ai commands
         if (local _x) then {
             _headless_client = [] call KPLIB_fnc_getLessLoadedHC;
             if (!isNull _headless_client) then {

@@ -1,5 +1,6 @@
 params [
-    ["_transVeh", objNull, [objNull]]
+    ["_transVeh", objNull, [objNull]],
+	["_objPos", []] // HangoverIt: added to provide a position instead of determined in this script - optional
 ];
 
 if (isNull _transVeh) exitWith {};
@@ -7,7 +8,9 @@ sleep 1;
 
 private _transGrp = (group (driver _transVeh));
 private _start_pos = getpos _transVeh;
-private _objPos =  [getpos _transVeh] call KPLIB_fnc_getNearestBluforObjective;
+if (count _objPos == 0) then {
+	_objPos =  [getpos _transVeh] call KPLIB_fnc_getNearestBluforObjective;
+};
 private _unload_distance = 500;
 private _crewcount = count crew _transVeh;
 
@@ -22,10 +25,12 @@ if ((alive _transVeh) && (alive (driver _transVeh))) then {
     _infGrp = createGroup [GRLIB_side_enemy, true];
 
     {
-        [_x, _start_pos, _infGrp, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+		if ((_transVeh emptyPositions "cargo") == 0) exitWith {}; // HangoverIt - load up to the available cargo space
+        private _unit = [_x, _start_pos, _infGrp, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+		_unit assignAsCargo _transVeh;
+		_unit moveInCargo _transVeh; // HangoverIt - added assignAsCargo call
+		
     } foreach ([] call KPLIB_fnc_getSquadComp);
-
-    {_x assignAsCargo _transVeh;_x moveInCargo _transVeh} forEach (units _infGrp); // HangoverIt 18th June 2021 - added assignAsCargo call
 
     while {(count (waypoints _infGrp)) != 0} do {deleteWaypoint ((waypoints _infGrp) select 0);};
 

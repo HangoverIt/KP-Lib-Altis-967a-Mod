@@ -185,7 +185,7 @@ private _weights = [
 private _dao = [] ;
 if (!(isNil "daoVAMinfo")) then {
 	_dao = daoVAMinfo ;
-	diag_log format ["HangoverIt: saving DAO %1", _dao] ;
+	//diag_log format ["HangoverIt: saving DAO %1", _dao] ;
 };
 
 
