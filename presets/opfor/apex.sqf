@@ -121,14 +121,21 @@ opfor_battlegroup_vehicles_low_intensity = [
 ];
 
 /* All vehicles that spawn within battlegroups (see the above 2 arrays) and also hold 8 soldiers as passengers.
-If something in this array can't hold all 8 soldiers then buggy behaviours may occur.    */
+If something in this array can't hold all 8 soldiers then buggy behaviours may occur. 
+HangoverIt - potentially fixed battlegroup limit issue. Added more types of transport    */
 opfor_troup_transports = [
     "O_T_Truck_03_transport_ghex_F",                                    // Tempest Transport
     "O_T_Truck_03_covered_ghex_F",                                      // Tempest Transport (Covered)
     "O_T_APC_Wheeled_02_rcws_ghex_F",                                   // MSE-3 Marid
     "O_Heli_Transport_04_bench_F",                                      // Mi-290 Taru (Bench)
     "O_Heli_Light_02_dynamicLoadout_F",                                 // Po-30 Orca (Armed)
-    "O_T_VTOL_02_infantry_dynamicLoadout_F"                             // Y-32 Xi'an (Infantry)
+    "O_T_VTOL_02_infantry_dynamicLoadout_F",                            // Y-32 Xi'an (Infantry)
+	"O_T_MRAP_02_ghex_F",                                               // Ifrit
+    "O_T_MRAP_02_hmg_ghex_F",                                           // Ifrit (HMG)
+	"O_T_MRAP_02_gmg_ghex_F",                                           // Ifrit (GMG)
+	"O_T_APC_Tracked_02_cannon_ghex_F",									// BTR-K Kamysh
+	"O_T_LSV_02_armed_F",                                               // Qilin (armed)
+	"O_T_LSV_02_AT_F"                                                   // Qilin (AT)
 ];
 
 // Enemy rotary-wings that will need to spawn in flight.

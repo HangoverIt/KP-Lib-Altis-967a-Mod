@@ -1,6 +1,8 @@
 params [
-    ["_grp", grpNull, [grpNull]], ["_loc", [], [[]]]
+    ["_grp", grpNull, [grpNull]], ["_loc", [], [[]]],
+	["_fobAttack", false, [false]] // HangoverIt: new parameter for FOB attacks
 ];
+
 if (count _loc == 0) then { // HangoverIt - added new loc param to be precise about getNearestBluforObjective
   _loc = getPos (leader _grp);
 }; 
@@ -13,6 +15,9 @@ if (isNil "reset_battlegroups_ai") then {reset_battlegroups_ai = false};
 sleep (5 + (random 5));
 
 private _objPos = [_loc] call KPLIB_fnc_getNearestBluforObjective;
+if (_fobAttack) then {
+	_objPos = [_loc] call KPLIB_fnc_getNearestFob;
+};
 
 [_objPos] remoteExec ["remote_call_incoming"];
 
@@ -58,5 +63,5 @@ sleep (10 + (random 5));
 reset_battlegroups_ai = false;
 
 if (!((units _grp) isEqualTo []) && (GRLIB_endgame == 0)) then {
-    [_grp,_objPos] spawn battlegroup_ai;
+    [_grp] spawn battlegroup_ai;
 };
