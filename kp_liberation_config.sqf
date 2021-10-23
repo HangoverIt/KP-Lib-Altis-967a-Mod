@@ -985,10 +985,10 @@ KP_liberation_suppMod_artyVeh = [
     "I_G_Mortar_01_F",
     "I_Mortar_01_F",
     "I_Truck_02_MRL_F",
-    "O_G_Mortar_01_F",
-    "O_MBT_02_arty_F",
-    "O_Mortar_01_F",
-    "O_T_MBT_02_arty_ghex_F",
+    //"O_G_Mortar_01_F", // HangoverIt - remove as these can be controlled by blufor
+    //"O_MBT_02_arty_F", // HangoverIt - remove as these can be controlled by blufor
+    //"O_Mortar_01_F", // HangoverIt - remove as these can be controlled by blufor
+    //"O_T_MBT_02_arty_ghex_F",
     "rhs_2b14_82mm_msv",
     "rhs_2b14_82mm_vdv",
     "rhs_2b14_82mm_vmf",

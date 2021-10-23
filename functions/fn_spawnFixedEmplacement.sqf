@@ -36,6 +36,7 @@ if (count _roads > 0) then {
 	private _rend = [] ;
 	private _s1 = [] ;
 	private _s2 = [];
+	
 	while {count _trypos == 0 && _maxattempts > 0} do {
 		private _road = selectRandom _roads ;
 		_info = getRoadInfo _road ;
@@ -43,8 +44,8 @@ if (count _roads > 0) then {
 		_rend = _info select 7;
 		_width = _info select 1;
 		_v = _rbeg vectorFromTo _rend ; // normalised vector
-		_s1 = [(_v select 0) * -1,(_v select 1) * 1,0]; // normalised perpendicular vector 1
-		_s2 = [(_v select 0) * 1,(_v select 1) * -1,0]; // normalised perpendicular vector 2
+		_s1 = [(_v select 1) * -1,(_v select 0) * 1,0]; // normalised perpendicular vector 1
+		_s2 = [(_v select 1) * 1,(_v select 0) * -1,0]; // normalised perpendicular vector 2
 		
 		// Try halfway along roads
 		_diff = _rbeg vectorDiff _rend ;
@@ -52,18 +53,18 @@ if (count _roads > 0) then {
 		_vmid = _rbeg vectorAdd _diff ;
 	
 		_trypos = _vmid vectorAdd (_s1 vectorMultiply (_sizefixed + _width)) ;
-		_objs = _trypos nearObjects (_sizefixed * 4);
-		if (count _objs > 0 || !(isNull (roadAt _trypos))) then {
+		_trypos = _trypos findEmptyPosition [0,0,_spawn] ;
+		if (count _trypos == 0 || (isOnRoad _trypos)) then {
 			_trypos = _vmid vectorAdd (_s2 vectorMultiply (_sizefixed + _width));
-			_objs = _trypos nearObjects (_sizefixed * 4);
-			if (count _objs > 0 || !(isNull (roadAt _trypos))) then {
+			_trypos = _trypos findEmptyPosition [0,0,_spawn] ;
+			if (count _trypos == 0 || (isOnRoad _trypos)) then {
 				_trypos = [] ;
 			};
 		};
 		_maxattempts = _maxattempts -1;
 	};
 	
-	diag_log format ["HangoverIt: Fixed emplacement attempts remaining %1, spawn at %2, s1 %3, s2 %4", _maxattempts, _trypos,_s1,_s2] ;
+	//diag_log format ["HangoverIt: Fixed emplacement attempts remaining %1, spawn at %2, s1 %3, s2 %4", _maxattempts, _trypos,_s1,_s2] ;
 	
 	if (count _trypos > 0) then {
 		// Found position. Spawn units

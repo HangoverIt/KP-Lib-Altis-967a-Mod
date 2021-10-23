@@ -195,11 +195,11 @@ if ((!(_sector in blufor_sectors)) && (([markerPos _sector, [_opforcount] call K
     };
 
 	// HangoverIt - spawn fixed emplacements
-	if (combat_readiness > 30) then {
+	if (combat_readiness > 30 || _sector in sectors_bigtown) then {
 		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
 		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
 	};
-	if (combat_readiness > 40) then {
+	if (combat_readiness > 40 || _sector in sectors_bigtown) then {
 		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
 		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
 	};
