@@ -18,12 +18,12 @@ Vcm_Settings =
 	//VCOM ARTILLERY. Only one kind of advanced artillery can be used at a time.
 	VCM_ARTYENABLE = true; //Enable improved artillery handling from Vcom.
 	VCM_ARTYLST = []; //List of all AI inside of artillery pieces, leave this alone.
-	VCM_ARTYDELAY = 30; //Delay between squads requesting artillery
+	VCM_ARTYDELAY = 20; //Delay between squads requesting artillery
 	VCM_ARTYWT = -(VCM_ARTYDELAY);
 	VCM_ARTYET = -(VCM_ARTYDELAY);
 	VCM_ARTYRT = -(VCM_ARTYDELAY);
 	VCM_ARTYSIDES = [west,east,resistance];  //Sides that will use VCOM/FFE artillery
-	VCM_AIMagLimit = 5; //Number of mags remaining before AI looks for ammo.
+	VCM_AIMagLimit = 2; //Number of mags remaining before AI looks for ammo.
 	VCM_Debug = false; //Enable debug mode.
 	VCM_MINECHANCE = 75; //Chance to lay a mine
 	VCM_SIDEENABLED = [west,east,resistance]; //Sides that will activate Vcom AI

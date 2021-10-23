@@ -60,6 +60,7 @@ if (_classname in opfor_choppers) then {
 } else {
     _newvehicle = _classname createVehicle _spawnpos;
     _newvehicle allowDamage false;
+	_newvehicle enableSimulation false;
 
     [_newvehicle] call KPLIB_fnc_allowCrewInImmobile;
 
@@ -95,6 +96,7 @@ if (_classname in militia_vehicles) then {
 _newvehicle addMPEventHandler ["MPKilled", {_this spawn kill_manager}];
 sleep 0.1;
 _newvehicle allowDamage true;
+_newvehicle enableSimulation true;
 _newvehicle setDamage 0;
 
 _newvehicle
