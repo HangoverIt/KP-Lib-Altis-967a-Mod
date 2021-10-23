@@ -79,6 +79,7 @@ class KPLIB {
         class sortStorage               {};
         class spawnBuildingSquad        {};
         class spawnCivilians            {};
+		class spawnFixedEmplacement		{}; // HangoverIt
         class spawnGuerillaGroup        {};
         class spawnMilitaryPostSquad    {};
         class spawnMilitiaCrew          {};

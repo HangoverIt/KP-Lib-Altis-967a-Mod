@@ -159,7 +159,7 @@ if ((!(_sector in blufor_sectors)) && (([markerPos _sector, [_opforcount] call K
         if (combat_readiness > 30) then {_squad2 = ([] call KPLIB_fnc_getSquadComp);};
         if (GRLIB_unitcap >= 1.5) then {_squad3 = ([] call KPLIB_fnc_getSquadComp);};
 
-        if((random 100) > 95) then {_vehtospawn pushback ([] call KPLIB_fnc_getAdaptiveVehicle);};
+        if((random 100) > 85) then {_vehtospawn pushback ([] call KPLIB_fnc_getAdaptiveVehicle);};
 
         _spawncivs = false;
 
@@ -194,6 +194,20 @@ if ((!(_sector in blufor_sectors)) && (([markerPos _sector, [_opforcount] call K
         };
     };
 
+	// HangoverIt - spawn fixed emplacements
+	if (combat_readiness > 30) then {
+		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+	};
+	if (combat_readiness > 40) then {
+		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+	};
+	if (combat_readiness > 75) then {
+		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+	};
+	
     _managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnMilitaryPostSquad);
 
     if (count _squad1 > 0) then {
