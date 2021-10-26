@@ -1,17 +1,24 @@
 # Changelog
 
-## 0.96.7a unofficial 01 (2021-Jun-19)
+## 0.96.7a unofficial 01 (2021-Oct-26)
 ### AIS added with changes
 * Class name can be used for AIS_MEDEVAC_STATIONS. Game object continues to also work in config
 * New config to always allow qualified medical role to revive anywhere
 * New config to allow any player to revive at AIS_MEDEVAC_STATIONS
 * Medikit required for medic qualification
 * AIS Config defaults set for KP Liberation
-* Experimental - Non qualified medical AI will only stabilise. Only qualified AI can revive
+* Non qualified medical AI will only stabilise. Only qualified AI can revive
+### VCOM support
+* VCOM enabled for opfor
+### Dracos Air Operations (DAO) support
+* Saves aircraft stored in virtual hangers
 ### KP Liberation changes
 * AI infantry spawned for a battle group vehicle will also be assigned to the vehicle. AI will also be given the sector destination as a waypoint instead of vehicle position
 * Fixed incorrect variable name in manage_logistics.sqf to enable ambush functionality on convoys
-* More stuff destroyed when FOB lost and not just FOB
+* More resources and vehicles destroyed when FOB lost and not just FOB removed
+* Added static emplacements in sectors for opfor
+* Allowed more vehicles to support troop transport in battle groups
+* Random chance a battle group will target a FOB instead of sector in an attack
 
 
 ## 0.96.7a (2020-09-12)
