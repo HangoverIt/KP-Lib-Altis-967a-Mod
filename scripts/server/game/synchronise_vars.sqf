@@ -82,6 +82,11 @@ while {true} do {
         air_weight
     ];
     publicVariable "sync_vars";
+	
+	// HangoverIt: Sync DAO if mod is running - should change when count of air units increases or decreases
+	if (!(isNil "daoVAMinfo")) then {
+		publicVariable "daoVAMinfo";
+	};
 
     _KP_liberation_fob_resources_old = +KP_liberation_fob_resources;
     _KP_liberation_supplies_global_old = KP_liberation_supplies_global;
