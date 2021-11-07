@@ -57,8 +57,12 @@ if (count _roads > 0) then {
 		if (count _trypos == 0 || (isOnRoad _trypos)) then {
 			_trypos = _vmid vectorAdd (_s2 vectorMultiply (_sizefixed + _width));
 			_trypos = _trypos findEmptyPosition [0,0,_spawn] ;
-			if (count _trypos == 0 || (isOnRoad _trypos)) then {
+			if (count _trypos == 0) then {
 				_trypos = [] ;
+			}else{
+				if (isOnRoad _trypos) then {
+					_trypos = [] ;
+				};
 			};
 		};
 		_maxattempts = _maxattempts -1;
