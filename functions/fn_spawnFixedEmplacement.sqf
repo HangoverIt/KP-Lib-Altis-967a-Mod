@@ -54,7 +54,9 @@ if (count _roads > 0) then {
 	
 		_trypos = _vmid vectorAdd (_s1 vectorMultiply (_sizefixed + _width)) ;
 		_trypos = _trypos findEmptyPosition [0,0,_spawn] ;
-		if (count _trypos == 0 || (isOnRoad _trypos)) then {
+		_isOnRoad = false ;
+		if (count _trypos > 0) then {_isOnRoad = isOnRoad _trypos;};
+		if (count _trypos == 0 || _isOnRoad) then {
 			_trypos = _vmid vectorAdd (_s2 vectorMultiply (_sizefixed + _width));
 			_trypos = _trypos findEmptyPosition [0,0,_spawn] ;
 			if (count _trypos == 0) then {
