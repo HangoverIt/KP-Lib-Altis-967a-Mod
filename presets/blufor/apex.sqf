@@ -467,3 +467,14 @@ elite_vehicles = [
     "B_Plane_Fighter_01_Stealth_F",                                     // F/A-181 Black Wasp II (Stealth)
     "B_T_VTOL_01_armed_F"                                               // V-44 X Blackfish (Armed)
 ];
+
+blufor_static = [
+	"B_HMG_01_high_F", 
+	"B_GMG_01_high_F", 
+	"B_Mortar_01_F"
+];
+
+blufor_static_heavy = [
+	"B_static_AT_F",
+	"B_static_AA_F"
+];

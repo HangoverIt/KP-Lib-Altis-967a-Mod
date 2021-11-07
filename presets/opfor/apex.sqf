@@ -151,3 +151,14 @@ opfor_air = [
     "O_Plane_CAS_02_dynamicLoadout_F",                                  // To-199 Neophron (CAS)
     "O_Plane_Fighter_02_F"                                              // To-201 Shikra
 ];
+
+opfor_static = [
+	"O_HMG_01_high_F", 
+	"O_GMG_01_high_F", 
+	"O_Mortar_01_F"
+];
+
+opfor_static_heavy = [
+	"O_static_AT_F",
+	"O_static_AA_F"
+];

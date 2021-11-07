@@ -10,18 +10,19 @@
 
     Parameter(s):
         _pos - Center position of the area to spawn fixed emplacements
+		_fixed - (optional) list of fixed emplacements. One will be spwaned at random
 
     Returns:
         Spawned units [ARRAY]
 */
 
 params [
-    ["_pos", [0, 0, 0], [[]]]
+    ["_pos", [0, 0, 0], [[]]],
+	["_fixed", ["O_HMG_01_high_F", "O_GMG_01_high_F", "O_Mortar_01_F", "O_static_AT_F"], [[]]]
 ];
 
 if (_pos isEqualTo [0, 0, 0]) exitWith {["No or zero pos given"] call BIS_fnc_error; []};
 
-private _fixed = ["O_HMG_01_high_F", "O_GMG_01_high_F", "O_Mortar_01_F"];
 private _spawn = selectRandom _fixed; 
 private _roads = _pos nearRoads GRLIB_capture_size ;
 private _sizefixed = ((sizeOf _spawn) *  0.5) + 1 ; // Convert to radius and add margin

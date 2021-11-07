@@ -196,16 +196,19 @@ if ((!(_sector in blufor_sectors)) && (([markerPos _sector, [_opforcount] call K
 
 	// HangoverIt - spawn fixed emplacements
 	if (combat_readiness > 30 || _sector in sectors_bigtown) then {
-		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
-		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos,opfor_static] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos,opfor_static] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos, opfor_static_heavy] call KPLIB_fnc_spawnFixedEmplacement);
 	};
 	if (combat_readiness > 40 || _sector in sectors_bigtown) then {
-		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
-		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos,opfor_static] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos,opfor_static] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos, opfor_static_heavy] call KPLIB_fnc_spawnFixedEmplacement);
 	};
 	if (combat_readiness > 75) then {
-		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
-		_managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos,opfor_static] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos,opfor_static] call KPLIB_fnc_spawnFixedEmplacement);
+		_managed_units = _managed_units + ([_sectorpos, opfor_static_heavy] call KPLIB_fnc_spawnFixedEmplacement);
 	};
 	
     _managed_units = _managed_units + ([_sectorpos] call KPLIB_fnc_spawnMilitaryPostSquad);

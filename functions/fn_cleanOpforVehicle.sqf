@@ -22,6 +22,7 @@ params [
 if (isNull _veh) exitWith {["Null object given"] call BIS_fnc_error; false};
 
 if !(_veh getVariable ["KPLIB_captured", false]) then {
+	deleteVehicleCrew _veh; // HangoverIt - added to remove all crew
     deleteVehicle _veh;
 };
 
