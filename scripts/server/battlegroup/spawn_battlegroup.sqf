@@ -21,8 +21,11 @@ if !(_spawn_marker isEqualTo "") then {
 
     private _bg_groups = [];
     private _selected_opfor_battlegroup = [];
-    private _target_size = (round (GRLIB_battlegroup_size * ([] call KPLIB_fnc_getOpforFactor) * (sqrt GRLIB_csat_aggressivity))) min 16;
-    if (combat_readiness < 60) then {_target_size = round (_target_size * 0.65);};
+    private _target_size = (ceil (GRLIB_battlegroup_size * ([] call KPLIB_fnc_getOpforFactor) * (sqrt GRLIB_csat_aggressivity))) min 16;
+    if (combat_readiness < 70) then {
+		_reduction_factor = (combat_readiness max 35) / 100 ; // HangoverIt - some better scaling of battle group size according to readiness
+		_target_size = ceil (_target_size * _reduction_factor);
+	};
 
     [_spawn_marker] remoteExec ["remote_call_battlegroup"];
 

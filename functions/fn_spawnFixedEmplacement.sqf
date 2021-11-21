@@ -11,6 +11,7 @@
     Parameter(s):
         _pos - Center position of the area to spawn fixed emplacements
 		_fixed - (optional) list of fixed emplacements. One will be spwaned at random
+		_onroad - (optional) boolean flag set to true if fixed position is along a road or around position
 
     Returns:
         Spawned units [ARRAY]
@@ -18,7 +19,8 @@
 
 params [
     ["_pos", [0, 0, 0], [[]]],
-	["_fixed", ["O_HMG_01_high_F", "O_GMG_01_high_F", "O_Mortar_01_F", "O_static_AT_F"], [[]]]
+	["_fixed", ["O_HMG_01_high_F", "O_GMG_01_high_F", "O_Mortar_01_F", "O_static_AT_F"], [[]]],
+	["_onroad", true, [true]]
 ];
 
 if (_pos isEqualTo [0, 0, 0]) exitWith {["No or zero pos given"] call BIS_fnc_error; []};
@@ -29,9 +31,9 @@ private _sizefixed = ((sizeOf _spawn) *  0.5) + 1 ; // Convert to radius and add
 private _trypos = [] ;
 private _maxattempts = 20 ;
 private _spawnedunits = [] ;
+private _dir = 0 ;
 
-
-if (count _roads > 0) then {	
+if (count _roads > 0 && _onroad) then {	
 	private _info = [] ;
 	private _rbeg = [] ;
 	private _rend = [] ;
@@ -69,20 +71,27 @@ if (count _roads > 0) then {
 			};
 		};
 		_maxattempts = _maxattempts -1;
+		//diag_log format ["HangoverIt: Fixed emplacement attempts remaining %1, spawn at %2, s1 %3, s2 %4", _maxattempts, _trypos,_s1,_s2] ;
 	};
+	_dir = _rbeg getDir _rend;
+
+}else{
+	// No roads so find a safe place
+	_trypos = [_pos, 10, GRLIB_capture_size * 0.66, _sizefixed, 0, 0.1, 0, [], _pos] call BIS_fnc_findSafePos;
+	_trypos pushBack 0; // add z position
 	
-	//diag_log format ["HangoverIt: Fixed emplacement attempts remaining %1, spawn at %2, s1 %3, s2 %4", _maxattempts, _trypos,_s1,_s2] ;
-	
-	if (count _trypos > 0) then {
-		// Found position. Spawn units
-		_fixedobj = [_trypos, _spawn, true] call KPLIB_fnc_spawnVehicle;
-		_fixedobj setDir (_rbeg getDir _rend) ;
-		waitUntil {sleep 0.2; count (crew _fixedobj) >0;};
-		_grp = group ((crew _fixedobj) select 0) ;
-		_unit1 = [opfor_rifleman, _trypos, _grp] call KPLIB_fnc_createManagedUnit;
-		_grp addVehicle _fixedobj ;
-		_spawnedunits = [_unit1, _fixedobj] ;
-	};
+	_dir = _pos getDir _trypos;
+};
+
+if (count _trypos > 0) then {
+	// Found position. Spawn units
+	_fixedobj = [_trypos, _spawn, true] call KPLIB_fnc_spawnVehicle;
+	_fixedobj setDir (_dir) ;
+	waitUntil {sleep 0.2; count (crew _fixedobj) >0;};
+	_grp = group ((crew _fixedobj) select 0) ;
+	_unit1 = [opfor_rifleman, _trypos, _grp] call KPLIB_fnc_createManagedUnit;
+	_grp addVehicle _fixedobj ;
+	_spawnedunits = [_unit1, _fixedobj] ;
 };
 
 _spawnedunits;
