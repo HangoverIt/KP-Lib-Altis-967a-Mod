@@ -63,22 +63,26 @@ while { GRLIB_endgame == 0 } do {
 	// HangoverIt: updated to prevent _grp being nil when patrol is destroyed
     while { _patrol_continue } do {
         sleep 60;
-        if ( {alive _x} count (units _grp) == 0  ) then {
-            _patrol_continue = false;
-        } else {
-            if ( time - _started_time > 900 ) then {
-                if ( [ getpos (leader _grp) , 4000 , GRLIB_side_friendly ] call KPLIB_fnc_getUnitsCount == 0 ) then {
-                    _patrol_continue = false;
-                    {
-                        if ( vehicle _x != _x ) then {
-                            [(vehicle _x)] call KPLIB_fnc_cleanOpforVehicle;
-                        };
-                        deleteVehicle _x;
-                    } foreach (units _grp);
-					_patrol_continue = false ;
-                };
-            };
-        };
+		if !(isNil "_grp") then {
+			if ( {alive _x} count (units _grp) == 0  ) then {
+				_patrol_continue = false;
+			} else {
+				if ( time - _started_time > 900 ) then {
+					if ( [ getpos (leader _grp) , 4000 , GRLIB_side_friendly ] call KPLIB_fnc_getUnitsCount == 0 ) then {
+						_patrol_continue = false;
+						{
+							if ( vehicle _x != _x ) then {
+								[(vehicle _x)] call KPLIB_fnc_cleanOpforVehicle;
+							};
+							deleteVehicle _x;
+						} foreach (units _grp);
+						_patrol_continue = false ;
+					};
+				};
+			};
+		}else{
+			_patrol_continue = false; // group is nil so must be destroyed
+		};
     };
 
     if ( !([] call KPLIB_fnc_isBigtownActive) ) then {
