@@ -47,16 +47,22 @@ if ((_unit isKindOf "Man") && (alive _unit) && (side group _unit == GRLIB_side_e
 			};
 		
 			waitUntil {sleep 1;
-				!alive _unit || side group _unit == GRLIB_side_friendly
+				!alive _unit || _unit getVariable ["ais_unconscious", false] || side group _unit == GRLIB_side_friendly
+			};
+
+			// HangoverIt - if prisioner falls unconcious in AIS then they will die - fixes issues with rescue missions
+			if (_unit getVariable ["ais_unconscious", false]) then {
+				_unit setDamage 1 ;
 			};
 
 			if (alive _unit) then {
 				if (KP_liberation_ace) then {
 					["ace_captives_setSurrendered", [_unit, false], _unit] call CBA_fnc_targetEvent;
 				} else {
-					_unit enableAI "ANIM";
-					_unit enableAI "MOVE";
-					_unit setCaptive false;
+					// HangoverIt - enableAI and setCaptive should be run on local client who has captured the prisioner
+					[_unit, "ANIM"] remoteExec ["enableAI", _unit] ;
+					[_unit, "MOVE"] remoteExec ["enableAI", _unit] ;
+					[_unit, false] remoteExec ["setCaptive", _unit] ;
 				};
 				sleep 1;
 				if (!_nointel) then {

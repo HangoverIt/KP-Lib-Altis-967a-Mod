@@ -21,5 +21,6 @@ if (_sector in sectors_bigtown || _sector in sectors_capture) then {
         [(KP_liberation_cr_sector_gain - _penalty), false] spawn F_cr_changeCR;
     };
 
+	diag_log format ["HangoverIt: "Civilian sector %1 (%2) captured. Penalty: %3", markerText _sector, _sector, _penalty] ;
     [format ["Civilian sector %1 (%2) captured. Penalty: %3", markerText _sector, _sector, _penalty], "CIVREP"] call KPLIB_fnc_log;
 };
