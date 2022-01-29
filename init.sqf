@@ -1,5 +1,5 @@
 //Exec Vcom AI function
-[] execVM "Vcom\VcomInit.sqf";
+[] spawn VCM_fnc_VcomInit;
 //End of Vcom commands
 
 KPLIB_init = false;

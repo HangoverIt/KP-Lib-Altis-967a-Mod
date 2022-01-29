@@ -35,7 +35,7 @@ private _civUnits = units _civLeader;
 } foreach (_civUnits);
 
 // Disable any VCOM on the civilians (i.e. don't steal cars)
-_civLeader setVariable ["Vcm_Disable",true];
+_civLeader setVariable ["Vcm_Disable",true,true];
 
 
 //_marker = createMarker ["mIfestiona", _civLeaderPos]; // DEBUG

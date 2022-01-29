@@ -11,9 +11,7 @@
 	Returns:
 		NOTHING
 */
-if (isNil "Vcm_ActivateAI") then { // HangoverIt - added wait for variable to be defined
-	Vcm_ActivateAI = true ; // give a default if not set
-};
+
 while {alive player && {Vcm_ActivateAI}} do
 {
 	if (player isIRLaserOn currentWeapon player) then

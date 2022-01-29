@@ -268,6 +268,15 @@ if ((!(_sector in blufor_sectors)) && (([markerPos _sector, [_opforcount] call K
             };
 
             _stopit = true;
+			
+			// Crews should get out and potentially surrender
+			{
+				if (_x != vehicle _x) then {
+					unassignVehicle _x ;
+					[_x] orderGetIn false ;
+					moveOut _x ;
+				};
+			}forEach _managed_units;
 
             {[_x] spawn prisonner_ai;} forEach ((markerPos _sector) nearEntities [["Man"], _local_capture_size * 1.2]);
 
