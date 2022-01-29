@@ -32,9 +32,9 @@ if ((_unit isKindOf "Man") && (alive _unit) && (side group _unit == GRLIB_side_e
 			_unit removeItem "NVGoggles_INDEP";
 			_unit setUnitPos "UP";
 			sleep 1;
-			private _grp = createGroup [GRLIB_side_civilian, true];
+			private _grp = createGroup [GRLIB_side_civilian, true]; 
 			[_unit] joinSilent _grp;
-			_grp setVariable ["Vcm_Disable",true]; // HangoverIt disable Vcom on prisonners
+			_grp setVariable ["Vcm_Disable",true,true]; // HangoverIt disable Vcom on prisoners
 		
 			if (KP_liberation_ace) then {
 				["ace_captives_setSurrendered", [_unit, true], _unit] call CBA_fnc_targetEvent;

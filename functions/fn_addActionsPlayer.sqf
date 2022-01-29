@@ -370,4 +370,18 @@ _player addAction [
     "
 ];
 
+// Relink support - work around for disappearing artillary support - HangoverIT
+_player addAction [
+    ["<t color='#FFFF00'>", localize "STR_SUPPORTS_ACTION", "</t>"] joinString "",
+    {[player, KPLIB_suppMod_req, KPLIB_suppMod_arty] call BIS_fnc_addSupportLink;},
+    nil,
+    -900,
+    false,
+    true,
+    "",
+    "
+       !(KPLIB_suppMod_req in (synchronizedObjects player))
+    "
+];
+
 true

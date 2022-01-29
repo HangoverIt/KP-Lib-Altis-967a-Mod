@@ -52,7 +52,7 @@ while { true } do {
             _grp = createGroup GRLIB_side_friendly;
         };
         // HangoverIt - 13th June 2021 - added: [this] call AIS_System_fnc_loadAIS;
-		// HangoverIt - added to stop VCOM controlling friendly AI: group this setVariable ["Vcm_Disable",true];
+		// HangoverIt - added to stop VCOM controlling friendly AI: group this setVariable ["Vcm_Disable",true,true];
         _classname createUnit [_pos, _grp,"[this] call KPLIB_fnc_initManagedUnit;", 0.5, "private"];
         build_confirmed = 0;
     } else {

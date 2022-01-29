@@ -32,6 +32,11 @@ if (animationState _unit in ["ladderriflestatic", "laddercivilstatic"]) then {
     _unit action ["ladderOff", (nearestBuilding _unit)];
 };
 
+// Hangover IT - remove unit from vehicle - stop shooting and driving
+unassignVehicle _unit ;
+[_unit] orderGetIn false ;
+moveOut _unit ;
+
 // animation and other actions across the network to all players
 //[_unit, true] remoteExecCall ["AIS_System_fnc_unconcsiousRemote", [-2,0] select hasInterface, false];
 [[_unit, true], {

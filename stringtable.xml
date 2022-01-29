@@ -6821,6 +6821,9 @@
             <Korean>-- 전초기지 주변 정리</Korean>
             <Czech>-- Vymazat zónu FOB</Czech>
         </Key>
+        <Key ID="STR_SUPPORTS_ACTION">
+            <Original>-- Relink to support</Original>
+        </Key>
         <Key ID="STR_FOB_REPACKAGE_HINT">
             <Original>FOB repackaged.\nPossibly created clearance will be reverted upon server restart.</Original>
             <German>FOB eingepackt.\nEventuelle Gebietsräumung wird zum Serverneustart rückgängig gemacht.</German>
