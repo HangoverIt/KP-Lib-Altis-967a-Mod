@@ -22,7 +22,7 @@ if (_veh == _unit) exitWith {false;}; // HangoverIT - unit is not in a vehicle
 unassignVehicle _unit ;
 [_unit] orderGetIn false ;
 moveOut _unit ;
-(group _unit) leaveVehicle _veh ;
+//(group _unit) leaveVehicle _veh ; // HangoverIT - causes all units to exit
 
 
 /* Alternative KP Lib code
