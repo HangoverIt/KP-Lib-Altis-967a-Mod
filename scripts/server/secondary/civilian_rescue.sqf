@@ -21,10 +21,10 @@ _civcar setDir _dir ;
 private _civLeader = createGroup [GRLIB_side_enemy, true];
 private _civLeaderPos = (getpos _civcar) getPos [25, random 360];
 
-private _nonvip = ["C_Nikos", _civLeaderPos, _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+private _nonvip = ["C_Nikos", _civLeaderPos, _civLeader, "PRIVATE", 0.5, false] call KPLIB_fnc_createManagedUnit;
 sleep 0.2;
 
-private _vip = ["C_Nikos_aged", _civLeaderPos getPos [1, random 360], _civLeader, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+private _vip = ["C_Nikos_aged", _civLeaderPos getPos [1, random 360], _civLeader, "PRIVATE", 0.5, false] call KPLIB_fnc_createManagedUnit;
 sleep 2;
 
 private _civUnits = units _civLeader;

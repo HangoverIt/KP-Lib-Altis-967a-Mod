@@ -88,7 +88,7 @@ if (_classname in militia_vehicles) then {
     sleep 0.1;
     // HangoverIt - call init for managed units
 	{
-		[_x] call KPLIB_fnc_initManagedUnit ;
+		[_x,true] call KPLIB_fnc_initManagedUnit ;
 	} forEach _crew;
 };
 

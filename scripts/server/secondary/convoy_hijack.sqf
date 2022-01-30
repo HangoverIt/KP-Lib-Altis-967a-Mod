@@ -131,10 +131,7 @@ while { _mission_in_progress } do {
         };
 
         {
-            unAssignVehicle _x;
-            _x action ["eject", vehicle _x];
-            _x action ["getout", vehicle _x];
-            unAssignVehicle _x;
+            [_x] call KPLIB_fnc_exitVehicle ;
             sleep 0.7;
         } foreach (units _troops_group);
 

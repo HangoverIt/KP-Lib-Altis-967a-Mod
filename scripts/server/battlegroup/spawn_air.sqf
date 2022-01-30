@@ -20,7 +20,7 @@ for "_i" from 1 to _planes_number do {
     _plane flyInHeight (120 + (random 180));
     _plane addMPEventHandler ["MPKilled", {_this spawn kill_manager}];
     [_plane] call KPLIB_fnc_addObjectInit;
-    {[_x] call KPLIB_fnc_initManagedUnit ;} forEach (crew _plane); // HangoverIt - updated to general init for created units
+    {[_x,true] call KPLIB_fnc_initManagedUnit ;} forEach (crew _plane); // HangoverIt - updated to general init for created units
     (crew _plane) joinSilent _grp;
     sleep 1;
 };

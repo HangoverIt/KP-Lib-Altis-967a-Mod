@@ -495,7 +495,7 @@ if (!isNil "_saveData") then {
             _x params ["_spawnPos", "_units"];
             _grp = createGroup [GRLIB_side_friendly, true];
             {
-                [_x, [_spawnPos, _grp] select (_forEachIndex > 0), _grp] call KPLIB_fnc_createManagedUnit;
+                [_x, [_spawnPos, _grp] select (_forEachIndex > 0), _grp, false] call KPLIB_fnc_createManagedUnit;
             } forEach _units;
         } forEach _aiGroups;
     } else {
@@ -508,7 +508,7 @@ if (!isNil "_saveData") then {
             {
                 _pos = [(_x select 1) select 0, (_x select 1) select 1, ((_x select 1) select 2) + 0.2];
                 _dir = _x select 2;
-                _unit = [(_x select 0), _pos, _grp] call KPLIB_fnc_createManagedUnit;
+                _unit = [(_x select 0), _pos, _grp, false] call KPLIB_fnc_createManagedUnit;
                 _unit setDir _dir;
                 _unit setPosATL _pos;
             } forEach _x;

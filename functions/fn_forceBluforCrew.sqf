@@ -26,7 +26,7 @@ if (isNull _veh) exitWith {["Null object given"] call BIS_fnc_error; false};
 private _grp = createVehicleCrew _veh;
 // HangoverIt - ensure all created units are initialised
 {
-	[_x] call KPLIB_fnc_initManagedUnit ;
+	[_x,false] call KPLIB_fnc_initManagedUnit ;
 }forEach units _grp ;
 
 // If the config crew isn't the correct side, replace it with the crew classnames from the preset
@@ -35,7 +35,7 @@ if ((side _grp) != GRLIB_side_friendly) then {
 
     _grp = createGroup [GRLIB_side_friendly, true];
     while {count units _grp < 3} do {
-        [crewman_classname, getPos _veh, _grp] call KPLIB_fnc_createManagedUnit;
+        [crewman_classname, getPos _veh, _grp, false] call KPLIB_fnc_createManagedUnit;
     };
     ((units _grp) select 0) moveInDriver _veh;
     ((units _grp) select 1) moveInGunner _veh;

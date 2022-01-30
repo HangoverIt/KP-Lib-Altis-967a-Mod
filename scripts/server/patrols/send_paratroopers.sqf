@@ -27,7 +27,7 @@ if (isNull _chopper_type) then {
     (crew _newvehicle) joinSilent _pilot_group;
 
     _newvehicle addMPEventHandler ["MPKilled", {_this spawn kill_manager}];
-    {[_x] call KPLIB_fnc_initManagedUnit ;} forEach (crew _newvehicle); // HangoverIt - updated to add general init for created units
+    {[_x,true] call KPLIB_fnc_initManagedUnit ;} forEach (crew _newvehicle); // HangoverIt - updated to add general init for created units
 } else {
     _newvehicle = _chopper_type;
     _pilot_group = group _newvehicle;

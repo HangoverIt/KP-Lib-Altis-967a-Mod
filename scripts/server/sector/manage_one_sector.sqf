@@ -272,30 +272,30 @@ if ((!(_sector in blufor_sectors)) && (([markerPos _sector, [_opforcount] call K
 			// Crews should get out and potentially surrender
 			{
 				if (_x != vehicle _x) then {
-					unassignVehicle _x ;
-					[_x] orderGetIn false ;
-					moveOut _x ;
+					[_x] call KPLIB_fnc_exitVehicle ;
 				};
 			}forEach _managed_units;
+			
+			sleep 30;
 
             {[_x] spawn prisonner_ai;} forEach ((markerPos _sector) nearEntities [["Man"], _local_capture_size * 1.2]);
 
-            sleep 60;
+            sleep 30;
 
             active_sectors = active_sectors - [_sector]; publicVariable "active_sectors";
 
-            sleep 600;
+            sleep 1200; // HangoverIt - increase to 20 min before removal
 
             {
-                if (_x isKindOf "Man") then {
-                    if (side group _x != GRLIB_side_friendly) then {
-                        deleteVehicle _x;
-                    };
-                } else {
-                    if (!isNull _x) then {
-                        [_x] call KPLIB_fnc_cleanOpforVehicle;
-                    };
-                };
+				if (!isNull _x) then {
+					if (_x isKindOf "Man") then {
+						if (side group _x != GRLIB_side_friendly) then {
+							deleteVehicle _x;
+						};
+					} else {
+						[_x] call KPLIB_fnc_cleanOpforVehicle;
+					};
+				};
             } forEach _managed_units;
         } else {
             if (([_sectorpos, (([_opforcount] call KPLIB_fnc_getSectorRange) + 300), GRLIB_side_friendly] call KPLIB_fnc_getUnitsCount) == 0) then {

@@ -9,7 +9,7 @@ if ( _ownership != GRLIB_side_enemy ) exitWith {};
 if ( GRLIB_blufor_defenders ) then {
     _grp = creategroup [GRLIB_side_friendly, true];
     {
-        [_x, _thispos, _grp] call KPLIB_fnc_createManagedUnit;
+        [_x, _thispos, _grp, true] call KPLIB_fnc_createManagedUnit;
     } foreach blufor_squad_inf;
     sleep 3;
     _grp setBehaviour "COMBAT";

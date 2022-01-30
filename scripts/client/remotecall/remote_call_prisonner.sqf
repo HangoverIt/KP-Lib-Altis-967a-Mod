@@ -62,10 +62,7 @@ if (alive _unit) then {
         _unit setCaptive false;
 
         if ((vehicle _unit != _unit) && !(_unit isEqualTo (driver vehicle _unit))) then {
-            unAssignVehicle _unit;
-            _unit action ["eject", vehicle _unit];
-            _unit action ["getout", vehicle _unit];
-            unAssignVehicle _unit;
+            [_unit] call KPLIB_fnc_exitVehicle ;
         };
 
         while {(count (waypoints _grp)) != 0} do {deleteWaypoint ((waypoints _grp) select 0);};
