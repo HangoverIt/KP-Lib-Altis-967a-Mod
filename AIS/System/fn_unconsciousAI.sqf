@@ -37,7 +37,7 @@ private _veh = vehicle _unit ;
 unassignVehicle _unit ;
 [_unit] orderGetIn false ;
 moveOut _unit ;
-_unit leaveVehicle _veh ;
+//_unit leaveVehicle _veh ; // HangoverIt - causes all units to exit
 
 // animation and other actions across the network to all players
 //[_unit, true] remoteExecCall ["AIS_System_fnc_unconcsiousRemote", [-2,0] select hasInterface, false];
