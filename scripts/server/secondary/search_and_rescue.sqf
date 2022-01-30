@@ -18,10 +18,10 @@ _helofire setpos (getpos _helowreck);
 private _pilotsGrp = createGroup [GRLIB_side_enemy, true];
 private _pilotsPos = (getpos _helowreck) getPos [25, random 360];
 
-[pilot_classname, _pilotsPos, _pilotsGrp, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+[pilot_classname, _pilotsPos, _pilotsGrp, "PRIVATE", 0.5, false] call KPLIB_fnc_createManagedUnit;
 sleep 0.2;
 
-[pilot_classname, _pilotsPos getPos [1, random 360], _pilotsGrp, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
+[pilot_classname, _pilotsPos getPos [1, random 360], _pilotsGrp, "PRIVATE", 0.5, false] call KPLIB_fnc_createManagedUnit;
 sleep 2;
 
 private _pilotUnits = units _pilotsGrp;

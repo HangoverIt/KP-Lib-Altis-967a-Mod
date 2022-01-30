@@ -36,7 +36,7 @@ private _unit = objNull;
 private _weapon = [];
 for "_i" from 1 to _amount do {
     // Create unit
-    _unit = [selectRandom KP_liberation_guerilla_units, _pos, _grp, "PRIVATE", 5] call KPLIB_fnc_createManagedUnit;
+    _unit = [selectRandom KP_liberation_guerilla_units, _pos, _grp, "PRIVATE", 5, true] call KPLIB_fnc_createManagedUnit;
 
     // Clear inventory
     removeAllWeapons _unit;

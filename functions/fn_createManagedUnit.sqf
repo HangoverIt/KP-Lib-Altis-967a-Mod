@@ -6,14 +6,15 @@
     License: MIT License - http://www.opensource.org/licenses/MIT
 
     Description:
-        Creates unit managed by kill tracker.
+        Creates unit managed by adding events and variables
 
     Parameter(s):
-        _type       - Type of unit              [STRING, defaults to ""]
-        _spawnPos   - Where to spawn            [ARRAY|OBJECT|GROUP, defaults to [0, 0, 0]]
-        _group      - Group to add the unit to  [GROUP, defaults to grpNull]
-        _rank       - Unit rank                 [STRING, defaults to "PRIVATE"]
-        _placement  - Placement radius          [NUMBER, defaults to 0]
+        _type        - Type of unit              		[STRING, defaults to ""]
+        _spawnPos    - Where to spawn            		[ARRAY|OBJECT|GROUP, defaults to [0, 0, 0]]
+        _group       - Group to add the unit to  		[GROUP, defaults to grpNull]
+        _rank        - Unit rank                 		[STRING, defaults to "PRIVATE"]
+        _placement   - Placement radius          		[NUMBER, defaults to 0]
+		_independent - Units are fully server managed 	[BOOLEAN, defaults to true]
 
     Returns:
         Created unit [OBJECT]
@@ -24,7 +25,8 @@ params [
     ["_spawnPos", [0, 0, 0], [[], objNull, grpNull], [2, 3]],
     ["_group", grpNull, [grpNull]],
     ["_rank", "PRIVATE", [""]],
-    ["_placement", 0, [0]]
+    ["_placement", 0, [0]],
+	["_independent", true, [true]]
 ];
 
 private ["_unit"];
@@ -40,7 +42,7 @@ isNil {
     [_unit] joinSilent _group;
     deleteGroup _groupTemp;
 
-	[_unit] call KPLIB_fnc_initManagedUnit ;
+	[_unit,_independent] call KPLIB_fnc_initManagedUnit ;
 };
 
 _unit

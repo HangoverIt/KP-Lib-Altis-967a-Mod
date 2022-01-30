@@ -42,7 +42,8 @@ for "_i" from 1 to _amount do {
         [
             selectRandom civilians,
             [(((_sPos select 0) + (75 * _spread)) - (random (150 * _spread))), (((_sPos select 1) + (75 * _spread)) - (random (150 * _spread))), 0],
-            _grp
+            _grp, 
+			false
         ] call KPLIB_fnc_createManagedUnit
     );
 

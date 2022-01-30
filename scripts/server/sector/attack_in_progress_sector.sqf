@@ -14,7 +14,7 @@ if ( _sector in sectors_military ) then {
 if ( GRLIB_blufor_defenders ) then {
     _grp = creategroup [GRLIB_side_friendly, true];
     {
-        [_x, markerPos _sector, _grp, "PRIVATE", 20] call KPLIB_fnc_createManagedUnit;
+        [_x, markerPos _sector, _grp, "PRIVATE", 20, true] call KPLIB_fnc_createManagedUnit;
     } foreach _squad_type;
     sleep 3;
     _grp setBehaviour "COMBAT";
