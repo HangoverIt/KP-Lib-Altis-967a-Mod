@@ -291,7 +291,9 @@ KPLIB_o_allVeh_classes  = [];
     opfor_battlegroup_vehicles_low_intensity,
     opfor_troup_transports,
     opfor_choppers,
-    opfor_air
+    opfor_air,
+	opfor_static,
+	opfor_static_heavy
 ];
 KPLIB_o_allVeh_classes = KPLIB_o_allVeh_classes apply {toLower _x};
 KPLIB_o_allVeh_classes = KPLIB_o_allVeh_classes arrayIntersect KPLIB_o_allVeh_classes;

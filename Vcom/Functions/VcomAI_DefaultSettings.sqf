@@ -19,7 +19,7 @@ Vcm_Settings =
 	VCM_ARTYENABLE = true; //Enable improved artillery handling from Vcom.
 	VCM_ARTYLST = []; //List of all AI inside of artillery pieces, leave this alone.
 	VCM_ARTYDELAY = 60; //Delay between squads requesting artillery
-	VCM_MEDICALACTIVE = true; // AI will heal themselves, and medics will heal others in their squad.
+	VCM_MEDICALACTIVE = false; // AI will heal themselves, and medics will heal others in their squad. HangoverIT - disabled for AIS
 	VCM_ARTYWT = -(VCM_ARTYDELAY);
 	VCM_ARTYET = -(VCM_ARTYDELAY);
 	VCM_ARTYRT = -(VCM_ARTYDELAY);
@@ -37,13 +37,13 @@ Vcm_Settings =
 	VCM_WARNDIST = 1000; //How far AI can request help from other groups.
 	VCM_WARNDELAY = 30; //How long the AI have to survive before they can call in for support. This activates once the AI enter combat.
 	VCM_STATICARMT = 300; //How long AI stay on static weapons when initially arming them. This is just for AI WITHOUT static bags. They will stay for this duration when NO ENEMIES ARE SEEN, or their group gets FAR away.	
-	VCM_StealVeh = false; //Will the AI steal vehicles.
+	VCM_StealVeh = true; //Will the AI steal vehicles.
 	VCM_ClassSteal = false; //If true, crewmen are required to steal tracked vehicles. Pilots are required to steal aircraft. false = anyone can steal any vehicle.
 	VCM_AIDISTANCEVEHPATH = 100; //Distance AI check from the squad leader to steal vehicles
 	VCM_ADVANCEDMOVEMENT = true; //True means AI will actively generate waypoints if no other waypoints are generated for the AI group (2 or more). False disables this advanced movements.
 	VCM_FRMCHANGE = true; //AI GROUPS WILL CHANGE FORMATIONS TO THEIR BEST GUESS.
 	VCM_SKILLCHANGE = true; //AI Groups will have their skills changed by Vcom.
-	VCM_USECBASETTINGS = true;//If CBA is enabled on the host, use the CBA default settings. If false, use the filepatching settings instead.
+	VCM_USECBASETTINGS = false;//If CBA is enabled on the host, use the CBA default settings. If false, use the filepatching settings instead.
 	VCM_CARGOCHNG = true; //If true, Vcom will handle disembarking/re-embarking orders instead of vanilla. This is with the intention to prevent the endless embark/disembark loops AI are given.	
 	VCM_TURRETUNLOAD = true;//If true = Prevents AI vehicle turret positions from leaving a vehicle just beecause it is slightly damaged. Example: leaving a tank when just the tracks are damaged.	
 	VCM_DISEMBARKRANGE = 500; //How far AI will disembark from their enemies. If the vehicle is damaged, they will disembark.

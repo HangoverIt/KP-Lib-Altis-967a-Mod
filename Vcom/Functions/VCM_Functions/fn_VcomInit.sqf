@@ -42,9 +42,10 @@
 	
 	waitUntil {!(isNil "VCM_AIMagLimit")};
 	
+	if (isNil "VCM_MEDICALACTIVE") then {VCM_MEDICALACTIVE = true ;}; // HangoverIT - set default config if not set
 	//Mod checks
 	//ACE CHECK
-	if (!(isNil "ACE_Medical_enableFor") && {ACE_Medical_enableFor isEqualTo 1}) then {VCM_MEDICALACTIVE = false;} else {VCM_MEDICALACTIVE = true;};
+	if (!(isNil "ACE_Medical_enableFor") && {ACE_Medical_enableFor isEqualTo 1}) then {VCM_MEDICALACTIVE = false;}; // HangoverIT - only set to false if ACE medical enabled
 	//CBA CHECK
 	if (isClass(configFile >> "CfgPatches" >> "cba_main")) then {CBAACT = true;} else {CBAACT = false;};
 	//ENHANCED MOVEMENT CHECK

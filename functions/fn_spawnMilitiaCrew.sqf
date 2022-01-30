@@ -25,7 +25,7 @@ if (isNull _vehicle) exitWith {["Null object given"] call BIS_fnc_error; false};
 private _grp = createGroup [GRLIB_side_enemy, true];
 private _units = [];
 for "_i" from 1 to 3 do {
-    _units pushBack ([selectRandom militia_squad, getPos _vehicle, _grp, true] call KPLIB_fnc_createManagedUnit);
+    _units pushBack ([selectRandom militia_squad, getPos _vehicle, _grp] call KPLIB_fnc_createManagedUnit);
 };
 
 // Assign to vehicle

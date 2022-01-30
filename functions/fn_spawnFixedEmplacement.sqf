@@ -89,7 +89,7 @@ if (count _trypos > 0) then {
 	_fixedobj setDir (_dir) ;
 	waitUntil {sleep 0.2; count (crew _fixedobj) >0;};
 	_grp = group ((crew _fixedobj) select 0) ;
-	_unit1 = [opfor_rifleman, _trypos, _grp, true] call KPLIB_fnc_createManagedUnit;
+	_unit1 = [opfor_rifleman, _trypos, _grp] call KPLIB_fnc_createManagedUnit;
 	_grp addVehicle _fixedobj ;
 	_spawnedunits = [_unit1, _fixedobj] ;
 };
