@@ -46,7 +46,7 @@ for "_i" from 1 to _amount do {
         _grp = createGroup [GRLIB_side_enemy, true];
     };
 
-    _unit = [selectRandom _classnames, _pos, _grp, true] call KPLIB_fnc_createManagedUnit;
+    _unit = [selectRandom _classnames, _pos, _grp] call KPLIB_fnc_createManagedUnit;
     _unit setDir (random 360);
     _unit setPos (_positions deleteAt (random (floor (count _positions) - 1)));
     [_unit, _sector] spawn building_defence_ai;

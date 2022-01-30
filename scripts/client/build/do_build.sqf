@@ -337,7 +337,7 @@ while { true } do {
 
                 if(buildtype != 6) then {
                     _vehicle addMPEventHandler ["MPKilled", {_this spawn kill_manager}];
-                    { _x addMPEventHandler ["MPKilled", {_this spawn kill_manager}]; } foreach (crew _vehicle);
+                    { [_x,false] call KPLIB_fnc_initManagedUnit; } foreach (crew _vehicle); // HangoverIt - init managed unit for each crew
                 };
             };
 

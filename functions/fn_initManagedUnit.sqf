@@ -27,6 +27,12 @@ if (isNull _group || side _group == GRLIB_side_civilian) then {
 	_unit setVariable ["I_am_a_civilian", true,true] ; // HangoverIt - Set flag that this is a civilian as ambigious with prisioner AI
 };
 
+if (side _group == GRLIB_side_friendly) then {
+	// HangoverIt - All friendly AI can have the additional capability to capture vehicles
+	_unit addEventHandler ["GetInMan", {[_this select 2] call KPLIB_fnc_setVehiclesSeized;}];
+	_unit addEventHandler ["GetInMan", {[_this select 2] call KPLIB_fnc_setVehicleCaptured;}];
+};
+
 if (!_independent) then {
 	_group setVariable ["Vcm_Disable",true,true]; // HangoverIt - Stop VCOM working on units that are not independent
 };

@@ -35,7 +35,7 @@ if ((side _grp) != GRLIB_side_friendly) then {
 
     _grp = createGroup [GRLIB_side_friendly, true];
     while {count units _grp < 3} do {
-        [crewman_classname, getPos _veh, _grp, false] call KPLIB_fnc_createManagedUnit;
+        [crewman_classname, getPos _veh, _grp, "PRIVATE", 0, false] call KPLIB_fnc_createManagedUnit;
     };
     ((units _grp) select 0) moveInDriver _veh;
     ((units _grp) select 1) moveInGunner _veh;

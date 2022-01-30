@@ -16,11 +16,16 @@
 */
 params["_unit"];
 
+private _veh = vehicle _unit ;
+if (_veh == _unit) exitWith {false;}; // HangoverIT - unit is not in a vehicle
+
 unassignVehicle _unit ;
 [_unit] orderGetIn false ;
 moveOut _unit ;
+(group _unit) leaveVehicle _veh ;
 
-/*
+
+/* Alternative KP Lib code
 			unAssignVehicle _unit;
             _unit action ["eject", vehicle _unit];
             _unit action ["getout", vehicle _unit];

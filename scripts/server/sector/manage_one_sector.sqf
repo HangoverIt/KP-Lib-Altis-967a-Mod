@@ -271,16 +271,18 @@ if ((!(_sector in blufor_sectors)) && (([markerPos _sector, [_opforcount] call K
 			
 			// Crews should get out and potentially surrender
 			{
-				if (_x != vehicle _x) then {
-					[_x] call KPLIB_fnc_exitVehicle ;
+				if (_x isKindOf "Land") then {
+					{
+						[_x] call KPLIB_fnc_exitVehicle ;
+					}forEach crew _x ;
 				};
 			}forEach _managed_units;
 			
-			sleep 30;
+			sleep 5;
 
             {[_x] spawn prisonner_ai;} forEach ((markerPos _sector) nearEntities [["Man"], _local_capture_size * 1.2]);
 
-            sleep 30;
+            sleep 55;
 
             active_sectors = active_sectors - [_sector]; publicVariable "active_sectors";
 

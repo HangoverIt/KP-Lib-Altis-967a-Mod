@@ -17,7 +17,7 @@ private _grp = createGroup [GRLIB_side_enemy, true];
 private _hvt = [opfor_officer, getPos _roadObj, _grp, "CAPTAIN", 30, false] call KPLIB_fnc_createManagedUnit;
 
 for "_i" from 1 to 4 do {
-    [selectRandom militia_squad, _grp, _grp] call KPLIB_fnc_createManagedUnit;
+    [selectRandom militia_squad, getPos _roadObj, _grp] call KPLIB_fnc_createManagedUnit;
     sleep 0.1;
 };
 
