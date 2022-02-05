@@ -23,6 +23,11 @@ for "_i" from 1 to _planes_number do {
     {[_x,true] call KPLIB_fnc_initManagedUnit ;} forEach (crew _plane); // HangoverIt - updated to general init for created units
     (crew _plane) joinSilent _grp;
     sleep 1;
+	
+	// HangoverIt - make the planes a bit more intelligent against targets
+	_plane setVehicleRadar 1;
+	_plane setVehicleReceiveRemoteTargets true ;
+	_plane setVehicleReportRemoteTargets true ;
 };
 
 while {!((waypoints _grp) isEqualTo [])} do {deleteWaypoint ((waypoints _grp) select 0);};
