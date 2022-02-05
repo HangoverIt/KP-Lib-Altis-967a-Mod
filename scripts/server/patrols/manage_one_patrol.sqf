@@ -27,7 +27,7 @@ while { GRLIB_endgame == 0 } do {
     _sector_spawn_pos = [(((markerpos _spawn_marker) select 0) - 500) + (random 1000),(((markerpos _spawn_marker) select 1) - 500) + (random 1000),0];
 
     if (_is_infantry) then {
-        _grp = createGroup [GRLIB_side_enemy, true];
+        _grp = createGroup [GRLIB_side_enemy, false];
         _squad = [] call KPLIB_fnc_getSquadComp;
         {
             [_x, _sector_spawn_pos, _grp, "PRIVATE", 0.5] call KPLIB_fnc_createManagedUnit;
@@ -84,6 +84,13 @@ while { GRLIB_endgame == 0 } do {
 			_patrol_continue = false; // group is nil so must be destroyed
 		};
     };
+	
+	// HangoverIt - Clean up group
+	{
+		deleteVehicle _x ;
+	}forEach units _grp ;
+	_grpOwner = groupOwner _grp ;
+	[_grp] remoteExec ["deleteGroup", _grpOwner] ;
 
     if ( !([] call KPLIB_fnc_isBigtownActive) ) then {
         sleep (600.0 / GRLIB_difficulty_modifier);
