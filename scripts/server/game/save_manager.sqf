@@ -300,6 +300,17 @@ if (!isNil "_saveData") then {
 					daoVAMinfo = _this ;
 					publicVariable "daoVAMinfo";
 					diag_log format ["HangoverIt: loading DAO data %1", daoVAMinfo] ;
+					
+					// Add exclusion list to all clients for UAVs. Assumes all UAV classes have the description of 'UAV' within
+					daoIgnore = [] ;
+					{
+						_class = _x select 0 ;
+						if ("UAV" in _class) then {
+							diag_log format ["HangoverIt: Adding air vehicle %1 for exclusion", _class];
+							daoIgnore pushBack _class ;
+						};
+					}forEach air_vehicles;
+					publicVariable "daoIgnore";
 				};
 			};
 		}forEach getLoadedModsInfo ;
