@@ -21,7 +21,7 @@ params [
     ["_pos", getPos player, [[]], [2, 3]]
 ];
 
-private _sectors = sectors_opfor select {((markerPos _x) distance2d _pos) < _radius};
+private _sectors = (sectors_allSectors - blufor_sectors) select {((markerPos _x) distance2d _pos) < _radius};
 
 if (_sectors isEqualTo []) exitWith {""};
 

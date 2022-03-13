@@ -27,9 +27,9 @@ params [
 
 
 // Only check for opfor spawn points which aren't used already in the current session
-private _spawnsToCheck = sectors_opfor;
+private _spawnsToCheck = sectors_allSectors - blufor_sectors;
 if (!isNil "used_positions") then {
-    _spawnsToCheck = sectors_opfor - used_positions;
+    _spawnsToCheck = _spawnsToCheck - used_positions;
 };
 
 private _allLocs = (blufor_sectors apply {(markerPos _x)}) + GRLIB_all_fobs;
