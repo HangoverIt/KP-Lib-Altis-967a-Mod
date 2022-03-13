@@ -29,6 +29,7 @@ class KPLIB {
         class forceBluforCrew           {};
         class getAdaptiveVehicle        {};
         class getBluforRatio            {};
+		class getOpforRatio             {}; // HangoverIt
         class getCommander              {};
         class getCrateHeight            {};
         class getFobName                {};

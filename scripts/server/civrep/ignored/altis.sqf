@@ -57,5 +57,6 @@ KP_liberation_cr_ign_buildings = [
 	"Land_SlideCastle_F",
 	"Land_spp_Mirror_F",
 	"Land_TTowerSmall_1_F",
-	"Land_TTowerSmall_2_F"
+	"Land_TTowerSmall_2_F",
+	"Land_wpp_Turbine_V2_F"
 ];

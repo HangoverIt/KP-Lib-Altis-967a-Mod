@@ -1,4 +1,4 @@
-params ["_unit", ["_sector", ""]];
+params ["_unit", ["_sector", ""], ["_side", GRLIB_side_enemy]];
 
 _unit setUnitPos "UP";
 _unit disableAI "PATH";
@@ -7,19 +7,31 @@ private _hostiles = 0;
 private _ratio = 0.4;
 private _range = 40;
 
+private _checkside = GRLIB_side_friendly;
+private _sectorGroup = blufor_sectors;
+
+if (_side == GRLIB_side_friendly) then {
+	_checkside = GRLIB_side_enemy;
+	_sectorGroup = sectors_opfor;
+};
+
 while {_move_is_disabled && local _unit && alive _unit && !(captive _unit)} do {
 
     if !(_sector isEqualTo "") then {
-        _ratio = [_sector] call KPLIB_fnc_getBluforRatio;
+		if (_side == GRLIB_side_enemy) then {
+			_ratio = [_sector] call KPLIB_fnc_getBluforRatio;
+		}else{
+			_ratio = [_sector] call KPLIB_fnc_getOpforRatio;
+		};
     };
 
     _range = floor (linearConversion [0, 1, _ratio, 0, GRLIB_capture_size / 3 * 2, true]);
 
-    _hostiles = ((getPos _unit) nearEntities [["Man"], _range]) select {side _x == GRLIB_side_friendly};
+    _hostiles = ((getPos _unit) nearEntities [["Man"], _range]) select {side _x == _checkside};
 
     if (_move_is_disabled &&
         {
-            (_sector in blufor_sectors) ||
+            (_sector in _sectorGroup) ||
             {!(_hostiles isEqualTo [])} ||
             {damage _unit > 0.25}
         }

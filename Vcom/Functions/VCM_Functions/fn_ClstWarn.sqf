@@ -30,7 +30,7 @@ _unitGroup spawn {sleep 300;_this setVariable ["VCM_RQSTHELP",false];};
 private _trgtPos = getpos _killer;
 
 //If this gets attached to a player, then exit before doing anything
-if (isPlayer _unit) exitWith {};
+if (isPlayer _unit || _unit in allPlayers) exitWith {}; // HangoverIt; added allPlayers check as isPlayer can be inaccurate in MP
 
 //Check to see if this unit should be moving to support others or not
 //Check to see if this unit is garrisoned. If so, don't do anything
@@ -41,8 +41,8 @@ if (isNil "_checkStatus" || {(_unit getVariable ["Vcm_Disable",false])} || {!("I
 
 private _arrayOrg = _unit call VCM_fnc_FriendlyArray;
 _arrayOrg = _arrayOrg - VCM_ARTYLST;
-//Remove players 
-{if (isPlayer _x) then {_arrayOrg deleteAt _foreachIndex;};} foreach _arrayOrg;
+//Remove players - HangoverIt; added allPlayers check as isPlayer can be inaccurate in MP
+{if (isPlayer _x || _x in allPlayers) then {_arrayOrg deleteAt _foreachIndex;};} foreach _arrayOrg;
 
 private _array2 = _killer call VCM_fnc_FriendlyArray;
 _array2 = _array2 - VCM_ARTYLST;
