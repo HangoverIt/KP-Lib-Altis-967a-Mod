@@ -59,6 +59,8 @@ for "_i" from 0 to (8) do {
 };
 _vehicle = [_spawn_opfor_at, selectRandom _vehicle_pool] call KPLIB_fnc_spawnVehicle;
 (crew _vehicle) joinSilent _grpPatrol;
+_vehicle = [_spawn_opfor_at, selectRandom _vehicle_pool] call KPLIB_fnc_spawnVehicle;
+(crew _vehicle) joinSilent _grpPatrol;
 
 // Clear all waypoints
 while {(count (waypoints _grpPatrol)) != 0} do {deleteWaypoint ((waypoints _grpPatrol) select 0);};
@@ -96,6 +98,9 @@ while {_timeOut > 0} do {
 		_wp setWaypointCompletionRadius 50;
 	};
 	
+	if (_timeOut % 60 == 0) then {
+		_smoke = createVehicle ["SmokeShellGreen", _spawn_loc, [], 5, "NONE"];
+	};
 	_mkr setMarkerText "Supplies " + (_timeOut call _covertMinSec);
 	_timeOut = _timeOut - 1;
 	sleep 1 ;

@@ -2,6 +2,7 @@ params [ "_sector" ];
 private [ "_attacktime", "_ownership", "_grp", "_squad_type" ];
 
 sleep 5;
+private _building_range = 50;
 
 _ownership = [ markerpos _sector ] call KPLIB_fnc_getSectorOwnership;
 if ( _ownership != GRLIB_side_enemy ) exitWith {};
@@ -12,9 +13,22 @@ if ( _sector in sectors_military ) then {
 };
 
 if ( GRLIB_blufor_defenders ) then {
+	_sectorpos = markerPos _sector;
+	_allbuildings = (nearestObjects [_sectorpos, ["House"], _building_range]) select {alive _x};
+	_buildingpositions = [];
+	{
+		_buildingpositions = _buildingpositions + ([_x] call BIS_fnc_buildingPositions);
+	} forEach _allbuildings;
     _grp = creategroup [GRLIB_side_friendly, true];
     {
-        [_x, markerPos _sector, _grp, "PRIVATE", 20, true] call KPLIB_fnc_createManagedUnit;
+        _unit = [_x, markerPos _sector, _grp, "PRIVATE", 20, true] call KPLIB_fnc_createManagedUnit;
+		if (random 100 >= 20) then { // 80% chance to spawn in building
+			_unit setDir (random 360);
+			if (count _buildingpositions > 0) then {
+				_unit setPos (_buildingpositions deleteAt (random (floor (count _buildingpositions) - 1)));
+			};
+			[_unit, _sector, GRLIB_side_friendly] spawn building_defence_ai;
+		};
     } foreach _squad_type;
     sleep 3;
     _grp setBehaviour "COMBAT";
