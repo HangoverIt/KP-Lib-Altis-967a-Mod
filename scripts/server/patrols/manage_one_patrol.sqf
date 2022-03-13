@@ -1,6 +1,8 @@
 params [ "_minimum_readiness", "_is_infantry" ];
 private [ "_headless_client" ];
 
+private _timeOutPatrol = 900;
+
 waitUntil { !isNil "blufor_sectors" };
 waitUntil { !isNil "combat_readiness" };
 
@@ -52,6 +54,7 @@ while { GRLIB_endgame == 0 } do {
 
 	diag_log format["HangoverIt: Created patrol - is infantry %1, Group %2, Unit Count %3", _is_infantry, _grp, count (units _grp)];
 
+
     if ( local _grp ) then {
         _headless_client = [] call KPLIB_fnc_getLessLoadedHC;
         if ( !isNull _headless_client ) then {
@@ -59,24 +62,18 @@ while { GRLIB_endgame == 0 } do {
         };
 		diag_log format["HangoverIt: Patrol group %1 transferred to HC %2", _grp, _headless_client];
     };
-
+	
 	// HangoverIt: updated to prevent _grp being nil when patrol is destroyed
     while { _patrol_continue } do {
         sleep 60;
 		if !(isNil "_grp") then {
+			_leaderpos = getpos (leader _grp);
 			if ( {alive _x} count (units _grp) == 0  ) then {
 				_patrol_continue = false;
 			} else {
-				if ( time - _started_time > 900 ) then {
-					if ( [ getpos (leader _grp) , 4000 , GRLIB_side_friendly ] call KPLIB_fnc_getUnitsCount == 0 ) then {
+				if ( time - _started_time > _timeOutPatrol ) then {
+					if ( [ _leaderpos , 4000 , GRLIB_side_friendly ] call KPLIB_fnc_getUnitsCount == 0 ) then {
 						_patrol_continue = false;
-						{
-							if ( vehicle _x != _x ) then {
-								[(vehicle _x)] call KPLIB_fnc_cleanOpforVehicle;
-							};
-							deleteVehicle _x;
-						} foreach (units _grp);
-						_patrol_continue = false ;
 					};
 				};
 			};
@@ -87,8 +84,11 @@ while { GRLIB_endgame == 0 } do {
 	
 	// HangoverIt - Clean up group
 	{
-		deleteVehicle _x ;
-	}forEach units _grp ;
+		if ( vehicle _x != _x ) then {
+			[(vehicle _x)] call KPLIB_fnc_cleanOpforVehicle;
+		};
+		deleteVehicle _x;
+	} foreach (units _grp);
 	_grpOwner = groupOwner _grp ;
 	[_grp] remoteExec ["deleteGroup", _grpOwner] ;
 
