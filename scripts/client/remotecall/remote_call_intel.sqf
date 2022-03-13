@@ -83,5 +83,19 @@ switch (_notiftype) do {
         deleteMarkerLocal "secondarymarkerzone";
         secondary_objective_position_marker = [];
     };
+	case 12: {
+        ["lib_intel_civ_resupply_end"] call BIS_fnc_showNotification;
+        deleteMarkerLocal "secondarymarker";
+        deleteMarkerLocal "secondarymarkerzone";
+        secondary_objective_position_marker = [];
+    };
+	case 13: {
+        waitUntil {!isNil "secondary_objective_position_marker"};
+        waitUntil {count secondary_objective_position_marker > 0};
+        ["lib_intel_civ_resupply_start", [markertext ([10000, secondary_objective_position_marker] call KPLIB_fnc_getNearestSector)]] call BIS_fnc_showNotification;
+    };
+	case 14: {
+        ["lib_intel_civ_resupply_received", [markertext ([10000, secondary_objective_position_marker] call KPLIB_fnc_getNearestSector)]] call BIS_fnc_showNotification;
+    };
     default {[format ["remote_call_intel.sqf -> no valid value for _notiftype: %1", _notiftype], "ERROR"] remoteExecCall ["KPLIB_fnc_log", 2];};
 };

@@ -43,7 +43,7 @@ if(isServer) then {
     GET_PARAM(GRLIB_difficulty_modifier, "Difficulty", 2);
     GET_PARAM(GRLIB_csat_aggressivity, "Aggressivity", 2);
     GET_PARAM_BOOL(GRLIB_adaptive_opfor, "AdaptToPlayercount", 1);
-    GET_PARAM(GRLIB_civilian_activity, "Civilians", 1);
+    GET_PARAM(GRLIB_civilian_activity, "Civilians", 2);
     GET_PARAM_BOOL(GRLIB_build_first_fob, "FirstFob", 0);
     GET_PARAM_BOOL(KP_liberation_fob_vehicle, "FirstFobVehicle", 0);
     GET_PARAM(GRLIB_maximum_fobs, "MaximumFobs", 26);
