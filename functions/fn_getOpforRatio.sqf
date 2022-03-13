@@ -28,5 +28,5 @@ private _blue = [(markerPos _sector), _range, GRLIB_side_friendly] call KPLIB_fn
 if (_blue > 0 || _red > 0) then {
     _red / (_blue + _red)
 } else {
-    [0, 1] select (_sector in sectors_opfor)
+    [0, 1] select (_sector in (sectors_allSectors - blufor_sectors))
 };

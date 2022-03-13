@@ -12,7 +12,7 @@ private _sectorGroup = blufor_sectors;
 
 if (_side == GRLIB_side_friendly) then {
 	_checkside = GRLIB_side_enemy;
-	_sectorGroup = sectors_opfor;
+	_sectorGroup = sectors_allSectors - blufor_sectors;
 };
 
 while {_move_is_disabled && local _unit && alive _unit && !(captive _unit)} do {
