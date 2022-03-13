@@ -18,7 +18,7 @@ private _mkr_zone = createMarkerLocal ["CIVRESUPPLYZONE", _spawn_loc];
 _mkr_zone setMarkerColorLocal "ColorCIV";
 _mkr_zone setMarkerShapeLocal "ELLIPSE";
 _mkr_zone setMarkerBrushLocal "FDiagonal";
-_mkr_zone setMarkerSizeLocal [_resupply_zone_radius,_resupply_zone_radius];
+_mkr_zone setMarkerSize [_resupply_zone_radius,_resupply_zone_radius];
 
 
 secondary_objective_position_marker = _spawn_loc ;

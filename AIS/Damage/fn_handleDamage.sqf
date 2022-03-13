@@ -33,8 +33,8 @@ params [
 	"_instigator",		// Person who pulled the trigger. (Object)
 	"_hitPoint"			// hit point Cfg name (String)
 ];
-if (side (group _unit) == CIVILIAN) then {diag_log format["Civilian %1 was damaged by %2 on side %3", name _unit, name _source, side _source];};
-if (isNil "_damage") then {_damage = 0; diag_log format ["fn_handleDamage called with Nil _damage var"];}; // HangoverIt fix and debug
+//if (side (group _unit) == CIVILIAN) then {diag_log format["Civilian %1 was damaged by %2 on side %3", name _unit, name _source, side _source];};
+//if (isNil "_damage") then {_damage = 0; diag_log format ["fn_handleDamage called with Nil _damage var"];}; // HangoverIt fix and debug
 // remote Units
 if !(local _unit) exitWith {false};
 if (_damage == 0) exitWith {[_unit, _hitPartIndex] call AIS_Damage_fnc_exitDamageHandler};
