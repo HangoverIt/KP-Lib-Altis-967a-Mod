@@ -204,13 +204,13 @@ GRLIB_color_enemy_bright = "ColorRED";                                  // Enemy
 
 GRLIB_fob_range = 125;                                                  // Build range around the main FOB building.
 GRLIB_halo_altitude = 2500;                                             // Altitude in metres for the HALO jump.
-GRLIB_secondary_missions_costs = [15, 10, 8, 10];                       // Intel price for the secondary missions [FOB hunting, Convoy ambush, SAR].
+GRLIB_secondary_missions_costs = [15, 10, 8, 10, 10];                   // Intel price for the secondary missions [FOB hunting, Convoy ambush, SAR, Resupply].
 GRLIB_secondary_objective_impact = 0.6;                                 // The percentage impact against enemy combat readiness for a successful FOB hunt.
 GRLIB_recycling_percentage = 0.5;                                       // Percentage of resources you get back from recycling.
 KP_liberation_production_interval = 30;                                 // Time in minutes until a production process is finished, when resources multiplier is set to 1.
 
 GRLIB_sector_size = 1000;                                               // Range to activate a sector.
-//GRLIB_capture_size = 175;                                               // Range to capture a sector.
+//GRLIB_capture_size = 175;                                             // Range to capture a sector.
 GRLIB_capture_size = 250;
 GRLIB_defended_buildingpos_part = 0.4;                                  // Multiplier for defenders in buildings.
 GRLIB_battlegroup_size = 6;                                             // Size of enemy battlegroups.
@@ -234,6 +234,8 @@ KP_liberation_cr_sector_gain = 5;                                       // Civil
 KP_liberation_cr_wounded_chance = 35;                                   // Chance (0-100) that there are wounded civilians right after capturing a sector.
 KP_liberation_cr_wounded_gain = 2;                                      // Civil Reputation gain for providing medical assistance for wounded civilians.
 KP_liberation_cr_mission_gain = 10;                                     // civil reputation gain for successfully completeing the rescue mission.
+KP_liberation_cr_resupply_gain = 4;                                     // civil reputation gain for successfully completeing the rescue mission.
+
 
 KP_liberation_civinfo_min = 5400;                                       // Civil Informant minimum spawn time. (seconds)
 KP_liberation_civinfo_max = 10800;                                      // Civil Informant maximum spawn time. (seconds)

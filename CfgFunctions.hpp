@@ -40,10 +40,12 @@ class KPLIB {
         class getLocationName           {};
         class getMilitaryId             {};
         class getMobileRespawns         {};
+		class getNearBuildingMissionSpawn {} ; // HangoverIt
         class getNearbyPlayers          {};
         class getNearestBluforObjective {};
         class getNearestFob             {};
         class getNearestSector          {};
+		class getNearestOpforSector     {} ; // HangoverIt
         class getNearestTower           {};
         class getNearestViVTransport    {};
         class getOpforCap               {};

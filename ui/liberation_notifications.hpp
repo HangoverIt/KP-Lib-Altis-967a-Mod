@@ -202,4 +202,25 @@ class CfgNotifications {
         color[] = {0, 0.5, 0, 1};
         sound = "taskUpdated";
     };
+	class lib_intel_civ_resupply_end: lib_default_notification {
+        title = "Civilian Resupply";
+        description = "Resupply complete";
+        iconPicture = "res\notif\ui_notif_restart.paa";
+        color[] = { 1, 1, 0, 1 };
+        sound = "taskCanceled";
+    };
+	class lib_intel_civ_resupply_start: lib_default_notification {
+		title = "Civilian Resupply";
+        description = "Resupply for civilians has started";
+		iconPicture = "res\notif\ui_notif_camb.paa";
+        color[] = { 1, 1, 0, 1 };
+		sound = "taskCreated";
+    };
+	class lib_intel_civ_resupply_received: lib_default_notification {
+		title = "Civilian Resupply";
+        description = "Resupply received";
+		iconPicture = "res\notif\ui_notif_sec_una.paa";
+        color[] = { 1, 1, 0, 1 };
+		sound = "taskCreated";
+    };
 };
