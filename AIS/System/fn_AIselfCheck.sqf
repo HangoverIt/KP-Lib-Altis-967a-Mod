@@ -27,7 +27,8 @@ if (!isNull (_injured_ai getVariable ["ais_hasHelper", objNull])) then {
 private _group_with_player = false;
 private _all_members = (units group _injured_ai) - [_injured_ai];
 if (count _all_members > 0) then {
-	{if (isPlayer _x) exitWith {_group_with_player = true};true} count _all_members;
+	// HangoverIt - added check for unconscious players - call for help if player is unable to help or command
+	{if (isPlayer _x && !(_x getVariable ["ais_unconscious", false])) exitWith {_group_with_player = true};true} count _all_members;
 };
 
 // do nothing if players in group

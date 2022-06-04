@@ -30,6 +30,11 @@ if (typeOf player == "VirtualSpectator_F") exitWith {
     execVM "scripts\client\ui\ui_manager.sqf";
 };
 
+// Add function to headless clients to manage a patrol - HangoverIt
+if (typeOf player == "HeadlessClient_F") then {
+	manage_one_patrol = compileFinal preprocessFileLineNumbers "scripts\server\patrols\manage_one_patrol.sqf";
+};
+
 // This causes the script error with not defined variable _display in File A3\functions_f_bootcamp\Inventory\fn_arsenal.sqf [BIS_fnc_arsenal], line 2122
 // ["Preload"] call BIS_fnc_arsenal;
 spawn_camera = compileFinal preprocessFileLineNumbers "scripts\client\spawn\spawn_camera.sqf";

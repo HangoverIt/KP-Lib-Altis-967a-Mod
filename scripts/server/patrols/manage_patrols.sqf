@@ -13,12 +13,25 @@ waitUntil { sleep 0.3; count blufor_sectors > 3 };
 
 if (worldName != "song_bin_tanh") then {
     {
-        [_x, false] spawn manage_one_patrol;
+		// Execute patrols direct with headless clients - HangoverIt
+		_headless_client = [] call KPLIB_fnc_getLessLoadedHC;
+		if !(isNull _headless_client) then {
+			[_x, false] remoteExec ["manage_one_patrol", _headless_client];
+		}else{
+			[_x, false] spawn manage_one_patrol;
+		};
         sleep 1;
     } foreach _combat_triggers;
 };
 
 {
-    [_x, true] spawn manage_one_patrol;
+	// Execute patrols direct with headless clients - HangoverIt
+	_headless_client = [] call KPLIB_fnc_getLessLoadedHC;
+	if !(isNull _headless_client) then {
+		[_x, true] remoteExec ["manage_one_patrol", _headless_client];
+	}else{
+		[_x, true] spawn manage_one_patrol;
+	};
+    
     sleep 1;
 } foreach _combat_triggers_infantry;

@@ -380,7 +380,7 @@ _player addAction [
     true,
     "",
     "
-       !(KPLIB_suppMod_req in (synchronizedObjects player))
+       true || !(KPLIB_suppMod_req in (synchronizedObjects player))
     "
 ];
 

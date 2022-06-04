@@ -7,6 +7,7 @@ waitUntil { !isNil "blufor_sectors" };
 waitUntil { !isNil "combat_readiness" };
 
 while { GRLIB_endgame == 0 } do {
+	[format["HangoverIt: Patrol management - waiting for bluefor_sectors count %1 over 2 and combat_readiness %2 greater than or equal to %3", count blufor_sectors, combat_readiness, (_minimum_readiness / GRLIB_difficulty_modifier)]] remoteExec ["diag_log", 2] ;
     waitUntil { sleep 0.3; count blufor_sectors >= 3; };
     waitUntil { sleep 0.3; combat_readiness >= (_minimum_readiness / GRLIB_difficulty_modifier); };
 
@@ -52,9 +53,9 @@ while { GRLIB_endgame == 0 } do {
     _started_time = time;
     _patrol_continue = true;
 
-	diag_log format["HangoverIt: Created patrol - is infantry %1, Group %2, Unit Count %3", _is_infantry, _grp, count (units _grp)];
+	[format["HangoverIt: Created patrol - is infantry %1, Group %2, Unit Count %3", _is_infantry, _grp, count (units _grp)]] remoteExec ["diag_log", 2] ;
 
-
+/*  Disable the management of patrol to a headless client
     if ( local _grp ) then {
         _headless_client = [] call KPLIB_fnc_getLessLoadedHC;
         if ( !isNull _headless_client ) then {
@@ -62,7 +63,8 @@ while { GRLIB_endgame == 0 } do {
         };
 		diag_log format["HangoverIt: Patrol group %1 transferred to HC %2", _grp, _headless_client];
     };
-	
+*/
+
 	// HangoverIt: updated to prevent _grp being nil when patrol is destroyed
     while { _patrol_continue } do {
         sleep 60;
@@ -83,16 +85,17 @@ while { GRLIB_endgame == 0 } do {
     };
 	
 	// HangoverIt - Clean up group
+	[format["HangoverIt: Removed patrol - is infantry %1, Group %2, Unit Count %3", _is_infantry, _grp, count (units _grp)]] remoteExec ["diag_log", 2] ;
 	{
 		if ( vehicle _x != _x ) then {
 			[(vehicle _x)] call KPLIB_fnc_cleanOpforVehicle;
 		};
 		deleteVehicle _x;
 	} foreach (units _grp);
-	_grpOwner = groupOwner _grp ;
-	[_grp] remoteExec ["deleteGroup", _grpOwner] ;
+	deleteGroup _grp ;
 
     if ( !([] call KPLIB_fnc_isBigtownActive) ) then {
+		[format["HangoverIt: Patrol management - sleeping for %1", 600.0 / GRLIB_difficulty_modifier]] remoteExec ["diag_log", 2] ;
         sleep (600.0 / GRLIB_difficulty_modifier);
     };
 
