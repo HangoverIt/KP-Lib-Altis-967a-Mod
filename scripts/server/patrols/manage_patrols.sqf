@@ -16,6 +16,7 @@ if (worldName != "song_bin_tanh") then {
 		// Execute patrols direct with headless clients - HangoverIt
 		_headless_client = [] call KPLIB_fnc_getLessLoadedHC;
 		if !(isNull _headless_client) then {
+			(owner _headless_client) publicVariableClient "GRLIB_difficulty_modifier";
 			[_x, false] remoteExec ["manage_one_patrol", _headless_client];
 		}else{
 			[_x, false] spawn manage_one_patrol;
@@ -28,6 +29,7 @@ if (worldName != "song_bin_tanh") then {
 	// Execute patrols direct with headless clients - HangoverIt
 	_headless_client = [] call KPLIB_fnc_getLessLoadedHC;
 	if !(isNull _headless_client) then {
+		(owner _headless_client) publicVariableClient "GRLIB_difficulty_modifier";
 		[_x, true] remoteExec ["manage_one_patrol", _headless_client];
 	}else{
 		[_x, true] spawn manage_one_patrol;

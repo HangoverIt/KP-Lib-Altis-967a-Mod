@@ -7,8 +7,7 @@ waitUntil { !isNil "blufor_sectors" };
 waitUntil { !isNil "combat_readiness" };
 
 while { GRLIB_endgame == 0 } do {
-	[format["HangoverIt: Patrol management - waiting for bluefor_sectors count %1 over 2 and combat_readiness %2 greater than or equal to %3", count blufor_sectors, combat_readiness, (_minimum_readiness / GRLIB_difficulty_modifier)]] remoteExec ["diag_log", 2] ;
-	diag_log format["HangoverIt: Patrol management - waiting for bluefor_sectors count %1 over 2 and combat_readiness %2 greater than or equal to %3", count blufor_sectors, combat_readiness, (_minimum_readiness / GRLIB_difficulty_modifier)] ;
+	[format["HangoverIt: Patrol management on %1 - waiting for bluefor_sectors count %2 over 2 and combat_readiness %3 greater than or equal to %4, difficulty factor %5", clientOwner, count blufor_sectors, combat_readiness, (_minimum_readiness / GRLIB_difficulty_modifier), GRLIB_difficulty_modifier]] remoteExec ["diag_log", 2] ;
     waitUntil { sleep 0.3; count blufor_sectors >= 3; };
     waitUntil { sleep 0.3; combat_readiness >= (_minimum_readiness / GRLIB_difficulty_modifier); };
 
@@ -39,13 +38,20 @@ while { GRLIB_endgame == 0 } do {
     } else {
 
         private [ "_vehicle_object" ];
-        if ((combat_readiness > 75) && ((random 100) > 85) && !(opfor_choppers isEqualTo [])) then {
-            _vehicle_object = [_sector_spawn_pos, selectRandom opfor_choppers] call KPLIB_fnc_spawnVehicle;
+		// HangoverIt - reduced combat_readiness requirement based on difficulty
+        if ((combat_readiness >= (75 / GRLIB_difficulty_modifier)) && ((random 100) > 85) && !(opfor_choppers isEqualTo [])) then {
+			_air_class = [opfor_choppers, opfor_air] select ((random 100) > 50);
+			if (_air_class isEqualTo []) then { // Revert to vehicle if preset is empty
+				_vehicle_object = [_sector_spawn_pos, [] call KPLIB_fnc_getAdaptiveVehicle] call KPLIB_fnc_spawnVehicle;
+			}else{
+				// Spawn air unit
+				_vehicle_object = [_sector_spawn_pos, selectRandom _air_class] call KPLIB_fnc_spawnVehicle;
+			};
         } else {
             _vehicle_object = [_sector_spawn_pos, [] call KPLIB_fnc_getAdaptiveVehicle] call KPLIB_fnc_spawnVehicle;
         };
 
-        sleep 0.5;
+        sleep 5;
         _grp = group ((crew _vehicle_object) select 0);
     };
 
@@ -54,9 +60,9 @@ while { GRLIB_endgame == 0 } do {
     _started_time = time;
     _patrol_continue = true;
 
-	[format["HangoverIt: Created patrol - is infantry %1, Group %2, Unit Count %3", _is_infantry, _grp, count (units _grp)]] remoteExec ["diag_log", 2] ;
+	[format["HangoverIt: Created patrol on %1 - is infantry %2, Group %3, Unit Count %4", clientOwner, _is_infantry, _grp, count (units _grp)]] remoteExec ["diag_log", 2] ;
 
-/*  Disable the management of patrol to a headless client
+/*  Disable the management of patrol to a headless client. HC now owns the whole manage_one_patrol script
     if ( local _grp ) then {
         _headless_client = [] call KPLIB_fnc_getLessLoadedHC;
         if ( !isNull _headless_client ) then {
@@ -86,7 +92,7 @@ while { GRLIB_endgame == 0 } do {
     };
 	
 	// HangoverIt - Clean up group
-	[format["HangoverIt: Removed patrol - is infantry %1, Group %2, Unit Count %3", _is_infantry, _grp, count (units _grp)]] remoteExec ["diag_log", 2] ;
+	[format["HangoverIt: Removed patrol on %1 - is infantry %2, Group %3, Unit Count %4", clientOwner, _is_infantry, _grp, count (units _grp)]] remoteExec ["diag_log", 2] ;
 	{
 		if ( vehicle _x != _x ) then {
 			[(vehicle _x)] call KPLIB_fnc_cleanOpforVehicle;
@@ -96,7 +102,7 @@ while { GRLIB_endgame == 0 } do {
 	deleteGroup _grp ;
 
     if ( !([] call KPLIB_fnc_isBigtownActive) ) then {
-		[format["HangoverIt: Patrol management - sleeping for %1", 600.0 / GRLIB_difficulty_modifier]] remoteExec ["diag_log", 2] ;
+		[format["HangoverIt: Patrol management on %1 - sleeping for %2", clientOwner, 600.0 / GRLIB_difficulty_modifier]] remoteExec ["diag_log", 2] ;
         sleep (600.0 / GRLIB_difficulty_modifier);
     };
 

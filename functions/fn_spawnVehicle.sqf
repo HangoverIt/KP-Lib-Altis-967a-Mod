@@ -53,7 +53,7 @@ if (_spawnPos isEqualTo [] || _spawnPos isEqualTo zeroPos) exitWith {
 };
 
 // If it's a chopper, spawn it flying
-if (_classname in opfor_choppers) then {
+if (_classname in (opfor_choppers + opfor_air)) then {
     _newvehicle = createVehicle [_classname, _spawnpos, [], 0, 'FLY'];
     _newvehicle flyInHeight (80 + (random 120));
     _newvehicle allowDamage false;
