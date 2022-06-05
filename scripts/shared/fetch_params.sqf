@@ -43,14 +43,14 @@ if(isServer) then {
     GET_PARAM(GRLIB_difficulty_modifier, "Difficulty", 4);
     GET_PARAM(GRLIB_csat_aggressivity, "Aggressivity", 2);
     GET_PARAM_BOOL(GRLIB_adaptive_opfor, "AdaptToPlayercount", 1);
-    GET_PARAM(GRLIB_civilian_activity, "Civilians", 2);
+    GET_PARAM(GRLIB_civilian_activity, "Civilians", 3);
     GET_PARAM_BOOL(GRLIB_build_first_fob, "FirstFob", 0);
     GET_PARAM_BOOL(KP_liberation_fob_vehicle, "FirstFobVehicle", 0);
     GET_PARAM(GRLIB_maximum_fobs, "MaximumFobs", 26);
-    GET_PARAM(GRLIB_max_squad_size, "MaxSquadSize", 10);
+    GET_PARAM(GRLIB_max_squad_size, "MaxSquadSize", 16);
     GET_PARAM_BOOL(GRLIB_blufor_defenders, "BluforDefenders", 1);
     GET_PARAM_BOOL(GRLIB_autodanger, "Autodanger", 0);
-    GET_PARAM(GRLIB_time_factor, "DayDuration", 12);
+    GET_PARAM(GRLIB_time_factor, "DayDuration", 2);
     GET_PARAM_BOOL(GRLIB_shorter_nights, "ShorterNights", 0);
     GET_PARAM(GRLIB_weather_param, "Weather", 3);
     GET_PARAM_BOOL(KP_liberation_fog_param, "VanillaFog", 1);

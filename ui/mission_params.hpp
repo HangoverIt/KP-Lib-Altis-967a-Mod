@@ -27,7 +27,7 @@ class Params {
         title = $STR_PARAMS_DIFFICULTY;
         values[] = {0, 1, 2, 3, 4, 5, 6, 7};
         texts[] = {$STR_PARAMS_DIFFICULTY1, $STR_PARAMS_DIFFICULTY2, $STR_PARAMS_DIFFICULTY3, $STR_PARAMS_DIFFICULTY4, $STR_PARAMS_DIFFICULTY5, $STR_PARAMS_DIFFICULTY6, $STR_PARAMS_DIFFICULTY7, $STR_PARAMS_DIFFICULTY8};
-        default = 2;
+        default = 4;
     };
     class Aggressivity {
         title = $STR_AGGRESSIVITY_PARAM;
@@ -45,7 +45,7 @@ class Params {
         title = $STR_PARAMS_CIVILIANS;
         values[] = {0, 1, 2, 3};
         texts[] = {$STR_PARAMS_CIVILIANS1, $STR_PARAMS_CIVILIANS2, $STR_PARAMS_CIVILIANS3, $STR_PARAMS_CIVILIANS4};
-        default = 2;
+        default = 3;
     };
     class FirstFob {
         title = $STR_PARAMS_FIRSTFOB;
@@ -69,7 +69,7 @@ class Params {
         title = $STR_PARAM_SQUAD_SIZE;
         values[] = {0, 1, 2, 4, 6, 8, 10, 12, 16, 20, 24, 30, 36};
         texts[] = {0, 1, 2, 4, 6, 8, 10, 12, 16, 20, 24, 30, 36};
-        default = 12;
+        default = 16;
     };
     class BluforDefenders {
         title = $STR_PARAM_BLUFOR_DEFENDERS;
@@ -87,7 +87,7 @@ class Params {
         title = $STR_PARAMS_DAYDURATION;
         values[] = {8, 6, 4, 3, 2, 1};
         texts[] = {"3","4","6","8","12","24"};
-        default = 4;
+        default = 2;
     };
     class ShorterNights {
         title = $STR_SHORTER_NIGHTS_PARAM;
