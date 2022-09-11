@@ -37,7 +37,7 @@ if (isPlayer _unit || _unit in allPlayers) exitWith {}; // HangoverIt; added all
 //Check to see if unit has radio. If the unit does not have a radio, then it will not move to support
 private _checkStatus = assignedItems _unit;
 
-if (isNil "_checkStatus" || {(_unit getVariable ["Vcm_Disable",false])} || {!("ItemRadio" in _checkStatus)}) exitWith {};
+if (isNil "_checkStatus" || {(_unitGroup getVariable ["Vcm_Disable",false])} || {!("ItemRadio" in _checkStatus)}) exitWith {};
 
 private _arrayOrg = _unit call VCM_fnc_FriendlyArray;
 _arrayOrg = _arrayOrg - VCM_ARTYLST;

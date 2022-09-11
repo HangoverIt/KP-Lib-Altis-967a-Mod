@@ -40,7 +40,7 @@ if(isServer) then {
     // Mission Options
     ["--- Mission Options ---", "PARAM"] call KPLIB_fnc_log;
     GET_PARAM(GRLIB_unitcap, "Unitcap", 2);
-    GET_PARAM(GRLIB_difficulty_modifier, "Difficulty", 4);
+    GET_PARAM(GRLIB_difficulty_modifier, "Difficulty", 5);
     GET_PARAM(GRLIB_csat_aggressivity, "Aggressivity", 2);
     GET_PARAM_BOOL(GRLIB_adaptive_opfor, "AdaptToPlayercount", 1);
     GET_PARAM(GRLIB_civilian_activity, "Civilians", 3);
