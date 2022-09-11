@@ -66,7 +66,7 @@ if (_aliveCount > 0) then
 			private _checkStatus2 = assignedItems _x;
 			
 
-			if (!(isNil "_checkStatus2") && {!(_x getVariable ["Vcm_Disable",false])} && {!(_x getVariable ["VCM_NOFLANK",false])} && {!(_x getVariable ["VCM_NORESCUE",false])} && {!(_x getVariable ["VCM_MOVE2SUP",false])} && {"ItemRadio" in _checkStatus2}) then 
+			if (!(isNil "_checkStatus2") && {!((group _x) getVariable ["Vcm_Disable",false])} && {!((group _x) getVariable ["VCM_NOFLANK",false])} && {!((group _x) getVariable ["VCM_NORESCUE",false])} && {!((group _x) getVariable ["VCM_MOVE2SUP",false])} && {"ItemRadio" in _checkStatus2}) then 
 			{
 
 
